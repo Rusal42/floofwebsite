@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floofs Den - Discord Bot</title>
+    <meta name="description" content="Welcome to Floofs Den - a fun and feature-rich Discord bot with gambling, moderation, and entertainment commands.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="nav-logo">🐾</span>
+                <span class="nav-title">Floofs Den</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#commands" class="nav-link">Commands</a>
+                <a href="#stats" class="nav-link">Stats</a>
+                <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="nav-link support-link">
+                    <i class="fab fa-discord"></i> Support
+                </a>
+                <button id="loginBtn" class="login-btn">
+                    <i class="fab fa-discord"></i> Login
+                </button>
+            </div>
+            
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-particles"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Welcome to <span class="gradient-text">Floofs Den</span> 🌸
+                    </h1>
+                    <p class="hero-description">
+                        Your adorable fluffy companion for Discord! Bringing joy, games, and cozy vibes to your server. 
+                        Currently in <span id="serverCount">8</span> servers with <span id="userCount">30</span> people actively using Floof! 💕
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <button id="inviteBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Floof to Server
+                        </button>
+                        <a href="#commands" class="btn btn-secondary">
+                            <i class="fas fa-terminal"></i>
+                            View Commands
+                        </a>
+                        <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="btn btn-support">
+                            <i class="fab fa-discord"></i>
+                            Support Server
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="floof-showcase">
+                        <div class="floof-avatar-container">
+                            <img src="https://cdn.discordapp.com/avatars/1387563676961341461/your-bot-avatar.png" alt="Floof" class="floof-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            <div class="floof-avatar-fallback">🐾</div>
+                            <div class="floof-glow"></div>
+                        </div>
+                        <div class="floof-status">
+                            <div class="status-indicator">
+                                <div class="status-dot online"></div>
+                                <span class="status-text">Ready to floof! ✨</span>
+                            </div>
+                        </div>
+                        <div class="floof-sparkles">
+                            <span class="sparkle">✨</span>
+                            <span class="sparkle">🌟</span>
+                            <span class="sparkle">💫</span>
+                            <span class="sparkle">⭐</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose Floofs Den?</h2>
+                <p class="section-description">
+                    Packed with features to make your Discord server more engaging and fun
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎲</div>
+                    <h3>Gambling & Games</h3>
+                    <p>Exciting gambling commands, daily rewards, and interactive games to keep your community engaged.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Moderation Tools</h3>
+                    <p>Powerful moderation features including setup commands, role management, and server configuration.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎉</div>
+                    <h3>Fun Commands</h3>
+                    <p>Entertainment commands, memes, and interactive features to bring joy to your server.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fast & Reliable</h3>
+                    <p>Lightning-fast responses with 99.9% uptime. Your server deserves the best performance.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Easy Setup</h3>
+                    <p>Simple setup process with helpful guides and commands to get your server running quickly.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3>Premium Features</h3>
+                    <p>Advanced features and customization options for servers that want to go the extra mile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section id="commands" class="commands">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Commands</h2>
+                <p class="section-description">
+                    Discover the most loved commands that make Floofs Den special
+                </p>
+            </div>
+            
+            <div class="commands-grid">
+                <div class="command-category">
+                    <h3><i class="fas fa-dice"></i> Gambling</h3>
+                    <div class="command-list">
+                        <div class="command">
+                            <code>%balance</code>
+                            <span>Check your or another user's balance</span>
+                        </div>
+                        <div class="command">
+                            <code>%beg</code>
+                            <span>Beg for some coins</span>
+                        </div>
+                        <div class="command">
+                            <code>%work</code>
+                            <span>Work to earn money</span>
+                        </div>
+                        <div class="command">
+                            <code>%slots</code>
+                            <span>Try your luck at the slot machine</span>
+                        </div>
+                        <div class="command">
+                            <code>%coinflip</code>
+                            <span>Flip a coin and bet on it</span>
+                        </div>
+                        <div class="command">
+                            <code>%blackjack</code>
+                            <span>Play a game of blackjack</span>
+                        </div>
+                        <div class="command">
+                            <code>%roulette</code>
+                            <span>Spin the roulette wheel</span>
+                        </div>
+                        <div class="command">
+                            <code>%leaderboard</code>
+                            <span>View the richest users</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="command-category">
+                    <h3><i class="fas fa-heart"></i> Fun</h3>
+                    <div class="command-list">
+                        <div class="command">
+                            <code>%8ball</code>
+                            <span>Ask the magic 8-ball a question</span>
+                        </div>
+                        <div class="command">
+                            <code>%hug</code>
+                            <span>Give someone a warm hug</span>
+                        </div>
+                        <div class="command">
+                            <code>%pat</code>
+                            <span>Pat someone gently</span>
+                        </div>
+                        <div class="command">
+                            <code>%kiss</code>
+                            <span>Give someone a sweet kiss</span>
+                        </div>
+                        <div class="command">
+                            <code>%bite</code>
+                            <span>Playfully bite someone</span>
+                        </div>
+                        <div class="command">
+                            <code>%cat</code>
+                            <span>Get a random cute cat picture</span>
+                        </div>
+                        <div class="command">
+                            <code>%joke</code>
+                            <span>Get a random joke</span>
+                        </div>
+                        <div class="command">
+                            <code>%roll</code>
+                            <span>Roll a dice</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="command-category">
+                    <h3><i class="fas fa-shield-alt"></i> Moderation</h3>
+                    <div class="command-list">
+                        <div class="command">
+                            <code>%ban</code>
+                            <span>Ban a user from the server</span>
+                        </div>
+                        <div class="command">
+                            <code>%kick</code>
+                            <span>Kick a user from the server</span>
+                        </div>
+                        <div class="command">
+                            <code>%mute</code>
+                            <span>Mute a user</span>
+                        </div>
+                        <div class="command">
+                            <code>%warn</code>
+                            <span>Warn a user</span>
+                        </div>
+                        <div class="command">
+                            <code>%purge</code>
+                            <span>Delete multiple messages</span>
+                        </div>
+                        <div class="command">
+                            <code>%lockdown</code>
+                            <span>Lock down a channel</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="command-category">
+                    <h3><i class="fas fa-info-circle"></i> General</h3>
+                    <div class="command-list">
+                        <div class="command">
+                            <code>%help</code>
+                            <span>Show help information and commands</span>
+                        </div>
+                        <div class="command">
+                            <code>%snipe</code>
+                            <span>View recently deleted messages</span>
+                        </div>
+                        <div class="command">
+                            <code>%remind</code>
+                            <span>Set a reminder</span>
+                        </div>
+                        <div class="command">
+                            <code>%afk</code>
+                            <span>Set yourself as AFK</span>
+                        </div>
+                        <div class="command">
+                            <code>%prefix</code>
+                            <span>Change the bot prefix</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="stats">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Floofs Den Statistics</h2>
+                <p class="section-description">
+                    Real-time statistics showing Floofs Den's reach and performance
+                </p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏠</div>
+                    <div class="stat-number" id="totalServers">8</div>
+                    <div class="stat-label">Total Servers</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number" id="totalUsers">30</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-number" id="commandsUsed">150+</div>
+                    <div class="stat-label">Commands Used</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-number" id="uptime">50%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-number" id="ping">42ms</div>
+                    <div class="stat-label">Average Ping</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Add Floofs Den to Your Server?</h2>
+                <p>Be part of our cozy community and help Floof grow!</p>
+                <button id="inviteBtn2" class="btn btn-primary btn-large">
+                    <i class="fas fa-plus"></i>
+                    Add Floofs Den Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <span class="footer-logo">🐾</span>
+                        <span class="footer-title">Floofs Den</span>
+                    </div>
+                    <p>Making Discord servers more fun, one command at a time.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#commands">Commands</a></li>
+                        <li><a href="#stats">Statistics</a></li>
+                        <li><a href="/api/health">API Status</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/your-support-server">Discord Server</a></li>
+                        <li><a href="mailto:support@floofbot.com">Contact Us</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Floofs Den. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
