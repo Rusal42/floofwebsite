@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Floofs Den • API Status</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Small page-specific tweaks (rely on shared theme for most) */
+    .status-page {
+      padding: 120px 0 80px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(254, 247, 255, 0.95) 0%, rgba(247, 250, 252, 0.95) 100%);
+    }
+    .status-card {
+      background: var(--surface-color);
+      border-radius: 20px;
+      padding: 30px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-light);
+    }
+    .status-row { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: white; border: 2px solid var(--primary-color); color: var(--primary-color);
+      padding: 10px 14px; border-radius: 999px; font-weight: 700;
+      box-shadow: var(--shadow-light);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #48bb78; animation: pulse-dot 2s ease-in-out infinite; }
+    .kv { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--border-color); }
+    .kv:last-child { border-bottom: 0; }
+    .mono { font-family: "Courier New", Courier, monospace; color: #6b7280; }
+    .muted { color: var(--text-light); font-size: 0.95rem; }
+    .endpoint {
+      background: linear-gradient(135deg, #e8f5ff, #f0f8ff);
+      padding: 14px; border-radius: 12px; border: 2px solid rgba(135, 206, 250, 0.3);
+      font-family: "Courier New", monospace; color: #4169e1;
+    }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <!-- Navigation (reuse site navbar) -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="nav-logo">🐾</span>
+        <span class="nav-title">Floofs Den</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/index.html#home" class="nav-link">Home</a>
+        <a href="/index.html#features" class="nav-link">Features</a>
+        <a href="/index.html#commands" class="nav-link">Commands</a>
+        <a href="/index.html#stats" class="nav-link">Stats</a>
+        <a href="/status.html" class="nav-link">Status</a>
+        <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="nav-link support-link"><i class="fab fa-discord"></i> Support</a>
+        <button id="loginBtn" class="login-btn"><i class="fab fa-discord"></i> Login</button>
+      </div>
+      <div class="nav-toggle"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <main class="status-page">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 30px;">
+        <h1 class="section-title">API Status</h1>
+        <p class="section-description">Live health for Floofs Den backend endpoints</p>
+      </div>
+
+      <div class="status-row">
+        <div class="status-card">
+          <div class="badge" id="overallBadge"><span class="dot" id="overallDot"></span><span id="overallText">Checking…</span></div>
+          <p class="muted" id="checkedAt" style="margin-top: 10px;">—</p>
+
+          <div class="stat-card" style="margin-top: 16px;">
+            <div class="stat-icon">📡</div>
+            <div class="stat-number" id="env">—</div>
+            <div class="stat-label">Environment</div>
+          </div>
+        </div>
+
+        <div class="status-card">
+          <h3 style="margin-bottom: 10px; color: var(--primary-dark);">Endpoints</h3>
+          <div class="kv"><span>Stats</span><span class="endpoint">/api/stats</span></div>
+          <div class="kv"><span>Auth</span><span class="endpoint">/api/auth/discord</span></div>
+          <div class="kv"><span>Health</span><span class="endpoint">/api/health</span></div>
+        </div>
+
+        <div class="status-card">
+          <h3 style="margin-bottom: 10px; color: var(--primary-dark);">Details</h3>
+          <div class="kv"><span>Status</span><span class="mono" id="statusText">—</span></div>
+          <div class="kv"><span>Message</span><span class="mono" id="messageText">—</span></div>
+          <div class="kv"><span>Uptime</span><span class="mono" id="uptimeText">—</span></div>
+          <div class="kv"><span>Version</span><span class="mono" id="versionText">—</span></div>
+        </div>
+      </div>
+
+      <div class="actions" style="margin-top: 24px;">
+        <a class="btn btn-secondary" href="/">← Back to Home</a>
+        <button class="btn btn-primary" id="refreshBtn"><i class="fas fa-rotate"></i> Refresh</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    async function fetchHealth() {
+      // Prefer pretty JSON health from Netlify function via /api/health
+      try {
+        const res = await fetch('/api/health', { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const json = await res.json();
+
+        // Two possible shapes: simple {status, timestamp} from netlify/functions/health.js
+        // or rich object from server.js when running locally.
+        const status = json.status || (json.success ? 'healthy' : 'down');
+        const env = json.server?.environment || (json.environment || (json.server && json.server.name) || 'Production');
+        const version = json.server?.version || json.version || 'v1.0.0';
+        const uptime = json.server?.uptime || json.uptime || '—';
+        const message = json.message || json.cute_message || 'OK';
+
+        // Update UI
+        document.getElementById('overallText').textContent = (status === 'ok' || status === 'healthy') ? 'Healthy & Purring' : 'Issues Detected';
+        document.getElementById('overallDot').style.background = (status === 'ok' || status === 'healthy') ? '#48bb78' : '#f56565';
+        document.getElementById('checkedAt').textContent = 'Last checked: ' + new Date().toLocaleString();
+        document.getElementById('env').textContent = env;
+        document.getElementById('statusText').textContent = status;
+        document.getElementById('messageText').textContent = message;
+        document.getElementById('uptimeText').textContent = uptime;
+        document.getElementById('versionText').textContent = version;
+      } catch (e) {
+        document.getElementById('overallText').textContent = 'Unavailable';
+        document.getElementById('overallDot').style.background = '#f56565';
+        document.getElementById('checkedAt').textContent = 'Last checked: ' + new Date().toLocaleString();
+        document.getElementById('statusText').textContent = 'down';
+        document.getElementById('messageText').textContent = e.message;
+        document.getElementById('uptimeText').textContent = '—';
+        document.getElementById('versionText').textContent = '—';
+      }
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', fetchHealth);
+    fetchHealth();
+    // Auto-refresh every 30s
+    setInterval(fetchHealth, 30000);
+  </script>
+  <script src="/script.js"></script>
+</body>
+</html>
