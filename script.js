@@ -163,6 +163,24 @@ function setupEventListeners() {
     
     // Intersection Observer for animations
     setupScrollAnimations();
+
+    // Feature command panels toggle
+    document.querySelectorAll('.feature-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const selector = btn.getAttribute('data-target');
+            if (!selector) return;
+            const panel = document.querySelector(selector);
+            if (!panel) return;
+
+            const isOpen = panel.style.display !== 'none';
+            panel.style.display = isOpen ? 'none' : 'block';
+            btn.setAttribute('aria-expanded', String(!isOpen));
+
+            if (!isOpen) {
+                panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    });
 }
 
 // Smooth Scrolling

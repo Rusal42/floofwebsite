@@ -116,18 +116,77 @@
                     <div class="feature-icon">🎲</div>
                     <h3>Gambling & Games</h3>
                     <p>Exciting gambling commands, daily rewards, and interactive games to keep your community engaged.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-gambling" aria-expanded="false" aria-controls="panel-gambling" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-gambling" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="section-description" style="margin-bottom:8px;">Gambling commands:</div>
+                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                            <div class="command"><code>%balance</code> <span>View your current coins.</span></div>
+                            <div class="command"><code>%beg</code> <span>Chance to receive a small coin reward.</span></div>
+                            <div class="command"><code>%work</code> <span>Earn coins on a cooldown.</span></div>
+                            <div class="command"><code>%slots [amount]</code> <span>Slot machine with wins/losses based on symbols.</span></div>
+                            <div class="command"><code>%coinflip [amount] [heads|tails]</code> <span>50/50 coin toss bet.</span></div>
+                            <div class="command"><code>%blackjack [amount]</code> <span>Play blackjack vs the dealer. Hit/Stand via prompts.</span></div>
+                            <div class="command"><code>%roulette [amount] [color|number]</code> <span>Bet on red/black/green or a number.</span></div>
+                            <div class="command"><code>%donate @user [amount]</code> <span>Send coins to another user.</span></div>
+                            <div class="command"><code>%leaderboard</code> <span>See top balances.</span></div>
+                            <div class="command"><code>%levels</code> <span>Check XP/leveling progress.</span></div>
+                            <div class="command"><code>%release</code> <span>Claim periodic release rewards.</span></div>
+                            <div class="command"><code>%beatup [@user]</code> <span>Fun combat-themed coin interaction.</span></div>
+                            <div class="command"><code>%gambling</code> <span>Opens the gambling menu.</span></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
                     <h3>Moderation Tools</h3>
                     <p>Powerful moderation features including setup commands, role management, and server configuration.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-moderation" aria-expanded="false" aria-controls="panel-moderation" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-moderation" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="section-description" style="margin-bottom:8px;">Moderation commands:</div>
+                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                            <div class="command"><code>%ban @user [reason]</code> <span>Ban a user from the server.</span></div>
+                            <div class="command"><code>%kick @user [reason]</code> <span>Kick a user from the server.</span></div>
+                            <div class="command"><code>%timeout @user [duration] [reason]</code> <span>Timeout a user for a period.</span></div>
+                            <div class="command"><code>%warn @user [reason]</code> <span>Warn a user; logs to infractions.</span></div>
+                            <div class="command"><code>%infractions @user</code> <span>View a user's infractions.</span></div>
+                            <div class="command"><code>%clearinfractions @user</code> <span>Clear a user's infractions.</span></div>
+                            <div class="command"><code>%slowmode [seconds]</code> <span>Set channel slowmode.</span></div>
+                            <div class="command"><code>%purge [1-100]</code> <span>Bulk delete recent messages in the current channel.</span></div>
+                            <div class="command"><code>%ticket</code> <span>Ticket system menu and actions.</span></div>
+                            <div class="command"><code>%advancedlog</code> <span>Configure/view advanced logging.</span></div>
+                            <div class="command"><code>%antispam</code> <span>Anti-spam controls and toggles.</span></div>
+                            <div class="command"><code>%whois @user</code> <span>View detailed user info.</span></div>
+                            <div class="command"><code>%av @user</code> <span>Show user's avatar.</span></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">🎉</div>
                     <h3>Fun Commands</h3>
                     <p>Entertainment commands, memes, and interactive features to bring joy to your server.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-fun" aria-expanded="false" aria-controls="panel-fun" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-fun" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="section-description" style="margin-bottom:8px;">Fun commands:</div>
+                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                            <div class="command"><code>%8ball</code></div>
+                            <div class="command"><code>%bite</code></div>
+                            <div class="command"><code>%blush</code></div>
+                            <div class="command"><code>%cat</code></div>
+                            <div class="command"><code>%dance</code></div>
+                            <div class="command"><code>%highfive</code></div>
+                            <div class="command"><code>%hug</code></div>
+                            <div class="command"><code>%joke</code></div>
+                            <div class="command"><code>%kiss</code></div>
+                            <div class="command"><code>%pat</code></div>
+                            <div class="command"><code>%poll</code></div>
+                            <div class="command"><code>%roll</code></div>
+                            <div class="command"><code>%shoot</code></div>
+                            <div class="command"><code>%slap</code></div>
+                            <div class="command"><code>%wave</code></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="feature-card">
@@ -135,11 +194,94 @@
                     <h3>Fast & Reliable</h3>
                     <p>Lightning-fast responses with 99.9% uptime. Your server deserves the best performance.</p>
                 </div>
-                
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧰</div>
+                    <h3>General Utilities</h3>
+                    <p>Handy utilities for everyday server life.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-general" aria-expanded="false" aria-controls="panel-general" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-general" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                            <div class="command"><code>%help</code></div>
+                            <div class="command"><code>%snipe</code></div>
+                            <div class="command"><code>%bulksnipe</code></div>
+                            <div class="command"><code>%clearsnipe</code></div>
+                            <div class="command"><code>%remind</code></div>
+                            <div class="command"><code>%revive</code></div>
+                            <div class="command"><code>%voice</code></div>
+                            <div class="command"><code>%analytics</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎭</div>
+                    <h3>Roles</h3>
+                    <p>Role management made easy.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-roles" aria-expanded="false" aria-controls="panel-roles" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-roles" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                            <div class="command"><code>%createrole</code></div>
+                            <div class="command"><code>%deleterole</code></div>
+                            <div class="command"><code>%giverole</code></div>
+                            <div class="command"><code>%takerole</code></div>
+                            <div class="command"><code>%listroles</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💤</div>
+                    <h3>AFK</h3>
+                    <p>Let others know you’re away.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-afk" aria-expanded="false" aria-controls="panel-afk" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-afk" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                            <div class="command"><code>%afk [reason]</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Important</h3>
+                    <p>High-impact tools like tickets, logging, and analytics.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-important" aria-expanded="false" aria-controls="panel-important" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-important" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                            <div class="command"><code>%ticket</code> <span>Create/support server tickets.</span></div>
+                            <div class="command"><code>%advancedlog</code> <span>Advanced event logging and configuration.</span></div>
+                            <div class="command"><code>%analytics</code> <span>Server analytics and insights.</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📼</div>
+                    <h3>Legacy</h3>
+                    <p>Older consolidated commands.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-legacy" aria-expanded="false" aria-controls="panel-legacy" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-legacy" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+                            <div class="command"><code>%fun-commands</code></div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="feature-card">
                     <div class="feature-icon">🔧</div>
-                    <h3>Easy Setup</h3>
+                    <h3>Configuration</h3>
                     <p>Simple setup process with helpful guides and commands to get your server running quickly.</p>
+                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-setup" aria-expanded="false" aria-controls="panel-setup" style="margin-top:10px;">View Commands</button>
+                    <div id="panel-setup" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
+                        <div class="section-description" style="margin-bottom:8px;">Configuration commands:</div>
+                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                            <div class="command"><code>%config</code> <span>Server setup menu including channels and settings.</span></div>
+                            <div class="command"><code>%prefix [newPrefix]</code> <span>View or change the bot's prefix.</span></div>
+                            <div class="command"><code>%vcconfig</code> <span>Configure temporary voice channels.</span></div>
+                            <div class="command"><code>%setup</code> <span>Guided setup for moderation/tickets/logging.</span></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="feature-card">
