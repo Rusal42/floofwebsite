@@ -6,7 +6,7 @@ const DISCORD_OAUTH_URL = `https://discord.com/api/oauth2/authorize?client_id=${
 // Bot invite URL with permissions
 const BOT_INVITE_URL = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&permissions=8&scope=bot`;
 
-// API Configuration (use relative path in production, localhost in development)
+// API Configuration (legacy site API; keep for auth/dashboard endpoints if needed)
 const API_BASE_URL = window.location.hostname === 'localhost' 
     ? 'http://localhost:3000/api' 
     : '/api';
@@ -22,14 +22,10 @@ const navMenu = document.querySelector('.nav-menu');
 document.addEventListener('DOMContentLoaded', function() {
     initializeAuth();
     setupEventListeners();
-    loadBotStats();
     setupSmoothScrolling();
     setupMobileNavigation();
     setupAnimations();
     handleAuthCallback();
-    
-    // Auto-refresh stats every 30 seconds
-    setInterval(loadBotStats, 30000);
 });
 
 // Authentication Functions
@@ -111,53 +107,7 @@ async function exchangeCodeForToken(code) {
     }
 }
 
-// Bot Statistics
-async function loadBotStats() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/stats`);
-        const stats = await response.json();
-        
-        if (stats.success) {
-            updateStatsDisplay(stats.data);
-        }
-    } catch (error) {
-        console.error('Failed to load bot stats:', error);
-        // Use fallback stats
-        updateStatsDisplay({
-            serverCount: 8,
-            userCount: 30,
-            commandsUsed: 150,
-            uptime: 50.0
-        });
-    }
-}
-
-function updateStatsDisplay(stats) {
-    // Update hero stats
-    const serverCountEl = document.getElementById('serverCount');
-    const userCountEl = document.getElementById('userCount');
-    
-    if (serverCountEl) {
-        animateNumber(serverCountEl, stats.serverCount, '+');
-    }
-    
-    if (userCountEl) {
-        animateNumber(userCountEl, stats.userCount, '+');
-    }
-    
-    // Update stats section
-    const totalServersEl = document.getElementById('totalServers');
-    const totalUsersEl = document.getElementById('totalUsers');
-    const commandsUsedEl = document.getElementById('commandsUsed');
-    const uptimeEl = document.getElementById('uptime');
-    const pingEl = document.getElementById('ping');
-    
-    if (totalServersEl) animateNumber(totalServersEl, stats.serverCount);
-    if (totalUsersEl) animateNumber(totalUsersEl, stats.userCount);
-    if (commandsUsedEl) commandsUsedEl.textContent = formatNumber(stats.commandsUsed) + '+';
-    if (uptimeEl) uptimeEl.textContent = stats.uptime + '%';
-    if (pingEl) pingEl.textContent = (stats.ping || 42) + 'ms';
-}
+// Removed Discord widget integration by request.
 
 function animateNumber(element, targetNumber, suffix = '') {
     const startNumber = 0;
@@ -291,7 +241,7 @@ function setupScrollAnimations() {
     }, observerOptions);
     
     // Observe elements for animation
-    document.querySelectorAll('.feature-card, .command-category, .stat-card, .section-title').forEach(el => {
+    document.querySelectorAll('.feature-card, .stat-card, .section-title').forEach(el => {
         observer.observe(el);
     });
 }
@@ -426,6 +376,5 @@ window.FloofWebsite = {
     login,
     logout,
     showNotification,
-    copyToClipboard,
-    loadBotStats
+    copyToClipboard
 };
