@@ -15,6 +15,174 @@
     --gradient-secondary: linear-gradient(135deg, #ffd93d 0%, #ff9ec7 100%);
 }
 
+/* Commands Section - Card Layout & Larger Typography */
+.commands-panel {
+    font-size: 1.05rem;
+}
+
+.commands-panel .command-list {
+    gap: 16px !important;
+}
+
+.commands-panel .command {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.commands-panel .command:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    border-color: rgba(183,148,246,0.35);
+}
+
+.commands-panel .command code {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #2d3748;
+    margin-bottom: 10px;
+    user-select: text;
+}
+
+.commands-panel .command span {
+    color: var(--text-light);
+    font-size: 0.98rem;
+    line-height: 1.6;
+}
+
+.feature-toggle {
+    font-size: 1rem;
+}
+
+.section-description {
+    font-size: 1.05rem;
+}
+
+/* Command Filter Toolbar */
+.command-toolbar {
+    position: relative;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: var(--shadow-light);
+    overflow: hidden;
+    transition: max-height 0.25s ease, box-shadow 0.2s ease;
+    max-height: 44px; /* collapsed height */
+    margin-bottom: 12px;
+}
+
+.command-toolbar.open {
+    max-height: 200px; /* expanded */
+    box-shadow: var(--shadow-medium);
+}
+
+.toolbar-handle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 14px;
+    cursor: pointer;
+    user-select: none;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+}
+
+.toolbar-grip {
+    width: 36px;
+    height: 6px;
+    border-radius: 3px;
+    background: #CBD5E0;
+}
+
+.toolbar-title {
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.toolbar-content {
+    padding: 12px 14px 14px 14px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+}
+
+.toolbar-search {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.toolbar-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.chip {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.chip.active, .chip:hover {
+    background: rgba(183, 148, 246, 0.12);
+    border-color: rgba(183, 148, 246, 0.6);
+}
+
+/* Global Commands Filter Bar */
+.global-command-filter {
+    margin: 8px 0 18px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--shadow-light);
+}
+
+.gcf-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 12px 14px;
+    flex-wrap: wrap;
+}
+
+.gcf-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.gcf-title { font-weight: 800; color: #2d3748; }
+.gcf-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.gcf-chip {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+.gcf-chip.active, .gcf-chip:hover { background: rgba(183,148,246,0.12); border-color: rgba(183,148,246,0.6); }
+
+.gcf-right input {
+    width: min(380px, 90vw);
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
 /* Legal Pages (Privacy & Terms) */
 .legal-page {
     padding: 120px 0 80px;

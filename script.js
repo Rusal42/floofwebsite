@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupMobileNavigation();
     setupAnimations();
+    setupCommandToolbars();
+    sortCommandLists();
+    setupGlobalCommandsFilter();
     handleAuthCallback();
 });
 
@@ -38,6 +41,62 @@ function initializeAuth() {
     }
 }
 
+// Command filter toolbar (collapsible with search)
+function setupCommandToolbars() {
+    document.querySelectorAll('.commands-panel').forEach(panel => {
+        // Build toolbar DOM
+        const toolbar = document.createElement('div');
+        toolbar.className = 'command-toolbar';
+
+        const handle = document.createElement('div');
+        handle.className = 'toolbar-handle';
+        handle.innerHTML = `
+            <div class="toolbar-grip"></div>
+            <div class="toolbar-title">Filter commands</div>
+        `;
+
+        const content = document.createElement('div');
+        content.className = 'toolbar-content';
+        content.innerHTML = `
+            <input type="text" class="toolbar-search" placeholder="Search commands in this panel..." aria-label="Search commands">
+            <div class="toolbar-chips">
+                <button type="button" class="chip chip-clear" title="Clear search">Clear</button>
+            </div>
+        `;
+
+        toolbar.appendChild(handle);
+        toolbar.appendChild(content);
+
+        // Insert toolbar at top of panel
+        panel.insertAdjacentElement('afterbegin', toolbar);
+
+        // Toggle open/close
+        handle.addEventListener('click', () => {
+            toolbar.classList.toggle('open');
+        });
+
+        // Search behavior confined to this panel
+        const searchInput = content.querySelector('.toolbar-search');
+        const clearBtn = content.querySelector('.chip-clear');
+        const cards = () => Array.from(panel.querySelectorAll('.command'));
+
+        function applyFilter() {
+            const q = searchInput.value.trim().toLowerCase();
+            cards().forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const match = text.includes(q);
+                card.style.display = match ? '' : 'none';
+            });
+        }
+
+        searchInput.addEventListener('input', applyFilter);
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            applyFilter();
+        });
+    });
+}
+
 function login() {
     // Redirect to Discord OAuth
     window.location.href = DISCORD_OAUTH_URL;
@@ -47,6 +106,87 @@ function logout() {
     localStorage.removeItem('discord_token');
     localStorage.removeItem('discord_user');
     updateUIForLoggedOutUser();
+}
+
+// Sort commands alphabetically within each commands panel
+function sortCommandLists() {
+    document.querySelectorAll('.commands-panel .command-list').forEach(list => {
+        const items = Array.from(list.children).filter(el => el.classList.contains('command'));
+        items.sort((a, b) => {
+            // Prefer text inside <code> if present
+            const aText = (a.querySelector('code')?.textContent || a.textContent || '').trim().toLowerCase();
+            const bText = (b.querySelector('code')?.textContent || b.textContent || '').trim().toLowerCase();
+            return aText.localeCompare(bText);
+        });
+        items.forEach(el => list.appendChild(el));
+    });
+}
+
+// Global filter bar: chips to switch panels + search across all panels
+function setupGlobalCommandsFilter() {
+    const container = document.getElementById('global-command-filter');
+    if (!container) return;
+
+    const chips = Array.from(container.querySelectorAll('.gcf-chip'));
+    const search = container.querySelector('#gcf-search');
+    const panels = Array.from(document.querySelectorAll('.commands-panel'));
+
+    function showOnlyPanel(sel) {
+        const target = document.querySelector(sel);
+        panels.forEach(p => { p.style.display = p === target ? '' : 'none'; });
+        // Clear search when switching category
+        if (search) search.value = '';
+        // Activate chip state
+        chips.forEach(c => c.classList.toggle('active', c.getAttribute('data-panel') === sel));
+        // Scroll into view if exists
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function clearPanelFilters() {
+        chips.forEach(c => c.classList.remove('active'));
+    }
+
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const sel = chip.getAttribute('data-panel');
+            showOnlyPanel(sel);
+        });
+    });
+
+    function applyGlobalSearch() {
+        const q = (search?.value || '').trim().toLowerCase();
+        if (!q) {
+            // If empty search, do not force-show all; respect active chip if any, else show all
+            const active = chips.find(c => c.classList.contains('active'));
+            if (active) {
+                showOnlyPanel(active.getAttribute('data-panel'));
+            } else {
+                panels.forEach(p => p.style.display = '');
+                panels.forEach(p => Array.from(p.querySelectorAll('.command')).forEach(card => card.style.display = ''));
+            }
+            return;
+        }
+
+        // Searching: show all panels, filter cards in each
+        clearPanelFilters();
+        panels.forEach(p => {
+            p.style.display = '';
+            const cards = Array.from(p.querySelectorAll('.command'));
+            let any = false;
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const match = text.includes(q);
+                card.style.display = match ? '' : 'none';
+                if (match) any = true;
+            });
+            // If no card matches in this panel, hide the whole panel for clarity
+            p.style.display = any ? '' : 'none';
+        });
+    }
+
+    if (search) {
+        search.addEventListener('input', applyGlobalSearch);
+    }
 }
 
 function updateUIForLoggedInUser(user) {

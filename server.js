@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const WEBSITE_VERSION = process.env.WEBSITE_VERSION || 'v2.1.5';
 
 // Middleware
 app.use(cors());
@@ -75,7 +76,7 @@ app.post('/api/update-stats', (req, res) => {
 
 // Simple health endpoint for uptime checks
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', port: PORT, time: new Date().toISOString() });
+    res.json({ status: 'ok', port: PORT, time: new Date().toISOString(), version: WEBSITE_VERSION, environment: process.env.NODE_ENV || 'development' });
 });
 
 // Discord OAuth2 callback
@@ -266,13 +267,23 @@ app.get('/api/health', (req, res) => {
     
     // If requesting JSON (API call)
     if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        const shardSnapshot = [{
+            id: 0,
+            status: 'operational',
+            uptime: uptimeFormatted,
+            latencyMs: botStats.ping,
+            servers: botStats.serverCount,
+            users: botStats.userCount,
+            updatedAt: new Date().toISOString()
+        }];
+
         return res.json({ 
             success: true,
             status: 'healthy',
             message: '🐾 Floofs Den API is purring along nicely!',
             server: {
                 name: 'Floofs Den API',
-                version: '1.0.0',
+                version: WEBSITE_VERSION,
                 uptime: uptimeFormatted,
                 environment: process.env.NODE_ENV || 'development'
             },
@@ -281,6 +292,7 @@ app.get('/api/health', (req, res) => {
                 auth: '/api/auth/discord',
                 health: '/api/health'
             },
+            shards: shardSnapshot,
             timestamp: new Date().toISOString(),
             cute_message: '✨ All systems floofy! ✨'
         });
@@ -524,7 +536,7 @@ app.get('/api/health', (req, res) => {
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Version</div>
-                    <div class="stat-value">v1.0.0</div>
+                    <div class="stat-value">${WEBSITE_VERSION}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Status</div>
