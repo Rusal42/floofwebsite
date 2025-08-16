@@ -6,8 +6,10 @@ const DISCORD_OAUTH_URL = `https://discord.com/api/oauth2/authorize?client_id=${
 // Bot invite URL with permissions
 const BOT_INVITE_URL = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&permissions=8&scope=bot`;
 
-// API Configuration (replace with your actual API endpoints)
-const API_BASE_URL = 'http://localhost:3000/api';
+// API Configuration (use relative path in production, localhost in development)
+const API_BASE_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3000/api' 
+    : '/api';
 
 // DOM Elements
 const loginBtn = document.getElementById('loginBtn');

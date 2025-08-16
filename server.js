@@ -35,6 +35,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+// API endpoint to get bot statistics
+app.get('/api/stats', (req, res) => {
+    res.json({
+        success: true,
+        data: botStats
+    });
+});
+
 // Discord OAuth2 callback
 app.post('/api/auth/discord', async (req, res) => {
     try {
