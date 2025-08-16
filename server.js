@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
@@ -17,6 +17,7 @@ app.use(express.static(path.join(__dirname)));
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-jwt-secret-change-this';
+const BOT_API_TOKEN = process.env.BOT_API_TOKEN; // used to authenticate bot -> website updates
 const DISCORD_API_BASE = 'https://discord.com/api/v10';
 
 // Bot Statistics (these would come from your bot's database in a real implementation)
@@ -41,6 +42,40 @@ app.get('/api/stats', (req, res) => {
         success: true,
         data: botStats
     });
+});
+
+// API endpoint to update bot statistics
+app.post('/api/update-stats', (req, res) => {
+    // simple header-based auth
+    const token = req.headers['x-bot-token'];
+    if (!BOT_API_TOKEN) {
+        return res.status(500).json({ success: false, error: 'Server BOT_API_TOKEN not configured' });
+    }
+    if (!token || token !== BOT_API_TOKEN) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    const { serverCount, userCount, commandsUsed, uptime, ping, timestamp } = req.body || {};
+
+    if (serverCount !== undefined) botStats.serverCount = serverCount;
+    if (userCount !== undefined) botStats.userCount = userCount;
+    if (commandsUsed !== undefined) botStats.commandsUsed = commandsUsed;
+    if (uptime !== undefined) botStats.uptime = uptime;
+    if (ping !== undefined) botStats.ping = ping;
+
+    // Update timestamp
+    botStats.lastUpdated = timestamp ? new Date(timestamp).toISOString() : new Date().toISOString();
+
+    return res.json({
+        success: true,
+        message: 'Stats updated successfully',
+        data: botStats
+    });
+});
+
+// Simple health endpoint for uptime checks
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', port: PORT, time: new Date().toISOString() });
 });
 
 // Discord OAuth2 callback
