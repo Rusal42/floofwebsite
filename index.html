@@ -124,7 +124,6 @@
                             <button class="gcf-chip" data-panel="#panel-roles">Roles</button>
                             <button class="gcf-chip" data-panel="#panel-afk">AFK</button>
                             <button class="gcf-chip" data-panel="#panel-important">Important</button>
-                            <button class="gcf-chip" data-panel="#panel-legacy">Legacy</button>
                             <button class="gcf-chip" data-panel="#panel-setup">Configuration</button>
                         </div>
                     </div>
@@ -166,22 +165,23 @@
                     <p>Powerful moderation features including setup commands, role management, and server configuration.</p>
                     <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-moderation" aria-expanded="false" aria-controls="panel-moderation" style="margin-top:10px;">View Commands</button>
                     <div id="panel-moderation" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="section-description" style="margin-bottom:8px;">Moderation commands:</div>
+                        <div class="section-description" style="margin-bottom:8px;">Moderation commands (enforced by Discord permissions):</div>
                         <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-                            <div class="command"><code>%ban @user [reason]</code> <span>Ban a user from the server.</span></div>
-                            <div class="command"><code>%kick @user [reason]</code> <span>Kick a user from the server.</span></div>
-                            <div class="command"><code>%timeout @user [duration] [reason]</code> <span>Timeout a user for a period.</span></div>
-                            <div class="command"><code>%warn @user [reason]</code> <span>Warn a user; logs to infractions.</span></div>
-                            <div class="command"><code>%infractions @user</code> <span>View a user's infractions.</span></div>
-                            <div class="command"><code>%clearinfractions @user</code> <span>Clear a user's infractions.</span></div>
-                            <div class="command"><code>%slowmode [seconds]</code> <span>Set channel slowmode.</span></div>
-                            <div class="command"><code>%purge [1-100]</code> <span>Bulk delete recent messages in the current channel.</span></div>
-                            <div class="command"><code>%ticket</code> <span>Ticket system menu and actions.</span></div>
-                            <div class="command"><code>%advancedlog</code> <span>Configure/view advanced logging.</span></div>
-                            <div class="command"><code>%antispam</code> <span>Anti-spam controls and toggles.</span></div>
+                            <div class="command"><code>%ban @user [reason]</code> <span>Ban a user from the server. <strong>Requires:</strong> Ban Members</span></div>
+                            <div class="command"><code>%kick @user [reason]</code> <span>Kick a user from the server. <strong>Requires:</strong> Kick Members</span></div>
+                            <div class="command"><code>%timeout @user [duration] [reason]</code> <span>Timeout a user. <strong>Requires:</strong> Moderate Members</span></div>
+                            <div class="command"><code>%warn @user [reason]</code> <span>Warn a user; logs to infractions. <strong>Requires:</strong> Manage Messages</span></div>
+                            <div class="command"><code>%infractions @user</code> <span>View a user's infractions. <strong>Requires:</strong> Moderator</span></div>
+                            <div class="command"><code>%clearinfractions @user</code> <span>Clear a user's infractions. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%slowmode [seconds]</code> <span>Set channel slowmode. <strong>Requires:</strong> Manage Channels</span></div>
+                            <div class="command"><code>%purge [1-100]</code> <span>Bulk delete recent messages. <strong>Requires:</strong> Manage Messages</span></div>
+                            <div class="command"><code>%ticket</code> <span>Ticket system menu and actions. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%advancedlog</code> <span>Advanced logging configuration. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%antispam</code> <span>Anti-spam controls and toggles. <strong>Requires:</strong> Manage Server</span></div>
                             <div class="command"><code>%whois @user</code> <span>View detailed user info.</span></div>
                             <div class="command"><code>%av @user</code> <span>Show user's avatar.</span></div>
                         </div>
+                        <p class="muted" style="margin-top:8px;">Only members with the listed Discord permissions can execute these actions. The bot also needs these permissions in the server/roles.</p>
                     </div>
                 </div>
                 
@@ -279,17 +279,7 @@
                     </div>
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">📼</div>
-                    <h3>Legacy</h3>
-                    <p>Older consolidated commands.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-legacy" aria-expanded="false" aria-controls="panel-legacy" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-legacy" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-                            <div class="command"><code>%fun-commands</code></div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="feature-card">
                     <div class="feature-icon">🔧</div>
@@ -297,13 +287,20 @@
                     <p>Simple setup process with helpful guides and commands to get your server running quickly.</p>
                     <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-setup" aria-expanded="false" aria-controls="panel-setup" style="margin-top:10px;">View Commands</button>
                     <div id="panel-setup" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="section-description" style="margin-bottom:8px;">Configuration commands:</div>
-                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-                            <div class="command"><code>%config</code> <span>Server setup menu including channels and settings.</span></div>
-                            <div class="command"><code>%prefix [newPrefix]</code> <span>View or change the bot's prefix.</span></div>
-                            <div class="command"><code>%vcconfig</code> <span>Configure temporary voice channels.</span></div>
-                            <div class="command"><code>%setup</code> <span>Guided setup for moderation/tickets/logging.</span></div>
+                        <div class="section-description" style="margin-bottom:8px;">Admin & Configuration (Manage Server required):</div>
+                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                            <div class="command"><code>%config modlog #channel</code> <span>Set the channel for moderation logs. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config roles #channel</code> <span>Set the role selection/menu channel. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config welcome #channel</code> <span>Set the welcome messages channel. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config gambling #channel</code> <span>Restrict gambling to a specific channel. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config changelog #channel</code> <span>Set the changelog announcements channel. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config prefix [symbol]</code> <span>Change the bot command prefix. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config view</code> <span>View all current server settings.</span></div>
+                            <div class="command"><code>%config reset</code> <span>Reset configuration to defaults. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%vcconfig</code> <span>Configure temporary voice channels. <strong>Requires:</strong> Manage Channels</span></div>
+                            <div class="command"><code>%setup</code> <span>Guided setup for moderation, logging, and tickets. <strong>Requires:</strong> Manage Server</span></div>
                         </div>
+                        <p class="muted" style="margin-top:8px;">All admin/config commands validate permissions. Non-admins cannot change server settings.</p>
                     </div>
                 </div>
                 
