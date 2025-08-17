@@ -370,7 +370,7 @@ body {
 
 /* Hero Section */
 .hero {
-    min-height: 100vh;
+    min-height: 110vh;
     display: flex;
     align-items: center;
     position: relative;
@@ -551,8 +551,8 @@ body {
 }
 
 .floof-avatar {
-    width: 200px;
-    height: 200px;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
     border: 6px solid white;
     box-shadow: 0 20px 40px rgba(255, 158, 199, 0.3);
@@ -561,8 +561,8 @@ body {
 }
 
 .floof-avatar-fallback {
-    width: 200px;
-    height: 200px;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
     border: 6px solid white;
     box-shadow: 0 20px 40px rgba(255, 158, 199, 0.3);
@@ -755,8 +755,8 @@ body {
 
     .floof-avatar,
     .floof-avatar-fallback {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
     }
 
     .btn {
