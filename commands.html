@@ -252,6 +252,8 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     .cx-meta { display:flex; flex-wrap:wrap; gap:6px; font-size:12px; color:var(--muted-color); }
     .cx-badge { padding:2px 8px; border-radius:999px; border:1px solid var(--border-color); background: var(--bg-color); font-weight:600; font-size:11px; }
     .cx-badge.admin { background:#e3d1ff20; border-color:#b18cff60; color:#b18cff; }
+    .cx-badge.mod { background:#ffd9a820; border-color:#ffb34760; color:#ff9a00; }
+    .cx-badge.perm { background:#90cdf420; border-color:#63b3ed60; color:#63b3ed; }
     .code-block { white-space:pre-wrap; background: var(--surface-color); border:1px solid var(--border-color); border-radius:10px; padding:10px; }
   </style>
   <script>
@@ -272,32 +274,32 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'beatup [@user]', desc:'Fun combat-themed coin interaction.', cat:'gambling' },
 
       // Moderation / Configuration
-      { name:'config modlog #channel', desc:'Set moderation logs channel.', cat:'configuration', admin:true },
-      { name:'config roles #channel', desc:'Set role selection/menu channel.', cat:'configuration', admin:true },
-      { name:'config welcome #channel', desc:'Set welcome channel.', cat:'configuration', admin:true },
-      { name:'config gambling #channel', desc:'Restrict gambling to a channel.', cat:'configuration', admin:true },
-      { name:'config changelog #channel', desc:'Set changelog announcements channel.', cat:'configuration', admin:true },
-      { name:'config ruleschannel #channel', desc:'Default channel for rules menu.', cat:'configuration', admin:true },
-      { name:'config colorschannel #channel', desc:'Default channel for color menu.', cat:'configuration', admin:true },
-      { name:'config rulescontent ...', desc:'Customize rules title/description/footer/button/role (use \\n for new lines).', cat:'configuration', admin:true },
-      { name:'config colorcontent ...', desc:'Customize color menu title/description.', cat:'configuration', admin:true },
-      { name:'config rulesmenu [#channel]', desc:'Post rules/agree menu (uses defaults).', cat:'configuration', admin:true },
-      { name:'config colormenu [#channel]', desc:'Auto-create color roles if missing; post color selector.', cat:'configuration', admin:true },
-      { name:'config view', desc:'View current configuration.', cat:'configuration', admin:true },
-      { name:'config reset [setting|all]', desc:'Reset a specific setting or all.', cat:'configuration', admin:true },
+      { name:'config modlog #channel', desc:'Set moderation logs channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config roles #channel', desc:'Set role selection/menu channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config welcome #channel', desc:'Set welcome channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config gambling #channel', desc:'Restrict gambling to a channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config changelog #channel', desc:'Set changelog announcements channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config ruleschannel #channel', desc:'Default channel for rules menu.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config colorschannel #channel', desc:'Default channel for color menu.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config rulescontent ...', desc:'Customize rules title/description/footer/button/role (use \\n for new lines).', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config colorcontent ...', desc:'Customize color menu title/description.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config rulesmenu [#channel]', desc:'Post rules/agree menu (uses defaults).', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config colormenu [#channel]', desc:'Auto-create color roles if missing; post color selector.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config view', desc:'View all current settings.', cat:'configuration', roles:['Admin'] },
+      { name:'config reset [setting|all]', desc:'Reset a specific setting or all.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
 
       // Moderation
-      { name:'ban @user [reason]', desc:'Ban a user. Requires: Ban Members.', cat:'moderation' },
-      { name:'kick @user [reason]', desc:'Kick a user. Requires: Kick Members.', cat:'moderation' },
-      { name:'timeout @user [duration] [reason]', desc:'Timeout a user. Requires: Moderate Members.', cat:'moderation' },
-      { name:'warn @user [reason]', desc:'Warn a user; logs to infractions. Requires: Manage Messages.', cat:'moderation' },
-      { name:'infractions @user', desc:'View a user\'s infractions.', cat:'moderation' },
-      { name:'clearinfractions @user', desc:'Clear user infractions. Requires: Administrator.', cat:'moderation', admin:true },
-      { name:'slowmode [seconds]', desc:'Set channel slowmode. Requires: Manage Channels.', cat:'moderation' },
-      { name:'purge [1-100]', desc:'Bulk delete recent messages. Requires: Manage Messages.', cat:'moderation' },
-      { name:'ticket', desc:'Ticket system menu and actions. Requires: Manage Server.', cat:'important' },
-      { name:'advancedlog', desc:'Advanced logging configuration. Requires: Manage Server.', cat:'important' },
-      { name:'createlevelroles [start] [end]', desc:'Create level roles automatically. Requires: Administrator.', cat:'moderation', admin:true },
+      { name:'ban @user [reason]', desc:'Ban a user.', cat:'moderation', roles:['Admin'], perms:['Ban Members'] },
+      { name:'kick @user [reason]', desc:'Kick a user.', cat:'moderation', roles:['Admin'], perms:['Kick Members'] },
+      { name:'timeout @user [duration] [reason]', desc:'Timeout a user.', cat:'moderation', roles:['Mod'], perms:['Moderate Members'] },
+      { name:'warn @user [reason]', desc:'Warn a user; logs to infractions.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'] },
+      { name:'infractions @user', desc:'View a user\'s infractions.', cat:'moderation', roles:['Mod'] },
+      { name:'clearinfractions @user', desc:'Clear a user\'s infractions.', cat:'moderation', roles:['Admin'] },
+      { name:'slowmode [seconds]', desc:'Set channel slowmode.', cat:'moderation', roles:['Mod'], perms:['Manage Channels'] },
+      { name:'purge [1-100]', desc:'Bulk delete recent messages.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'] },
+      { name:'ticket', desc:'Ticket system menu and actions.', cat:'important', roles:['Mod'], perms:['Manage Server'] },
+      { name:'advancedlog', desc:'Advanced logging configuration.', cat:'important', roles:['Mod'], perms:['Manage Server'] },
+      { name:'createlevelroles [start] [end]', desc:'Create level roles automatically.', cat:'moderation', roles:['Admin'] },
 
       // Fun
       { name:'8ball', desc:'Ask the magic 8ball.', cat:'fun' },
@@ -318,19 +320,19 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
 
       // General
       { name:'help', desc:'Show help.', cat:'general' },
-      { name:'snipe', desc:'Retrieve last deleted message in channel.', cat:'general' },
-      { name:'bulksnipe', desc:'Show list of recently deleted messages.', cat:'general' },
-      { name:'clearsnipe', desc:'Clear snipe cache.', cat:'general' },
+      { name:'snipe', desc:'Retrieve last deleted message in channel.', cat:'general', perms:['Manage Messages'] },
+      { name:'bulksnipe', desc:'Show list of recently deleted messages.', cat:'general', roles:['Mod'] },
+      { name:'clearsnipe', desc:'Clear snipe cache.', cat:'general', roles:['Mod'] },
       { name:'remind', desc:'Set a reminder.', cat:'general' },
-      { name:'revive', desc:'Ping a revive role with a question.', cat:'general' },
-      { name:'voice', desc:'Manage temporary voice channels.', cat:'general' },
-      { name:'analytics', desc:'Server analytics.', cat:'important' },
+      { name:'revive', desc:'Ping a revive role with a question.', cat:'general', perms:['Manage Messages'] },
+      { name:'voice', desc:'Manage temporary voice channels.', cat:'general', roles:['Mod'], perms:['Manage Channels'] },
+      { name:'analytics', desc:'Server analytics.', cat:'important', roles:['Mod'] },
 
       // Roles
-      { name:'createrole [name]', desc:'Create a role.', cat:'roles' },
-      { name:'deleterole [name]', desc:'Delete a role.', cat:'roles' },
-      { name:'giverole @user [role]', desc:'Give a role to a user.', cat:'roles' },
-      { name:'takerole @user [role]', desc:'Remove a user\'s role.', cat:'roles' },
+      { name:'createrole [name]', desc:'Create a role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
+      { name:'deleterole [name]', desc:'Delete a role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
+      { name:'giverole @user [role]', desc:'Give a role to a user.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
+      { name:'takerole @user [role]', desc:'Remove a user\'s role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
       { name:'listroles', desc:'List all roles.', cat:'roles' },
 
       // AFK
@@ -356,7 +358,22 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
         meta.className = 'cx-meta';
         const cat = document.createElement('span'); cat.className='cx-badge'; cat.textContent = c.cat;
         meta.appendChild(cat);
-        if(c.admin){ const adm=document.createElement('span'); adm.className='cx-badge admin'; adm.textContent='Admin'; meta.appendChild(adm); }
+        if(Array.isArray(c.roles)){
+          for(const r of c.roles){
+            const role = document.createElement('span');
+            role.className = 'cx-badge ' + (r==='Admin' ? 'admin' : 'mod');
+            role.textContent = r;
+            meta.appendChild(role);
+          }
+        }
+        if(Array.isArray(c.perms)){
+          for(const p of c.perms){
+            const perm = document.createElement('span');
+            perm.className = 'cx-badge perm';
+            perm.textContent = p;
+            meta.appendChild(perm);
+          }
+        }
         card.appendChild(title); card.appendChild(desc); card.appendChild(meta);
         grid.appendChild(card);
       }
