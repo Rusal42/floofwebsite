@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Floofs Den — Commands & Help</title>
+  <meta name="description" content="Full commands and setup help for Floofs Den Discord bot." />
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="nav-logo">🐾</span>
+        <span class="nav-title">Floofs Den</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/index.html#home" class="nav-link">Home</a>
+        <a href="/index.html#features" class="nav-link">Features</a>
+        <a href="/commands.html" class="nav-link active">Commands</a>
+        <a href="/status.html" class="nav-link">Status</a>
+        <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="nav-link support-link">
+          <i class="fab fa-discord"></i> Support
+        </a>
+      </div>
+      <div class="nav-toggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-hero">
+    <div class="container">
+      <h1 class="hero-title">Commands & Help</h1>
+      <p class="hero-description">Clear, step-by-step usage for admins and users.</p>
+      <div class="muted" style="margin-top:8px">Legend: <span class="badge badge-admin">Admin</span> requires Administrator permission</div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:24px; padding-bottom:48px">
+    <!-- Commands Explorer -->
+    <section id="explorer" class="doc-section" aria-label="Commands Explorer">
+      <h2 style="display:flex; align-items:center; gap:10px;">Commands
+        <small class="muted" style="font-weight:400">Explore by category or search</small>
+      </h2>
+      <div class="cx-toolbar">
+        <div class="cx-chips" role="tablist" aria-label="Categories">
+          <button class="cx-chip active" data-category="all">All</button>
+          <button class="cx-chip" data-category="gambling">Gambling</button>
+          <button class="cx-chip" data-category="moderation">Moderation</button>
+          <button class="cx-chip" data-category="fun">Fun</button>
+          <button class="cx-chip" data-category="general">General</button>
+          <button class="cx-chip" data-category="roles">Roles</button>
+          <button class="cx-chip" data-category="afk">AFK</button>
+          <button class="cx-chip" data-category="important">Important</button>
+          <button class="cx-chip" data-category="configuration">Configuration</button>
+        </div>
+        <div class="cx-search">
+          <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
+        </div>
+      </div>
+      <div id="cx-grid" class="cx-grid" aria-live="polite"></div>
+    </section>
+    <!-- Quick Help -->
+    <section id="help" class="doc-section">
+      <h2>Help</h2>
+      <div class="doc-block">
+        <h3>Prefix</h3>
+        <p>
+          Floof supports both a server default prefix and per-user prefixes.
+        </p>
+        <ul>
+          <li><code>%help</code> — Show the help menu with your current prefix.</li>
+          <li><strong>Per-user prefix:</strong> You can have your own prefix that only you can use. Ask an admin to set it via <code>%config userprefix @you !</code>. After that, you can use <code>!help</code>, <code>!balance</code>, etc., without changing the server default.</li>
+          <li><strong>Server default prefix (Admin):</strong> <code>%config prefix ?</code> changes the default prefix for everyone.</li>
+        </ul>
+        <p class="muted">Tip: You can always mention the bot to get help, e.g. <code>@Floof help</code>.</p>
+      </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section id="getting-started" class="doc-section">
+      <h2>Getting Started</h2>
+      <ol>
+        <li>Invite the bot with the recommended permissions.</li>
+        <li>Run <code>%config view</code> to see current settings. <span class="badge badge-admin">Admin</span></li>
+        <li>Set channels you need (modlog, welcome, gambling, changelog). <span class="badge badge-admin">Admin</span></li>
+        <li>Post menus if desired: rules menu and color roles. <span class="badge badge-admin">Admin</span></li>
+      </ol>
+    </section>
+
+    <!-- Configuration (Admin) -->
+    <section id="configuration" class="doc-section">
+      <h2>Configuration <span class="badge badge-admin">Admin</span></h2>
+      <div class="doc-grid">
+        <div class="doc-card"><code>%config modlog #channel</code><p>Set moderation logs destination.</p></div>
+        <div class="doc-card"><code>%config roles #channel</code><p>Set role selection/menu channel.</p></div>
+        <div class="doc-card"><code>%config welcome #channel</code><p>Set welcome messages channel.</p></div>
+        <div class="doc-card"><code>%config gambling #channel</code><p>Restrict gambling to a channel.</p></div>
+        <div class="doc-card"><code>%config changelog #channel</code><p>Set changelog announcements channel.</p></div>
+        <div class="doc-card"><code>%config rulesmenu [#channel] [RoleName]</code><p>Post the rules/agree menu. Optional: give RoleName on agree.</p></div>
+        <div class="doc-card"><code>%config colormenu [#channel]</code><p>Post the color roles selector menu.</p></div>
+        <div class="doc-card"><code>%config prefix [symbol]</code><p>Change server default prefix (e.g. <code>!</code>).</p></div>
+        <div class="doc-card"><code>%config userprefix @user [symbol]</code><p>Set a personal prefix for a user.</p></div>
+        <div class="doc-card"><code>%config view</code><p>View all current settings.</p></div>
+        <div class="doc-card"><code>%config reset [setting|all]</code><p>Reset a specific setting or all.</p></div>
+      </div>
+      <p class="muted">All config commands require Administrator and validate permissions.</p>
+    </section>
+
+    <!-- Menus -->
+    <section id="menus" class="doc-section">
+      <h2>Menus</h2>
+      <div class="doc-block">
+        <h3>Rules / Agree Menu <span class="badge badge-admin">Admin</span></h3>
+        <p>Use <code>%config rulesmenu [#channel]</code> to post. Members click the button to agree; optional auto-role if configured via <code>%config rulescontent role:"RoleName"</code>.</p>
+        <ul>
+          <li>Bot needs: <em>Send Messages</em>, <em>Embed Links</em>, <em>Add Reactions</em>, <em>Manage Roles</em> (if auto-role).</li>
+          <li>Common errors: role hierarchy (bot must be above the role), missing permissions.</li>
+        </ul>
+      </div>
+      <div class="doc-block">
+        <h3>Color Roles Menu <span class="badge badge-admin">Admin</span></h3>
+        <p>Use <code>%config colormenu [#channel]</code> to post a color selector. Members pick a color; bot assigns the corresponding role. If color roles don’t exist yet, the bot will create the set automatically.</p>
+        <ul>
+          <li>Bot needs <em>Manage Roles</em>, and its top role must be above the color roles.</li>
+          <li>Roles are created once on first run; subsequent runs reuse them.</li>
+        </ul>
+      </div>
+      <div class="doc-block">
+        <h3>Custom Rules Content <span class="badge badge-admin">Admin</span></h3>
+        <p>Customize the rules embed text, footer, button label, and assign role via quoted key-value pairs. <strong>Newlines:</strong> use <code>\n</code> inside quotes.</p>
+        <pre class="code-block"><code>%config rulescontent title:"Server Rules"
+description:"1. Be respectful\n2. No spam\n3. Follow Discord ToS"
+footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
+        <ul>
+          <li>Set defaults: <code>%config ruleschannel #rules</code>. Post using: <code>%config rulesmenu</code>.</li>
+          <li>Update any single field at any time (e.g., just the footer or button label).</li>
+          <li>Reset content: <code>%config reset rulescontent</code></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Leveling -->
+    <section id="leveling" class="doc-section">
+      <h2>Leveling</h2>
+      <div class="doc-grid">
+        <div class="doc-card"><code>%levels</code><p>Show your XP/level progress.</p></div>
+        <div class="doc-card"><code>%levels @user</code><p>View another user’s progress.</p></div>
+        <div class="doc-card"><code>%levels leaderboard</code><p>Top XP leaderboard.</p></div>
+        <div class="doc-card"><code>%levels config</code> <span class="badge badge-admin">Admin</span><p>Configure leveling (channels, rates, rewards).</p></div>
+        <div class="doc-card"><code>%levels reset @user</code> <span class="badge badge-admin">Admin</span><p>Reset a user’s XP/level.</p></div>
+        <div class="doc-card"><code>%levels reset all</code> <span class="badge badge-admin">Admin</span><p>Reset everyone’s XP/levels.</p></div>
+      </div>
+      <p class="muted">Spam protection prevents abuse; XP is rate-limited.</p>
+    </section>
+
+    <!-- Changelogs -->
+    <section id="changelogs" class="doc-section">
+      <h2>Changelogs</h2>
+      <p>Configure: <code>%config changelog #channel</code> <span class="badge badge-admin">Admin</span>. Once set, owners can post formatted changelogs via the bot’s changelog command suite.</p>
+    </section>
+
+    <!-- Roles -->
+    <section id="roles" class="doc-section">
+      <h2>Roles</h2>
+      <div class="doc-grid">
+        <div class="doc-card"><code>%createrole [name]</code><p>Create a new role.</p></div>
+        <div class="doc-card"><code>%deleterole [name]</code><p>Delete a role.</p></div>
+        <div class="doc-card"><code>%giverole @user [role]</code><p>Give a user a role.</p></div>
+        <div class="doc-card"><code>%takerole @user [role]</code><p>Remove a role from a user.</p></div>
+        <div class="doc-card"><code>%listroles</code><p>List all roles.</p></div>
+      </div>
+      <p class="muted">For role changes, the bot’s top role must be higher than the target role.</p>
+    </section>
+
+    <!-- Troubleshooting -->
+    <section id="troubleshooting" class="doc-section">
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>Bot can’t post:</strong> Check channel permissions (Send Messages, Embed Links).</li>
+        <li><strong>Role not assigned:</strong> Ensure bot role is above the target role and bot has Manage Roles.</li>
+        <li><strong>Commands not responding:</strong> Confirm prefix (server default or your per-user prefix) and try <code>@Floof help</code>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-brand"><span class="footer-logo">🐾</span><span class="footer-title">Floofs Den</span></div>
+          <p>Making Discord servers more fun, one command at a time.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="/index.html#features">Features</a></li>
+            <li><a href="/commands.html">Commands</a></li>
+            <li><a href="/status.html">API Status</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="https://discord.gg/Acpx662Eyg">Discord Server</a></li>
+            <li><a href="mailto:support@floofbot.com">Contact Us</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Connect</h4>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Floofs Den. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+  <style>
+    /* lightweight doc styles that reuse your theme */
+    .page-hero { padding: 64px 0 24px; background: linear-gradient(180deg, var(--bg-gradient-start), transparent); }
+    .doc-section { margin-bottom: 36px; }
+    .doc-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .doc-card { border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; background: var(--surface-color); }
+    .doc-block { border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; background: var(--surface-color); margin-bottom: 12px; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; margin-left: 6px; }
+    .badge-admin { background: #e3d1ff20; color: #b18cff; border: 1px solid #b18cff60; }
+    .doc-card code, .doc-block code { background: var(--chip-bg, #00000010); padding: 2px 6px; border-radius: 8px; }
+    /* Explorer */
+    .cx-toolbar { display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; }
+    .cx-chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width: thin; }
+    .cx-chip { white-space:nowrap; padding:6px 12px; border-radius:999px; border:1px solid var(--border-color); background: var(--surface-color); color: var(--text-color); cursor:pointer; }
+    .cx-chip.active { background: linear-gradient(180deg, #9b8cff33, #9b8cff22); border-color:#b18cff66; }
+    .cx-search input { padding:8px 10px; border-radius:10px; border:1px solid var(--border-color); background: var(--surface-color); color: var(--text-color); min-width:220px; }
+    .cx-grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .cx-card { border:1px solid var(--border-color); border-radius:12px; background: var(--surface-color); padding:12px; display:flex; flex-direction:column; gap:8px; }
+    .cx-card h4 { margin:0; font-size:16px; }
+    .cx-meta { display:flex; flex-wrap:wrap; gap:6px; font-size:12px; color:var(--muted-color); }
+    .cx-badge { padding:2px 8px; border-radius:999px; border:1px solid var(--border-color); background: var(--bg-color); font-weight:600; font-size:11px; }
+    .cx-badge.admin { background:#e3d1ff20; border-color:#b18cff60; color:#b18cff; }
+    .code-block { white-space:pre-wrap; background: var(--surface-color); border:1px solid var(--border-color); border-radius:10px; padding:10px; }
+  </style>
+  <script>
+    // Commands data (concise; expand as needed)
+    const COMMANDS = [
+      // Gambling
+      { name:'balance', desc:'View your current coins.', cat:'gambling' },
+      { name:'beg', desc:'Chance to receive a small coin reward.', cat:'gambling' },
+      { name:'work', desc:'Earn coins on a cooldown.', cat:'gambling' },
+      { name:'slots [amount]', desc:'Slot machine with wins/losses based on symbols.', cat:'gambling' },
+      { name:'coinflip [amount] [heads|tails]', desc:'50/50 coin toss bet.', cat:'gambling' },
+      { name:'blackjack [amount]', desc:'Play blackjack vs the dealer.', cat:'gambling' },
+      { name:'roulette [amount] [color|number]', desc:'Bet on red/black/green or a number.', cat:'gambling' },
+      { name:'donate @user [amount]', desc:'Send coins to another user.', cat:'gambling' },
+      { name:'leaderboard', desc:'See top balances.', cat:'gambling' },
+      { name:'levels', desc:'Check XP/leveling progress.', cat:'gambling' },
+      { name:'release', desc:'Claim periodic release rewards.', cat:'gambling' },
+      { name:'beatup [@user]', desc:'Fun combat-themed coin interaction.', cat:'gambling' },
+
+      // Moderation / Configuration
+      { name:'config modlog #channel', desc:'Set moderation logs channel.', cat:'configuration', admin:true },
+      { name:'config roles #channel', desc:'Set role selection/menu channel.', cat:'configuration', admin:true },
+      { name:'config welcome #channel', desc:'Set welcome channel.', cat:'configuration', admin:true },
+      { name:'config gambling #channel', desc:'Restrict gambling to a channel.', cat:'configuration', admin:true },
+      { name:'config changelog #channel', desc:'Set changelog announcements channel.', cat:'configuration', admin:true },
+      { name:'config ruleschannel #channel', desc:'Default channel for rules menu.', cat:'configuration', admin:true },
+      { name:'config colorschannel #channel', desc:'Default channel for color menu.', cat:'configuration', admin:true },
+      { name:'config rulescontent ...', desc:'Customize rules title/description/footer/button/role (use \\n for new lines).', cat:'configuration', admin:true },
+      { name:'config colorcontent ...', desc:'Customize color menu title/description.', cat:'configuration', admin:true },
+      { name:'config rulesmenu [#channel]', desc:'Post rules/agree menu (uses defaults).', cat:'configuration', admin:true },
+      { name:'config colormenu [#channel]', desc:'Auto-create color roles if missing; post color selector.', cat:'configuration', admin:true },
+      { name:'config view', desc:'View current configuration.', cat:'configuration', admin:true },
+      { name:'config reset [setting|all]', desc:'Reset a specific setting or all.', cat:'configuration', admin:true },
+
+      // Moderation
+      { name:'ban @user [reason]', desc:'Ban a user. Requires: Ban Members.', cat:'moderation' },
+      { name:'kick @user [reason]', desc:'Kick a user. Requires: Kick Members.', cat:'moderation' },
+      { name:'timeout @user [duration] [reason]', desc:'Timeout a user. Requires: Moderate Members.', cat:'moderation' },
+      { name:'warn @user [reason]', desc:'Warn a user; logs to infractions. Requires: Manage Messages.', cat:'moderation' },
+      { name:'infractions @user', desc:'View a user\'s infractions.', cat:'moderation' },
+      { name:'clearinfractions @user', desc:'Clear user infractions. Requires: Administrator.', cat:'moderation', admin:true },
+      { name:'slowmode [seconds]', desc:'Set channel slowmode. Requires: Manage Channels.', cat:'moderation' },
+      { name:'purge [1-100]', desc:'Bulk delete recent messages. Requires: Manage Messages.', cat:'moderation' },
+      { name:'ticket', desc:'Ticket system menu and actions. Requires: Manage Server.', cat:'important' },
+      { name:'advancedlog', desc:'Advanced logging configuration. Requires: Manage Server.', cat:'important' },
+      { name:'createlevelroles [start] [end]', desc:'Create level roles automatically. Requires: Administrator.', cat:'moderation', admin:true },
+
+      // Fun
+      { name:'8ball', desc:'Ask the magic 8ball.', cat:'fun' },
+      { name:'bite', desc:'Bite another user (fun).', cat:'fun' },
+      { name:'blush', desc:'Blush at someone.', cat:'fun' },
+      { name:'cat', desc:'Random cat image.', cat:'fun' },
+      { name:'dance', desc:'Dance!', cat:'fun' },
+      { name:'highfive', desc:'Give a high five.', cat:'fun' },
+      { name:'hug', desc:'Give a hug.', cat:'fun' },
+      { name:'joke', desc:'Tell a joke.', cat:'fun' },
+      { name:'kiss', desc:'Give a kiss.', cat:'fun' },
+      { name:'pat', desc:'Pat someone.', cat:'fun' },
+      { name:'poll', desc:'Create a poll.', cat:'fun' },
+      { name:'roll', desc:'Roll dice.', cat:'fun' },
+      { name:'shoot', desc:'Shoot (fun).', cat:'fun' },
+      { name:'slap', desc:'Slap (fun).', cat:'fun' },
+      { name:'wave', desc:'Wave!', cat:'fun' },
+
+      // General
+      { name:'help', desc:'Show help.', cat:'general' },
+      { name:'snipe', desc:'Retrieve last deleted message in channel.', cat:'general' },
+      { name:'bulksnipe', desc:'Show list of recently deleted messages.', cat:'general' },
+      { name:'clearsnipe', desc:'Clear snipe cache.', cat:'general' },
+      { name:'remind', desc:'Set a reminder.', cat:'general' },
+      { name:'revive', desc:'Ping a revive role with a question.', cat:'general' },
+      { name:'voice', desc:'Manage temporary voice channels.', cat:'general' },
+      { name:'analytics', desc:'Server analytics.', cat:'important' },
+
+      // Roles
+      { name:'createrole [name]', desc:'Create a role.', cat:'roles' },
+      { name:'deleterole [name]', desc:'Delete a role.', cat:'roles' },
+      { name:'giverole @user [role]', desc:'Give a role to a user.', cat:'roles' },
+      { name:'takerole @user [role]', desc:'Remove a user\'s role.', cat:'roles' },
+      { name:'listroles', desc:'List all roles.', cat:'roles' },
+
+      // AFK
+      { name:'afk [reason]', desc:'Set your AFK status.', cat:'afk' },
+    ];
+
+    const grid = document.getElementById('cx-grid');
+    const chips = Array.from(document.querySelectorAll('.cx-chip'));
+    const search = document.getElementById('cx-search');
+
+    function render(filterCat='all', query=''){
+      grid.innerHTML = '';
+      const q = query.trim().toLowerCase();
+      const items = COMMANDS.filter(c => (filterCat==='all' || c.cat===filterCat) && (!q || (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q))));
+      for(const c of items){
+        const card = document.createElement('div');
+        card.className = 'cx-card';
+        const title = document.createElement('h4');
+        title.textContent = c.name.startsWith('%') ? c.name : `%${c.name}`;
+        const desc = document.createElement('div');
+        desc.textContent = c.desc;
+        const meta = document.createElement('div');
+        meta.className = 'cx-meta';
+        const cat = document.createElement('span'); cat.className='cx-badge'; cat.textContent = c.cat;
+        meta.appendChild(cat);
+        if(c.admin){ const adm=document.createElement('span'); adm.className='cx-badge admin'; adm.textContent='Admin'; meta.appendChild(adm); }
+        card.appendChild(title); card.appendChild(desc); card.appendChild(meta);
+        grid.appendChild(card);
+      }
+      if(items.length===0){
+        const empty = document.createElement('div');
+        empty.className='muted';
+        empty.textContent='No commands match your filters.';
+        grid.appendChild(empty);
+      }
+    }
+
+    chips.forEach(ch => ch.addEventListener('click', () => {
+      chips.forEach(x => x.classList.remove('active'));
+      ch.classList.add('active');
+      render(ch.dataset.category, search.value);
+    }));
+    search.addEventListener('input', () => {
+      const active = document.querySelector('.cx-chip.active');
+      render(active?.dataset.category || 'all', search.value);
+    });
+    render();
+  </script>
+</body>
+</html>

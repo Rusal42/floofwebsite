@@ -30,6 +30,7 @@
             <div class="nav-menu">
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#features" class="nav-link">Features</a>
+                <a href="/commands.html" class="nav-link">Commands</a>
                 <a href="/status.html" class="nav-link">Status</a>
                 <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="nav-link support-link">
                     <i class="fab fa-discord"></i> Support
@@ -72,6 +73,10 @@
                         <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="btn btn-support">
                             <i class="fab fa-discord"></i>
                             Support Server
+                        </a>
+                        <a href="/commands.html" class="btn btn-secondary">
+                            <i class="fas fa-terminal"></i>
+                            Commands
                         </a>
                     </div>
                 </div>
@@ -178,6 +183,7 @@
                             <div class="command"><code>%ticket</code> <span>Ticket system menu and actions. <strong>Requires:</strong> Manage Server</span></div>
                             <div class="command"><code>%advancedlog</code> <span>Advanced logging configuration. <strong>Requires:</strong> Manage Server</span></div>
                             <div class="command"><code>%antispam</code> <span>Anti-spam controls and toggles. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%createlevelroles [start] [end]</code> <span>Create level roles automatically. <strong>Requires:</strong> Administrator</span></div>
                             <div class="command"><code>%whois @user</code> <span>View detailed user info.</span></div>
                             <div class="command"><code>%av @user</code> <span>Show user's avatar.</span></div>
                         </div>
@@ -287,20 +293,59 @@
                     <p>Simple setup process with helpful guides and commands to get your server running quickly.</p>
                     <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-setup" aria-expanded="false" aria-controls="panel-setup" style="margin-top:10px;">View Commands</button>
                     <div id="panel-setup" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="section-description" style="margin-bottom:8px;">Admin & Configuration (Manage Server required):</div>
+                        <div class="section-description" style="margin-bottom:8px;">Admin & Configuration (Administrator required):</div>
                         <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-                            <div class="command"><code>%config modlog #channel</code> <span>Set the channel for moderation logs. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%config roles #channel</code> <span>Set the role selection/menu channel. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%config welcome #channel</code> <span>Set the welcome messages channel. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%config gambling #channel</code> <span>Restrict gambling to a specific channel. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%config changelog #channel</code> <span>Set the changelog announcements channel. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%config prefix [symbol]</code> <span>Change the bot command prefix. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config modlog #channel</code> <span>Set the channel for moderation logs. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config roles #channel</code> <span>Set the role selection/menu channel. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config welcome #channel</code> <span>Set the welcome messages channel. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config gambling #channel</code> <span>Restrict gambling to a specific channel. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config changelog #channel</code> <span>Set the changelog announcements channel. <strong>Requires:</strong> Administrator</span></div>
+
+                            <!-- New: Legacy Menus Configuration -->
+                            <div class="command"><code>%config ruleschannel #channel</code> <span>Set default channel for Rules/Agree menu. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config colorschannel #channel</code> <span>Set default channel for Color Roles menu. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config rulescontent title:"Title" description:"Line1\nLine2" footer:"Footer" button:"Agree" role:"Member"</code> <span>Customize rules menu content and assign role name. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config colorcontent title:"Pick a Color" description:"Choose a color role"</code> <span>Customize color menu embed text. <strong>Requires:</strong> Administrator</span></div>
+
+                            <div class="command"><code>%config rulesmenu [#channel]</code> <span>Post the rules/agree menu (uses saved defaults if omitted). <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config colormenu [#channel]</code> 
+                                <span>Auto-create color roles if missing and post the color roles menu (uses saved defaults if omitted). 
+                                <strong>Requires:</strong> Administrator</span>
+                            </div>
+
+                            <div class="command"><code>%config prefix [symbol]</code> <span>Change the server default prefix. <strong>Requires:</strong> Administrator</span></div>
                             <div class="command"><code>%config view</code> <span>View all current server settings.</span></div>
-                            <div class="command"><code>%config reset</code> <span>Reset configuration to defaults. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%config reset [ruleschannel|colorschannel|rulescontent|colorcontent]</code> <span>Reset specific legacy menu settings. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%config reset</code> <span>Reset all configuration to defaults. <strong>Requires:</strong> Administrator</span></div>
+
                             <div class="command"><code>%vcconfig</code> <span>Configure temporary voice channels. <strong>Requires:</strong> Manage Channels</span></div>
                             <div class="command"><code>%setup</code> <span>Guided setup for moderation, logging, and tickets. <strong>Requires:</strong> Manage Server</span></div>
+                            <div class="command"><code>%levels config</code> <span>Configure the leveling system. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%levels reset @user</code> <span>Reset a user's XP/level. <strong>Requires:</strong> Administrator</span></div>
+                            <div class="command"><code>%levels reset all</code> <span>Reset all users' XP/levels. <strong>Requires:</strong> Administrator</span></div>
                         </div>
-                        <p class="muted" style="margin-top:8px;">All admin/config commands validate permissions. Non-admins cannot change server settings.</p>
+
+                        <!-- Quick Directions for Legacy Menus -->
+                        <div class="muted" style="margin-top:10px; line-height:1.6;">
+                            <strong>Directions:</strong>
+                            <ol style="margin:6px 0 0 18px;">
+                                <li>Set default channels: <code>%config ruleschannel #rules</code>, <code>%config colorschannel #roles</code>.</li>
+                                <li>Optionally customize text:
+                                    <br><code>%config rulescontent title:"Server Rules" description:"1. Be nice\n2. No spam" footer:"Click to agree" button:"I Agree" role:"Member"</code>
+                                    <br><code>%config colorcontent title:"Pick a Color" description:"Choose a single color role"</code>
+                                </li>
+                                <li>Post menus using saved defaults: <code>%config rulesmenu</code>, <code>%config colormenu</code>.
+                                    You can override channel inline, e.g. <code>%config rulesmenu #announcements</code>.</li>
+                                <li>Review current settings: <code>%config view</code>. Reset fields if needed: <code>%config reset rulescontent</code>.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Permissions Note -->
+                        <p class="muted" style="margin-top:8px;">
+                            All admin/config commands validate permissions. Non-admins cannot change server settings.
+                            For legacy menus, ensure the bot has: <strong>Manage Roles</strong> (to assign the agree role and color roles),
+                            <strong>Send Messages</strong>, <strong>Embed Links</strong>, and <strong>Add Reactions/Use External Emojis</strong> (if used) in the target channels.
+                        </p>
                     </div>
                 </div>
                 
@@ -345,6 +390,7 @@
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="#features">Features</a></li>
+                        <li><a href="/commands.html">Commands</a></li>
                         <li><a href="/status.html">API Status</a></li>
                     </ul>
                 </div>
