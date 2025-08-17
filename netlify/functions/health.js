@@ -61,7 +61,8 @@ const handler = async () => {
     message: '🐾 Floofs Den API is purring along nicely! (Netlify)',
     server: {
       name: 'Floofs Den API',
-      version: stats.version || WEBSITE_VERSION,
+      // Show explicit placeholder when version is not available from stats
+      version: (stats && stats.version) ? stats.version : '---',
       uptime: uptimeFormatted,
       environment: env
     },

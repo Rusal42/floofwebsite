@@ -23,7 +23,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.2",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "@netlify/blobs": "^6.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
