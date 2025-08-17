@@ -298,15 +298,11 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     .cx-badge.admin { background:#e3d1ff20; border-color:#b18cff60; color:#b18cff; }
     .cx-badge.mod { background:#ffd9a820; border-color:#ffb34760; color:#ff9a00; }
     .cx-badge.perm { background:#90cdf420; border-color:#63b3ed60; color:#63b3ed; }
-    .cx-args { font-size:13px; }
-    .cx-args strong { color: var(--text-color); }
-    .cx-args-list { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 0; padding:0; list-style:none; }
-    .cx-args-list li { border:1px dashed var(--border-color); padding:2px 6px; border-radius:8px; font-size:12px; }
-    .cx-aliases { font-size:13px; }
-    .cx-aliases strong { color: var(--text-color); }
-    .cx-alias-list { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 0; padding:0; list-style:none; }
-    .cx-alias-list li { background:#00000020; border:1px solid var(--border-color); padding:2px 6px; border-radius:999px; font-size:12px; }
-    .cx-perms { font-size:12px; color:var(--muted-color); }
+    .cx-args, .cx-aliases, .cx-perms { font-size:13px; }
+    .cx-args strong, .cx-aliases strong, .cx-perms strong { color: var(--text-color); text-transform: lowercase; font-weight:700; }
+    .cx-args-list, .cx-alias-list, .cx-perms-list { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 0; padding:0; list-style:none; }
+    .cx-args-list li { border:1px dashed var(--border-color); padding:2px 8px; border-radius:10px; font-size:12px; }
+    .cx-alias-list li, .cx-perms-list li { background:#00000020; border:1px solid var(--border-color); padding:2px 8px; border-radius:999px; font-size:12px; }
     .code-block { white-space:pre-wrap; background: var(--surface-color); border:1px solid var(--border-color); border-radius:10px; padding:10px; }
   </style>
   <script>
@@ -373,6 +369,10 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       // General
       { name:'help', desc:'Show help.', cat:'general' },
       { name:'snipe', desc:'Retrieve last deleted message in channel.', cat:'general', perms:['Manage Messages'], args:['channel?','index?'], aliases:['sn'] },
+      { name:'snipe embed', desc:'Snipe past embeds in the channel.', cat:'general', perms:['Manage Messages'], args:['channel?'] },
+      { name:'snipe bulk', desc:'List all recorded snipes in the past for a channel.', cat:'general', perms:['Manage Messages'], args:['channel?'] },
+      { name:'snipe user', desc:"Snipe a user's past deleted messages from a channel.", cat:'general', perms:['Manage Messages'], args:['user','channel?'] },
+      { name:'snipe search', desc:'Search past snipes by text.', cat:'general', perms:['Manage Messages'], args:['text'] },
       { name:'bulksnipe', desc:'Show list of recently deleted messages.', cat:'general', roles:['Mod'] },
       { name:'clearsnipe', desc:'Clear snipe cache.', cat:'general', roles:['Mod'] },
       { name:'remind', desc:'Set a reminder.', cat:'general' },
@@ -395,25 +395,41 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     const catChips = document.getElementById('cx-cat-chips');
     const search = document.getElementById('cx-search');
 
-    function computeCategoryCounts(){
+    // Map our internal categories to external display groups (baba-style)
+    const GROUP_MAP = {
+      configuration: 'Server',
+      moderation: 'Moderation',
+      roles: 'Server',
+      general: 'Information',
+      important: 'Server',
+      gambling: 'Fun',
+      afk: 'Information',
+      fun: 'Fun'
+      // Additional internal cats can be mapped here later
+    };
+
+    function getGroup(c){ return c.group || GROUP_MAP[c.cat] || 'Miscellaneous'; }
+
+    function computeGroupCounts(){
       const counts = {};
-      for(const c of COMMANDS){ counts[c.cat] = (counts[c.cat]||0)+1; }
+      for(const c of COMMANDS){ const g = getGroup(c); counts[g] = (counts[g]||0)+1; }
       const total = COMMANDS.length;
       return { counts, total };
     }
 
     function buildCategoryChips(){
-      const order = ['all','gambling','moderation','fun','general','roles','afk','important','configuration'];
-      const labels = { all:'All', gambling:'Gambling', moderation:'Moderation', fun:'Fun', general:'General', roles:'Roles', afk:'AFK', important:'Important', configuration:'Configuration' };
-      const icons = { all:'📚', gambling:'🎲', moderation:'🔨', fun:'🎉', general:'🧰', roles:'🏷️', afk:'💤', important:'⭐', configuration:'⚙️' };
-      const { counts, total } = computeCategoryCounts();
+      const order = ['All','Server','Fun','Moderation','Information','Audio','ImageManipulation','Bot','Miscellaneous','VoiceMaster','YouTube','Weather'];
+      const icons = { All:'📚', Server:'🗂️', Fun:'🎉', Moderation:'🔨', Information:'ℹ️', Audio:'🎧', ImageManipulation:'🖼️', Bot:'🤖', Miscellaneous:'🧩', VoiceMaster:'🎙️', YouTube:'▶️', Weather:'🌤️' };
+      const { counts, total } = computeGroupCounts();
       catChips.innerHTML = '';
       for(const key of order){
+        const isAll = key === 'All';
+        const count = isAll ? total : (counts[key] || 0);
+        if(!isAll && count === 0) continue; // hide empty groups
         const btn = document.createElement('button');
-        btn.className = 'cx-chip' + (key==='all' ? ' active' : '');
-        btn.dataset.category = key;
-        const count = key==='all' ? total : (counts[key] || 0);
-        btn.innerHTML = `${icons[key] || ''} ${labels[key]} <span class=\"count\">${count}</span>`;
+        btn.className = 'cx-chip' + (isAll ? ' active' : '');
+        btn.dataset.group = key;
+        btn.innerHTML = `${icons[key] || ''} ${key} <span class=\"count\">${count}</span>`;
         catChips.appendChild(btn);
       }
     }
@@ -448,15 +464,16 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       // Arguments block
       const argsWrap = document.createElement('div');
       argsWrap.className = 'cx-args';
-      if(Array.isArray(c.args) && c.args.length){
+      {
         const argsTitle = document.createElement('div');
-        argsTitle.innerHTML = '<strong>Arguments</strong>';
+        argsTitle.innerHTML = '<strong>arguments</strong>';
         const ul = document.createElement('ul');
         ul.className = 'cx-args-list';
-        for(const a of c.args){
-          const li = document.createElement('li');
-          li.textContent = a;
-          ul.appendChild(li);
+        const list = Array.isArray(c.args) ? c.args : [];
+        if(list.length){
+          for(const a of list){ const li = document.createElement('li'); li.textContent = a; ul.appendChild(li); }
+        } else {
+          const li = document.createElement('li'); li.textContent = 'None'; ul.appendChild(li);
         }
         argsWrap.appendChild(argsTitle);
         argsWrap.appendChild(ul);
@@ -466,7 +483,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       aliasesWrap.className = 'cx-aliases';
       if(Array.isArray(c.aliases) && c.aliases.length){
         const alTitle = document.createElement('div');
-        alTitle.innerHTML = '<strong>Aliases</strong>';
+        alTitle.innerHTML = '<strong>aliases</strong>';
         const ulA = document.createElement('ul');
         ulA.className = 'cx-alias-list';
         for(const al of c.aliases){
@@ -480,20 +497,29 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       // Permissions line
       const permsLine = document.createElement('div');
       permsLine.className = 'cx-perms';
-      if(Array.isArray(c.perms) && c.perms.length){
-        permsLine.textContent = `Permissions: ${c.perms.join(', ')}`;
+      const permsTitle = document.createElement('div');
+      permsTitle.innerHTML = '<strong>permissions</strong>';
+      const ulP = document.createElement('ul');
+      ulP.className = 'cx-perms-list';
+      const permsList = Array.isArray(c.perms) ? c.perms : [];
+      if(permsList.length){
+        for(const p of permsList){ const li = document.createElement('li'); li.textContent = p; ulP.appendChild(li); }
+      } else {
+        const li = document.createElement('li'); li.textContent = 'None'; ulP.appendChild(li);
       }
+      permsLine.appendChild(permsTitle);
+      permsLine.appendChild(ulP);
       card.appendChild(title); card.appendChild(desc); card.appendChild(meta);
       if(argsWrap.childNodes.length) card.appendChild(argsWrap);
       if(aliasesWrap.childNodes.length) card.appendChild(aliasesWrap);
-      if(permsLine.textContent) card.appendChild(permsLine);
+      card.appendChild(permsLine);
       return card;
     }
 
-    function render(filterCat='all', query=''){
+    function render(filterGroup='All', query=''){
       grid.innerHTML = '';
       const q = query.trim().toLowerCase();
-      const items = COMMANDS.filter(c => (filterCat==='all' || c.cat===filterCat) && (!q || (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q))));
+      const items = COMMANDS.filter(c => (filterGroup==='All' || getGroup(c)===filterGroup) && (!q || (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q))));
       for(const c of items){ grid.appendChild(makeCard(c)); }
       if(items.length===0){
         const empty = document.createElement('div');
@@ -516,11 +542,11 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       if(!btn) return;
       for(const b of catChips.querySelectorAll('button.cx-chip')) b.classList.remove('active');
       btn.classList.add('active');
-      render(btn.dataset.category, search.value);
+      render(btn.dataset.group || 'All', search.value);
     });
     search.addEventListener('input', () => {
       const active = document.querySelector('.cx-chip.active');
-      render(active?.dataset.category || 'all', search.value);
+      render(active?.dataset.group || 'All', search.value);
     });
     // Initial renders
     buildCategoryChips();
