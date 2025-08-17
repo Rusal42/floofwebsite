@@ -661,6 +661,36 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       const active = document.querySelector('.cx-chip.active');
       render(active?.dataset.group || 'All', search.value);
     });
+    // Helper: show only the selected category section (or all)
+    function setVisibleSections(group){
+      const catSections = [
+        { id:'configuration', group:'Configuration' },
+        { id:'gambling', group:'Gambling' },
+        { id:'moderation', group:'Moderation' },
+        { id:'fun', group:'Fun' },
+        { id:'general', group:'General' },
+        { id:'voice', group:'Voice' },
+        { id:'tickets', group:'Tickets' },
+        { id:'afk', group:'AFK' },
+        { id:'roles-section', group:'Roles' }
+      ];
+      for(const {id, group:grp} of catSections){
+        const el = document.getElementById(id);
+        if(!el) continue;
+        const show = (group === 'All') || (group === grp);
+        el.style.display = show ? '' : 'none';
+      }
+      // If focusing a specific group, scroll that section into view
+      if(group !== 'All'){
+        const target = catSections.find(s => s.group === group);
+        const el = target && document.getElementById(target.id);
+        if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+      } else {
+        // On All, ensure we're near the explorer
+        document.getElementById('explorer')?.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    }
+
     // Initial render (default to All)
     render('All');
     renderInto('grid-gambling', 'gambling');
@@ -671,7 +701,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     renderInto('grid-afk', 'afk');
     renderInto('grid-voice', 'voice');
     renderInto('grid-tickets', 'tickets');
-    
+    setVisibleSections('All');
     updateSectionCounts();
 
     // Quickbar active state (top nav chips)
@@ -719,6 +749,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
         a.classList.add('active');
         const group = a.dataset.group || 'All';
         render(group, search.value);
+        setVisibleSections(group);
       }, true);
     }
     // Search popover toggle
