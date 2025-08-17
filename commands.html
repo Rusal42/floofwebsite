@@ -21,8 +21,12 @@
       backdrop-filter: blur(6px);
       overflow:auto;
       scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-overflow-scrolling: touch;
     }
     .quickbar::-webkit-scrollbar { display:none; }
+    .quickbar.dragging { cursor: grabbing; }
     .quickbar .cx-chip {
       display:inline-flex; align-items:center; gap:8px;
       border-radius: 10px;
@@ -73,18 +77,34 @@
     <!-- Quick Navigation -->
     <nav class="doc-section" aria-label="Quick navigation" style="margin-bottom:16px;">
       <div class="quickbar" role="tablist" aria-label="Quick links">
-        <a class="cx-chip active" href="#configuration"><span class="icon">⚙️</span> Configuration</a>
-        <a class="cx-chip" href="#gambling"><span class="icon">🎲</span> Gambling</a>
-        <a class="cx-chip" href="#moderation"><span class="icon">🔨</span> Moderation</a>
-        <a class="cx-chip" href="#fun"><span class="icon">🎉</span> Fun</a>
-        <a class="cx-chip" href="#general"><span class="icon">🧰</span> General</a>
-        <a class="cx-chip" href="#roles-section"><span class="icon">🏷️</span> Roles</a>
-        <a class="cx-chip" href="#afk"><span class="icon">💤</span> AFK</a>
-        <a class="cx-chip" href="#important"><span class="icon">⭐</span> Important</a>
-        <a class="cx-chip" href="#explorer"><span class="icon">📚</span> Explorer</a>
-        <a class="cx-chip" href="#help"><span class="icon">❓</span> Help</a>
+        <a class="cx-chip active" href="#" data-group="All"><span class="icon">📚</span> All</a>
+        <a class="cx-chip" href="#" data-group="Server"><span class="icon">🗂️</span> Server</a>
+        <a class="cx-chip" href="#" data-group="Fun"><span class="icon">🎉</span> Fun</a>
+        <a class="cx-chip" href="#" data-group="Moderation"><span class="icon">🔨</span> Moderation</a>
+        <a class="cx-chip" href="#" data-group="Information"><span class="icon">ℹ️</span> Information</a>
+        <a class="cx-chip" href="#" data-group="Audio"><span class="icon">🎧</span> Audio</a>
+        <a class="cx-chip" href="#" data-group="ImageManipulation"><span class="icon">🖼️</span> ImageManipulation</a>
+        <a class="cx-chip" href="#" data-group="Bot"><span class="icon">🤖</span> Bot</a>
+        <a class="cx-chip" href="#" data-group="Miscellaneous"><span class="icon">🧩</span> Misc</a>
+        <a class="cx-chip" href="#" data-group="VoiceMaster"><span class="icon">🎙️</span> Voice</a>
+        <a class="cx-chip" href="#" data-group="YouTube"><span class="icon">▶️</span> YouTube</a>
+        <a class="cx-chip" href="#" data-group="Weather"><span class="icon">🌤️</span> Weather</a>
       </div>
     </nav>
+
+    <!-- Commands Explorer placed directly under quickbar -->
+    <section id="explorer" class="doc-section" aria-label="Commands Explorer">
+      <h2 style="display:flex; align-items:center; gap:10px;">Commands
+        <small class="muted" style="font-weight:400">Explore by category or search</small>
+      </h2>
+      <div class="cx-toolbar">
+        <div id="cx-cat-chips" class="cx-chips" role="tablist" aria-label="Categories" style="display:none"></div>
+        <div class="cx-search">
+          <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
+        </div>
+      </div>
+      <div id="cx-grid" class="cx-grid" aria-live="polite"></div>
+    </section>
 
     <!-- Configuration (Admin) (moved up) -->
     <section id="configuration" class="doc-section">
@@ -140,19 +160,7 @@
       <div id="grid-important" class="cx-grid" aria-live="polite"></div>
     </section>
 
-    <!-- Commands Explorer (moved below) -->
-    <section id="explorer" class="doc-section" aria-label="Commands Explorer">
-      <h2 style="display:flex; align-items:center; gap:10px;">Commands
-        <small class="muted" style="font-weight:400">Explore by category or search</small>
-      </h2>
-      <div class="cx-toolbar">
-        <div id="cx-cat-chips" class="cx-chips" role="tablist" aria-label="Categories"></div>
-        <div class="cx-search">
-          <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
-        </div>
-      </div>
-      <div id="cx-grid" class="cx-grid" aria-live="polite"></div>
-    </section>
+    <!-- (Explorer section moved above under quickbar) -->
     <!-- Quick Help -->
     <section id="help" class="doc-section">
       <h2>Help</h2>
@@ -564,9 +572,8 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       const active = document.querySelector('.cx-chip.active');
       render(active?.dataset.group || 'All', search.value);
     });
-    // Initial renders
-    buildCategoryChips();
-    render();
+    // Initial render (default to All)
+    render('All');
     renderInto('grid-gambling', 'gambling');
     renderInto('grid-moderation', 'moderation');
     renderInto('grid-fun', 'fun');
@@ -577,12 +584,46 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     // Quickbar active state (top nav chips)
     const quickbar = document.querySelector('.quickbar');
     if (quickbar){
+      // Active state on click (only if not dragging)
+      let dragging = false;
+      let startX = 0;
+      let scrollStart = 0;
+      let moved = 0;
+
+      function onDown(clientX){
+        dragging = true; moved = 0;
+        startX = clientX; scrollStart = quickbar.scrollLeft;
+        quickbar.classList.add('dragging');
+      }
+      function onMove(clientX){
+        if(!dragging) return;
+        const dx = clientX - startX;
+        moved = Math.max(moved, Math.abs(dx));
+        quickbar.scrollLeft = scrollStart - dx;
+      }
+      function onUp(){ dragging = false; quickbar.classList.remove('dragging'); }
+
+      // Mouse
+      quickbar.addEventListener('mousedown', (e)=>{ if(e.button!==0) return; onDown(e.clientX); });
+      window.addEventListener('mousemove', (e)=> onMove(e.clientX));
+      window.addEventListener('mouseup', onUp);
+
+      // Touch
+      quickbar.addEventListener('touchstart', (e)=>{ if(!e.touches[0]) return; onDown(e.touches[0].clientX); }, {passive:true});
+      quickbar.addEventListener('touchmove', (e)=>{ if(!e.touches[0]) return; onMove(e.touches[0].clientX); }, {passive:true});
+      quickbar.addEventListener('touchend', onUp);
+
+      // Click selects group (unless we dragged)
       quickbar.addEventListener('click', (e)=>{
         const a = e.target.closest('a.cx-chip');
         if(!a) return;
+        e.preventDefault();
+        if(moved > 5){ return; }
         for(const el of quickbar.querySelectorAll('a.cx-chip')) el.classList.remove('active');
         a.classList.add('active');
-      });
+        const group = a.dataset.group || 'All';
+        render(group, search.value);
+      }, true);
     }
     renderInto('grid-important', 'important');
   </script>
