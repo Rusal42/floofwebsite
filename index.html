@@ -32,6 +32,7 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="/commands.html" class="nav-link">Commands</a>
                 <a href="/status.html" class="nav-link">Status</a>
+                <a href="/rules.html" class="nav-link">Rules</a>
                 <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="nav-link support-link">
                     <i class="fab fa-discord"></i> Support
                 </a>
@@ -52,39 +53,18 @@
     <section id="home" class="hero">
         <div class="hero-background">
             <div class="hero-particles"></div>
+            <div class="hero-vignette"></div>
         </div>
         
         <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        Welcome to <span class="gradient-text">Floofs Den</span> 🌸
-                    </h1>
-                    <p class="hero-description">
-                        Your adorable fluffy companion for Discord! Games, moderation, and cozy vibes. 💕
-                    </p>
-                    
-                    <div class="hero-buttons">
-                        <button id="inviteBtn" class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            Add Floof to Server
-                        </button>
-                        
-                        <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="btn btn-support">
-                            <i class="fab fa-discord"></i>
-                            Support Server
-                        </a>
-                        <a href="/commands.html" class="btn btn-secondary">
-                            <i class="fas fa-terminal"></i>
-                            Commands
-                        </a>
-                    </div>
-                </div>
-                
+            <div class="hero-content" style="display:flex; flex-direction:column; align-items:center; text-align:center; gap: 18px;">
                 <div class="hero-image">
                     <div class="floof-showcase">
-                        <div class="floof-avatar-container">
-                            <img src="https://cdn.discordapp.com/avatars/1387563676961341461/your-bot-avatar.png" alt="Floof" class="floof-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                        <div class="floof-avatar-container reveal-pop" data-tilt>
+                            <picture>
+                                <source srcset="/assets/floof-hero.png" type="image/png">
+                                <img src="/assets/floof-hero.svg" alt="Floof Hero" class="floof-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                            </picture>
                             <div class="floof-avatar-fallback">🐾</div>
                             <div class="floof-glow"></div>
                         </div>
@@ -102,150 +82,33 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Why Choose Floofs Den?</h2>
-                <p class="section-description">
-                    Packed with features to make your Discord server more engaging and fun
-                </p>
-            </div>
-            
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎲</div>
-                    <h3>Gambling & Games</h3>
-                    <p>Exciting gambling commands, daily rewards, and interactive games to keep your community engaged.</p>
+                <div class="hero-text" style="max-width: 760px;">
+                    <h1 class="hero-title reveal-up" style="font-size: clamp(44px, 6.5vw, 78px); line-height: 1.05;">
+                        Welcome to <span class="gradient-text">Floofs Den</span> 🌸
+                    </h1>
+                    <p class="hero-description reveal-up" style="animation-delay: .08s">
+                        Your adorable fluffy companion for Discord! Games, moderation, and cozy vibes. 💕
+                    </p>
                     
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Moderation Tools</h3>
-                    <p>Powerful moderation features including setup commands, role management, and server configuration.</p>
-                    
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">🎉</div>
-                    <h3>Fun Commands</h3>
-                    <p>Entertainment commands, memes, and interactive features to bring joy to your server.</p>
-                    
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Fast & Reliable</h3>
-                    <p>Lightning-fast responses with 99.9% uptime. Your server deserves the best performance.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🧰</div>
-                    <h3>General Utilities</h3>
-                    <p>Handy utilities for everyday server life.</p>
-                    
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🎭</div>
-                    <h3>Roles</h3>
-                    <p>Role management made easy.</p>
-                    
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">💤</div>
-                    <h3>AFK</h3>
-                    <p>Let others know you’re away.</p>
-                    
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">⭐</div>
-                    <h3>Important</h3>
-                    <p>High-impact tools like tickets, logging, and analytics.</p>
-                    
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3>Configuration</h3>
-                    <p>Simple setup process with helpful guides and commands to get your server running quickly.</p>
-                    
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">💎</div>
-                    <h3>Premium Features</h3>
-                    <p>Advanced features and customization options for servers that want to go the extra mile.</p>
+                    <div class="hero-buttons reveal-up" style="animation-delay: .14s; display:grid; grid-template-columns: repeat(2, minmax(160px, 1fr)); gap:14px; justify-items:center; width: min(520px, 100%); margin: 10px auto 0;">
+                        <a href="/commands.html" class="btn btn-secondary" aria-label="Commands"><i class="fas fa-terminal"></i> cmds</a>
+                        <a href="https://discord.gg/Acpx662Eyg" target="_blank" rel="noopener" class="btn btn-support" aria-label="Discord Server"><i class="fab fa-discord"></i> discord</a>
+                        <a href="/status.html" class="btn btn-secondary" aria-label="Status"><i class="fas fa-signal"></i> status</a>
+                        <button id="inviteBtn" class="btn btn-primary" aria-label="Invite Bot"><i class="fas fa-key"></i> invite</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Add Floofs Den to Your Server?</h2>
-                <p>Be part of our cozy community and help Floof grow!</p>
-                <button id="inviteBtn2" class="btn btn-primary btn-large">
-                    <i class="fas fa-plus"></i>
-                    Add Floofs Den Now
-                </button>
-            </div>
-        </div>
-    </section>
+    <!-- Features & CTA removed for minimal Baba-style landing -->
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-brand">
-                        <span class="footer-logo">🐾</span>
-                        <span class="footer-title">Floofs Den</span>
-                    </div>
-                    <p>Making Discord servers more fun, one command at a time.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="/commands.html">Commands</a></li>
-                        <li><a href="/status.html">API Status</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="https://discord.gg/Acpx662Eyg">Discord Server</a></li>
-                        <li><a href="mailto:support@floofbot.com">Contact Us</a></li>
-                        <li><a href="/privacy">Privacy Policy</a></li>
-                        <li><a href="/terms">Terms of Service</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 Floofs Den. All rights reserved. • Bot v<span id="botVersion">—</span></p>
+            <div class="footer-bottom" style="text-align:center; padding: 30px 0;">
+                <p>&copy; 2024 Floofs Den • v<span id="botVersion">—</span></p>
             </div>
         </div>
     </footer>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Server Rules • Floofs Den</title>
+  <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .rules-hero {
+      padding: 120px 0 40px;
+      background: radial-gradient(1200px 400px at 50% -100px, rgba(255, 192, 203, 0.25), transparent),
+                  linear-gradient(180deg, rgba(20,20,40,0.9), rgba(20,20,40,0.95));
+    }
+    .rules-container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    .rules-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .rules-title { font-size: 28px; font-weight: 700; margin: 8px 0 6px; }
+    .rules-meta { color: #b8b8d4; font-size: 14px; margin-bottom: 16px; }
+    .rules-description { white-space: pre-wrap; line-height: 1.6; font-size: 16px; }
+    .rules-footer { color: #c9a3ff; margin-top: 18px; font-style: italic; }
+    .rules-actions { margin-top: 22px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .rules-button { background: linear-gradient(45deg, #ff69b4, #ff1493); border: none; color: #fff; padding: 10px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+    .rules-role { color: #9be6b4; font-weight: 600; }
+    .guild-selector { margin: 16px 0 24px; display: flex; gap: 10px; align-items: center; }
+    .guild-selector select { padding: 10px; border-radius: 10px; background: rgba(255,255,255,0.06); color: white; border: 1px solid rgba(255,255,255,0.12); }
+    .empty-state { text-align: center; color: #c7c7d9; padding: 40px 20px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="nav-logo">🐾</span>
+        <span class="nav-title">Floofs Den</span>
+      </div>
+      <div class="nav-menu">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/commands.html" class="nav-link">Commands</a>
+        <a href="/status.html" class="nav-link">Status</a>
+        <a href="/rules.html" class="nav-link active">Rules</a>
+        <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="nav-link support-link"><i class="fab fa-discord"></i> Support</a>
+        <button id="loginBtn" class="login-btn"><i class="fab fa-discord"></i> Login</button>
+      </div>
+      <div class="nav-toggle">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="rules-hero">
+    <div class="rules-container">
+      <h1 class="section-title">Server Rules</h1>
+      <p class="section-description">These rules are synced automatically from the Discord bot configuration.</p>
+    </div>
+  </section>
+
+  <main class="rules-container" style="margin-top:-20px;">
+    <div class="guild-selector">
+      <label for="guildSelect">Select server:</label>
+      <select id="guildSelect"><option value="">Loading...</option></select>
+      <input id="guildInput" type="text" placeholder="Or enter Guild ID" style="display:none; padding:10px; border-radius:10px; background: rgba(255,255,255,0.06); color:white; border: 1px solid rgba(255,255,255,0.12);" />
+      <button id="loadGuildBtn" class="rules-button" title="Load rules by Guild ID" style="display:none;">Load</button>
+    </div>
+
+    <div id="rulesCard" class="rules-card" style="display:none;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="feature-icon" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:rgba(255,105,180,0.2);">📜</div>
+        <div>
+          <div id="rulesGuildName" class="rules-meta">—</div>
+          <div id="rulesTitle" class="rules-title">—</div>
+          <div id="rulesUpdated" class="rules-meta">—</div>
+        </div>
+      </div>
+      <div id="rulesDescription" class="rules-description" style="margin-top:12px;">—</div>
+      <div id="rulesFooter" class="rules-footer">—</div>
+      <div class="rules-actions">
+        <button id="rulesCTA" class="rules-button" style="display:none;"></button>
+        <div id="rulesRole" class="rules-role" title="Role granted after agreeing" style="display:none;"><i class="fas fa-user-plus"></i> Role: <span id="rulesRoleName"></span></div>
+      </div>
+    </div>
+
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <div style="font-size:42px;">😿</div>
+      <p>No rules found for this server yet.</p>
+      <p style="font-size:14px; color:#aeb1c3;">Ask a moderator to configure rules via the bot so they appear here.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2024 Floofs Den. All rights reserved. • Bot v<span id="botVersion">—</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+  <script>
+    function setLoading(selectEl, loading) {
+      if (!selectEl) return;
+      if (loading) {
+        selectEl.innerHTML = '<option>Loading...</option>';
+        selectEl.disabled = true;
+      } else {
+        selectEl.disabled = false;
+      }
+    }
+
+    function setVisibility(id, show) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = show ? '' : 'none';
+    }
+
+    function fmtDate(iso) {
+      try { return new Date(iso).toLocaleString(); } catch { return ''; }
+    }
+
+    async function fetchGuildList() {
+      try {
+        const res = await fetch('/api/rules');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const json = await res.json();
+        return json?.data?.list || [];
+      } catch (e) {
+        console.error('Failed to fetch guild list', e);
+        return [];
+      }
+    }
+
+    async function fetchRules(guildId) {
+      try {
+        const res = await fetch('/api/rules?guildId=' + encodeURIComponent(guildId));
+        if (!res.ok) return null;
+        const json = await res.json();
+        return json?.data || null;
+      } catch (e) {
+        console.error('Failed to fetch rules', e);
+        return null;
+      }
+    }
+
+    function applyRules(rules) {
+      const has = v => v !== undefined && v !== null && String(v).trim() !== '';
+      if (!rules) {
+        setVisibility('rulesCard', false);
+        setVisibility('emptyState', true);
+        return;
+      }
+      setVisibility('emptyState', false);
+      setVisibility('rulesCard', true);
+      document.getElementById('rulesGuildName').textContent = rules.guildName || 'Unknown Server';
+      document.getElementById('rulesTitle').textContent = has(rules.rulesTitle) ? rules.rulesTitle : 'Server Rules';
+      document.getElementById('rulesUpdated').textContent = 'Last updated: ' + (fmtDate(rules.updatedAt) || '—');
+      document.getElementById('rulesDescription').textContent = has(rules.rulesDescription) ? rules.rulesDescription : 'No description provided.';
+      document.getElementById('rulesFooter').textContent = has(rules.rulesFooter) ? rules.rulesFooter : '';
+      const btn = document.getElementById('rulesCTA');
+      if (has(rules.rulesButton)) {
+        btn.textContent = rules.rulesButton;
+        btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+        btn.style.display = '';
+      } else {
+        btn.style.display = 'none';
+      }
+      const roleWrap = document.getElementById('rulesRole');
+      const roleName = document.getElementById('rulesRoleName');
+      if (has(rules.rulesAssignRole)) {
+        roleName.textContent = rules.rulesAssignRole;
+        roleWrap.style.display = '';
+      } else {
+        roleWrap.style.display = 'none';
+      }
+    }
+
+    async function initPage() {
+      const params = new URLSearchParams(window.location.search);
+      const gid = params.get('guildId');
+      const select = document.getElementById('guildSelect');
+      const input = document.getElementById('guildInput');
+      const loadBtn = document.getElementById('loadGuildBtn');
+
+      // Populate guild list (if any stored)
+      setLoading(select, true);
+      const list = await fetchGuildList();
+      setLoading(select, false);
+      select.innerHTML = '';
+      if (list.length) {
+        select.appendChild(new Option('Choose a server…', '', true, false));
+        list.forEach(g => select.appendChild(new Option(g.guildName || g.guildId, g.guildId)));
+        input.style.display = 'none';
+        loadBtn.style.display = 'none';
+      } else {
+        // Fallback: manual Guild ID entry
+        select.style.display = 'none';
+        input.style.display = '';
+        loadBtn.style.display = '';
+      }
+
+      async function load(guildId) {
+        const data = guildId ? await fetchRules(guildId) : null;
+        applyRules(data);
+      }
+
+      // Preload by URL param if provided
+      if (gid) {
+        if (select.style.display !== 'none') select.value = gid;
+        await load(gid);
+      }
+
+      select.addEventListener('change', async () => {
+        const v = select.value;
+        const url = new URL(window.location.href);
+        if (v) url.searchParams.set('guildId', v); else url.searchParams.delete('guildId');
+        history.replaceState({}, '', url.toString());
+        await load(v);
+      });
+
+      loadBtn.addEventListener('click', async () => {
+        const v = input.value.trim();
+        if (!v) return;
+        const url = new URL(window.location.href);
+        url.searchParams.set('guildId', v);
+        history.replaceState({}, '', url.toString());
+        await load(v);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initPage);
+  </script>
+</body>
+</html>

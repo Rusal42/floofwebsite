@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupMobileNavigation();
     setupAnimations();
+    setupHeroTilt();
     setupCommandToolbars();
     sortCommandLists();
     setupGlobalCommandsFilter();
@@ -415,6 +416,38 @@ function setupAnimations() {
     document.querySelectorAll('.command-category').forEach((category, index) => {
         category.style.animationDelay = `${index * 0.1}s`;
     });
+}
+
+// Subtle tilt effect for hero image container
+function setupHeroTilt() {
+    const tiltEl = document.querySelector('[data-tilt]');
+    if (!tiltEl) return;
+
+    const maxTilt = 8; // degrees
+    const dampen = 22; // lower = more sensitive
+
+    function applyTilt(e) {
+        const rect = tiltEl.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (rect.width / 2);
+        const dy = (e.clientY - cy) / (rect.height / 2);
+        const rotateX = Math.max(Math.min(-dy * maxTilt, maxTilt), -maxTilt);
+        const rotateY = Math.max(Math.min(dx * maxTilt, maxTilt), -maxTilt);
+        tiltEl.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+
+    function resetTilt() {
+        tiltEl.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+    }
+
+    // Mouse interactions
+    tiltEl.addEventListener('mousemove', applyTilt);
+    tiltEl.addEventListener('mouseleave', resetTilt);
+
+    // Touch: disable (keeps simple)
+    tiltEl.addEventListener('touchstart', () => tiltEl.style.transition = 'transform .2s ease');
+    tiltEl.addEventListener('touchend', () => { resetTilt(); tiltEl.style.transition = ''; });
 }
 
 // Notifications

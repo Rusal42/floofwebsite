@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="800" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Floof Hero">
+  <defs>
+    <radialGradient id="faceGrad" cx="50%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#FFD9D9"/>
+      <stop offset="100%" stop-color="#F8C9C9"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="#000" flood-opacity=".15"/>
+    </filter>
+  </defs>
+
+  <!-- Face base -->
+  <g filter="url(#shadow)">
+    <circle cx="400" cy="400" r="300" fill="url(#faceGrad)"/>
+  </g>
+
+  <!-- Blush -->
+  <circle cx="270" cy="420" r="60" fill="#FFA1B4" opacity="0.9"/>
+  <circle cx="530" cy="420" r="60" fill="#FFA1B4" opacity="0.9"/>
+
+  <!-- Eyes (cheerful closed) -->
+  <path d="M220 360 C260 370, 280 390, 300 410" stroke="#1B1B1B" stroke-width="26" stroke-linecap="round" fill="none"/>
+  <path d="M580 360 C540 370, 520 390, 500 410" stroke="#1B1B1B" stroke-width="26" stroke-linecap="round" fill="none"/>
+
+  <!-- Mouth (open) -->
+  <path d="M320 470 C330 560, 470 560, 480 470 Q400 510, 320 470 Z" fill="#1B1B1B"/>
+
+  <!-- Subtle highlight -->
+  <ellipse cx="340" cy="300" rx="120" ry="70" fill="#fff" opacity="0.25"/>
+</svg>

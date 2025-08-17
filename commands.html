@@ -138,9 +138,18 @@
         <div class="doc-card"><code>%config welcome #channel</code><p>Set welcome messages channel.</p></div>
         <div class="doc-card"><code>%config gambling #channel</code><p>Restrict gambling to a channel.</p></div>
         <div class="doc-card"><code>%config rulesmenu [#channel] [RoleName]</code><p>Post the rules/agree menu. Optional: give RoleName on agree.</p></div>
+        <div class="doc-card"><code>%config ruleschannel #channel</code> <span class="badge badge-admin">Admin</span><p>Set default channel for the rules/agree menu.</p></div>
+        <div class="doc-card"><code>%config rulescontent</code> <span class="badge badge-admin">Admin</span><p>Customize rules title, description (use \n), footer, button label, and auto-assign role.</p></div>
         <div class="doc-card"><code>%config colormenu [#channel]</code><p>Post the color roles selector menu.</p></div>
         <div class="doc-card"><code>%config view</code><p>View all current settings.</p></div>
         <div class="doc-card"><code>%config reset [setting|all]</code><p>Reset a specific setting or all.</p></div>
+      </div>
+      <div class="doc-block" style="margin-top:12px">
+        <h3>Rules config example</h3>
+        <pre class="code-block"><code>%config rulescontent title:"Server Rules"
+description:"1. Be respectful\n2. No spam\n3. Follow Discord ToS"
+footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
+        <p class="muted">Tip: set a default posting channel first with <code>%config ruleschannel #rules</code>, then post with <code>%config rulesmenu</code>.</p>
       </div>
       <p class="muted">All config commands require Administrator and validate permissions.</p>
     </section>

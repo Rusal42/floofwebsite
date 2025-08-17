@@ -401,6 +401,18 @@ body {
     animation: float 6s ease-in-out infinite;
 }
 
+/* Soft vignette like Baba hero */
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(60% 60% at 60% 40%, rgba(0,0,0,0.25), transparent 60%),
+        radial-gradient(80% 60% at 20% 70%, rgba(0,0,0,0.2), transparent 70%);
+    filter: blur(20px);
+    opacity: .7;
+}
+
 @keyframes float {
     0%, 100% { transform: translateY(0px) rotate(0deg); }
     50% { transform: translateY(-20px) rotate(180deg); }
@@ -491,6 +503,37 @@ body {
 .btn-support:hover {
     transform: translateY(-3px);
     box-shadow: var(--shadow-medium);
+}
+
+/* -------- Hero reveal animations (Baba-style) -------- */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    animation: revealUp .7s cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+.reveal-pop {
+    opacity: 0;
+    transform: translateY(22px) scale(.96);
+    animation: popIn .8s cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+@keyframes revealUp {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes popIn {
+    60% { opacity: 1; transform: translateY(0) scale(1.02); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .reveal-up,
+    .reveal-pop,
+    .floof-avatar,
+    .floof-avatar-fallback,
+    .hero-particles { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
 
 /* Floof Showcase */

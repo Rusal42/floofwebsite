@@ -21,6 +21,39 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-jwt-secret-change-this';
 const BOT_API_TOKEN = process.env.BOT_API_TOKEN; // used to authenticate bot -> website updates
 const DISCORD_API_BASE = 'https://discord.com/api/v10';
 
+// Data storage for rules configuration
+const fs = require('fs');
+const DATA_DIR = path.join(__dirname, 'data');
+const RULES_STORE = path.join(DATA_DIR, 'rules-config.json');
+
+function ensureDataStore() {
+    try {
+        if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+        if (!fs.existsSync(RULES_STORE)) fs.writeFileSync(RULES_STORE, JSON.stringify({}, null, 2));
+    } catch (e) {
+        console.error('Failed to initialize data store:', e);
+    }
+}
+
+function loadRulesStore() {
+    try {
+        ensureDataStore();
+        const raw = fs.readFileSync(RULES_STORE, 'utf8');
+        return JSON.parse(raw || '{}');
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveRulesStore(data) {
+    try {
+        ensureDataStore();
+        fs.writeFileSync(RULES_STORE, JSON.stringify(data, null, 2));
+    } catch (e) {
+        console.error('Failed to save rules store:', e);
+    }
+}
+
 // Bot Statistics (these would come from your bot's database in a real implementation)
 let botStats = {
     serverCount: 8,
@@ -39,43 +72,67 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// API endpoint to get bot statistics
-app.get('/api/stats', (req, res) => {
-    res.json({
-        success: true,
-        data: botStats
-    });
+// Receive rules config from the bot (per guild) and persist it
+app.post('/api/rules-sync', authenticateBot, (req, res) => {
+    try {
+        const {
+            guildId,
+            guildName,
+            rulesChannel,
+            rulesTitle,
+            rulesDescription,
+            rulesFooter,
+            rulesButton,
+            rulesAssignRole,
+            version,
+            timestamp
+        } = req.body || {};
+
+        if (!guildId) {
+            return res.status(400).json({ success: false, error: 'guildId is required' });
+        }
+
+        const store = loadRulesStore();
+        store[guildId] = {
+            guildId,
+            guildName: guildName || store[guildId]?.guildName || null,
+            rulesChannel: rulesChannel || null,
+            rulesTitle: rulesTitle || null,
+            rulesDescription: rulesDescription || null,
+            rulesFooter: rulesFooter || null,
+            rulesButton: rulesButton || null,
+            rulesAssignRole: rulesAssignRole || null,
+            version: version || WEBSITE_VERSION,
+            updatedAt: timestamp ? new Date(timestamp).toISOString() : new Date().toISOString()
+        };
+        saveRulesStore(store);
+        return res.json({ success: true, message: 'Rules synced', data: store[guildId] });
+    } catch (error) {
+        console.error('Rules sync error:', error);
+        return res.status(500).json({ success: false, error: 'Failed to sync rules' });
+    }
 });
 
-// API endpoint to update bot statistics
-app.post('/api/update-stats', (req, res) => {
-    // simple header-based auth
-    const token = req.headers['x-bot-token'];
-    if (!BOT_API_TOKEN) {
-        return res.status(500).json({ success: false, error: 'Server BOT_API_TOKEN not configured' });
+// Fetch rules config for a guild
+app.get('/api/rules', (req, res) => {
+    try {
+        const guildId = req.query.guildId;
+        const store = loadRulesStore();
+        if (!guildId) {
+            // return all guilds summary (ids and names) but not the full text to keep payload small
+            const list = Object.values(store).map(r => ({ guildId: r.guildId, guildName: r.guildName || null, updatedAt: r.updatedAt }));
+            return res.json({ success: true, data: { list } });
+        }
+        const rules = store[guildId];
+        if (!rules) return res.status(404).json({ success: false, error: 'Rules not found for guild' });
+        return res.json({ success: true, data: rules });
+    } catch (error) {
+        console.error('Get rules error:', error);
+        return res.status(500).json({ success: false, error: 'Failed to fetch rules' });
     }
-    if (!token || token !== BOT_API_TOKEN) {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
-    }
-
-    const { serverCount, userCount, commandsUsed, uptime, ping, version, timestamp } = req.body || {};
-
-    if (serverCount !== undefined) botStats.serverCount = serverCount;
-    if (userCount !== undefined) botStats.userCount = userCount;
-    if (commandsUsed !== undefined) botStats.commandsUsed = commandsUsed;
-    if (uptime !== undefined) botStats.uptime = uptime;
-    if (ping !== undefined) botStats.ping = ping;
-    if (version !== undefined) botStats.version = version;
-
-    // Update timestamp
-    botStats.lastUpdated = timestamp ? new Date(timestamp).toISOString() : new Date().toISOString();
-
-    return res.json({
-        success: true,
-        message: 'Stats updated successfully',
-        data: botStats
-    });
 });
+
+ 
 
 // Simple health endpoint for uptime checks
 app.get('/api/health', (req, res) => {
