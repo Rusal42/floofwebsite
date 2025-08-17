@@ -664,7 +664,9 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     // Helper: show only the selected category section (or all)
     function setVisibleSections(group){
       const explorer = document.getElementById('explorer');
-      if(explorer) explorer.style.display = (group === 'All') ? '' : 'none';
+      if(explorer) explorer.style.display = '';
+      const explorerGrid = document.getElementById('cx-grid');
+      if(explorerGrid) explorerGrid.style.display = (group === 'All') ? '' : 'none';
 
       const sections = [
         { id:'configuration', group:'Configuration' },
@@ -676,7 +678,9 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
         { id:'tickets', group:'Tickets' },
         { id:'afk', group:'AFK' },
         { id:'roles-section', group:'Roles' },
-        // Non-category informational sections (show only on All)
+        // Non-category informational sections
+        // Show Roles docs alongside the Roles grid when Roles is selected
+        { id:'roles', group:'Roles' },
         { id:'help', group:'All' },
         { id:'menus', group:'All' },
         { id:'leveling', group:'All' },
