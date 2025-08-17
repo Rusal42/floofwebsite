@@ -1,4 +1,6 @@
-const { updateStats } = require('./_statsStore');
+const { updateStats, getStats } = require('./_statsStore');
+let getStore;
+try { ({ getStore } = require('@netlify/blobs')); } catch (_) { getStore = null; }
 
 const BOT_API_TOKEN = process.env.BOT_API_TOKEN;
 
@@ -56,6 +58,16 @@ const handler = async (event) => {
   updates.lastUpdated = new Date().toISOString();
 
   const updated = updateStats(updates);
+
+  // Persist to Netlify Blobs (if available) so other function instances can read the latest stats
+  try {
+    if (getStore) {
+      const store = getStore({ name: 'floof-stats', consistency: 'strong' });
+      await store.set('stats.json', JSON.stringify(updated));
+    }
+  } catch (_) {
+    // ignore blob write errors to avoid breaking the endpoint
+  }
 
   return {
     statusCode: 200,

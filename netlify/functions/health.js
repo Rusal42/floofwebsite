@@ -13,13 +13,24 @@ const allowCors = (handler) => async (event) => {
 
 // Access in-memory stats (updated via /api/update-stats)
 const { getStats } = require('./_statsStore');
+let getStore;
+try { ({ getStore } = require('@netlify/blobs')); } catch (_) { getStore = null; }
 // Capture cold-start time as a fallback when no stats posted yet
 const startTime = Date.now();
 
 const handler = async () => {
   const WEBSITE_VERSION = process.env.WEBSITE_VERSION || 'v2.1.5';
   const env = process.env.NODE_ENV || 'production';
-  const stats = getStats();
+  // Prefer durable blob store if available
+  let stats;
+  try {
+    if (getStore) {
+      const store = getStore({ name: 'floof-stats', consistency: 'strong' });
+      const blob = await store.get('stats.json', { type: 'json' });
+      if (blob && typeof blob === 'object') stats = blob;
+    }
+  } catch (_) { /* ignore */ }
+  if (!stats) stats = getStats();
   // Use bot-provided uptime if available; otherwise fallback to function uptime
   const fnUptimeSec = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
   const statsUptimeSec = Number.isFinite(stats.uptime) ? Math.floor(stats.uptime) : 0;
@@ -66,7 +77,12 @@ const handler = async () => {
 
   return {
     statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    },
     body: JSON.stringify(payload)
   };
 };
