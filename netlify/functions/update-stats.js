@@ -32,7 +32,8 @@ const handler = async (event) => {
   }
 
   const token = event.headers['x-bot-token'] || event.headers['X-Bot-Token'];
-  if (!BOT_API_TOKEN || token !== BOT_API_TOKEN) {
+  // If a BOT_API_TOKEN is configured, enforce it. If not configured, allow updates (no-auth mode).
+  if (BOT_API_TOKEN && token !== BOT_API_TOKEN) {
     return {
       statusCode: 401,
       headers: { 'Content-Type': 'application/json' },
