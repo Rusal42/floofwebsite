@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupMobileNavigation();
     setupAnimations();
     setupHeroTilt();
+    setupHeroImageSwap();
     setupCommandToolbars();
     sortCommandLists();
     setupGlobalCommandsFilter();
@@ -41,6 +42,21 @@ function initializeAuth() {
     if (token && user) {
         updateUIForLoggedInUser(JSON.parse(user));
     }
+
+// Swap hero image to PNG only if it exists; default SVG always shows
+function setupHeroImageSwap() {
+    const imgEl = document.querySelector('.floof-avatar');
+    if (!imgEl) return;
+    const candidate = new Image();
+    candidate.onload = () => {
+        // Only swap if current is not already PNG
+        if (!/floof-hero\.png$/i.test(imgEl.src)) {
+            imgEl.src = '/assets/floof-hero.png';
+        }
+    };
+    candidate.onerror = () => { /* keep SVG */ };
+    candidate.src = '/assets/floof-hero.png';
+}
 }
 
 // Command filter toolbar (collapsible with search)
