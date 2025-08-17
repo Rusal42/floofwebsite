@@ -116,106 +116,27 @@
                 </p>
             </div>
             
-            <!-- Global Commands Filter Bar -->
-            <div id="global-command-filter" class="global-command-filter" aria-label="Commands Filter">
-                <div class="gcf-inner">
-                    <div class="gcf-left">
-                        <div class="gcf-title">Commands</div>
-                        <div class="gcf-chips" role="tablist">
-                            <button class="gcf-chip" data-panel="#panel-gambling">Gambling</button>
-                            <button class="gcf-chip" data-panel="#panel-moderation">Moderation</button>
-                            <button class="gcf-chip" data-panel="#panel-fun">Fun</button>
-                            <button class="gcf-chip" data-panel="#panel-general">General</button>
-                            <button class="gcf-chip" data-panel="#panel-roles">Roles</button>
-                            <button class="gcf-chip" data-panel="#panel-afk">AFK</button>
-                            <button class="gcf-chip" data-panel="#panel-important">Important</button>
-                            <button class="gcf-chip" data-panel="#panel-setup">Configuration</button>
-                        </div>
-                    </div>
-                    <div class="gcf-right">
-                        <input id="gcf-search" type="text" placeholder="Search all commands..." aria-label="Search all commands" />
-                    </div>
-                </div>
-            </div>
             
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🎲</div>
                     <h3>Gambling & Games</h3>
                     <p>Exciting gambling commands, daily rewards, and interactive games to keep your community engaged.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-gambling" aria-expanded="false" aria-controls="panel-gambling" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-gambling" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="section-description" style="margin-bottom:8px;">Gambling commands:</div>
-                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-                            <div class="command"><code>%balance</code> <span>View your current coins.</span></div>
-                            <div class="command"><code>%beg</code> <span>Chance to receive a small coin reward.</span></div>
-                            <div class="command"><code>%work</code> <span>Earn coins on a cooldown.</span></div>
-                            <div class="command"><code>%slots [amount]</code> <span>Slot machine with wins/losses based on symbols.</span></div>
-                            <div class="command"><code>%coinflip [amount] [heads|tails]</code> <span>50/50 coin toss bet.</span></div>
-                            <div class="command"><code>%blackjack [amount]</code> <span>Play blackjack vs the dealer. Hit/Stand via prompts.</span></div>
-                            <div class="command"><code>%roulette [amount] [color|number]</code> <span>Bet on red/black/green or a number.</span></div>
-                            <div class="command"><code>%donate @user [amount]</code> <span>Send coins to another user.</span></div>
-                            <div class="command"><code>%leaderboard</code> <span>See top balances.</span></div>
-                            <div class="command"><code>%levels</code> <span>Check XP/leveling progress.</span></div>
-                            <div class="command"><code>%release</code> <span>Claim periodic release rewards.</span></div>
-                            <div class="command"><code>%beatup [@user]</code> <span>Fun combat-themed coin interaction.</span></div>
-                            <div class="command"><code>%gambling</code> <span>Opens the gambling menu.</span></div>
-                        </div>
-                    </div>
+                    
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
                     <h3>Moderation Tools</h3>
                     <p>Powerful moderation features including setup commands, role management, and server configuration.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-moderation" aria-expanded="false" aria-controls="panel-moderation" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-moderation" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="section-description" style="margin-bottom:8px;">Moderation commands (enforced by Discord permissions):</div>
-                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-                            <div class="command"><code>%ban @user [reason]</code> <span>Ban a user from the server. <strong>Requires:</strong> Ban Members</span></div>
-                            <div class="command"><code>%kick @user [reason]</code> <span>Kick a user from the server. <strong>Requires:</strong> Kick Members</span></div>
-                            <div class="command"><code>%timeout @user [duration] [reason]</code> <span>Timeout a user. <strong>Requires:</strong> Moderate Members</span></div>
-                            <div class="command"><code>%warn @user [reason]</code> <span>Warn a user; logs to infractions. <strong>Requires:</strong> Manage Messages</span></div>
-                            <div class="command"><code>%infractions @user</code> <span>View a user's infractions. <strong>Requires:</strong> Moderator</span></div>
-                            <div class="command"><code>%clearinfractions @user</code> <span>Clear a user's infractions. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%slowmode [seconds]</code> <span>Set channel slowmode. <strong>Requires:</strong> Manage Channels</span></div>
-                            <div class="command"><code>%purge [1-100]</code> <span>Bulk delete recent messages. <strong>Requires:</strong> Manage Messages</span></div>
-                            <div class="command"><code>%ticket</code> <span>Ticket system menu and actions. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%advancedlog</code> <span>Advanced logging configuration. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%antispam</code> <span>Anti-spam controls and toggles. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%createlevelroles [start] [end]</code> <span>Create level roles automatically. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%whois @user</code> <span>View detailed user info.</span></div>
-                            <div class="command"><code>%av @user</code> <span>Show user's avatar.</span></div>
-                        </div>
-                        <p class="muted" style="margin-top:8px;">Only members with the listed Discord permissions can execute these actions. The bot also needs these permissions in the server/roles.</p>
-                    </div>
+                    
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">🎉</div>
                     <h3>Fun Commands</h3>
                     <p>Entertainment commands, memes, and interactive features to bring joy to your server.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-fun" aria-expanded="false" aria-controls="panel-fun" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-fun" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="section-description" style="margin-bottom:8px;">Fun commands:</div>
-                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-                            <div class="command"><code>%8ball</code></div>
-                            <div class="command"><code>%bite</code></div>
-                            <div class="command"><code>%blush</code></div>
-                            <div class="command"><code>%cat</code></div>
-                            <div class="command"><code>%dance</code></div>
-                            <div class="command"><code>%highfive</code></div>
-                            <div class="command"><code>%hug</code></div>
-                            <div class="command"><code>%joke</code></div>
-                            <div class="command"><code>%kiss</code></div>
-                            <div class="command"><code>%pat</code></div>
-                            <div class="command"><code>%poll</code></div>
-                            <div class="command"><code>%roll</code></div>
-                            <div class="command"><code>%shoot</code></div>
-                            <div class="command"><code>%slap</code></div>
-                            <div class="command"><code>%wave</code></div>
-                        </div>
-                    </div>
+                    
                 </div>
                 
                 <div class="feature-card">
@@ -228,125 +149,35 @@
                     <div class="feature-icon">🧰</div>
                     <h3>General Utilities</h3>
                     <p>Handy utilities for everyday server life.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-general" aria-expanded="false" aria-controls="panel-general" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-general" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-                            <div class="command"><code>%help</code></div>
-                            <div class="command"><code>%snipe</code></div>
-                            <div class="command"><code>%bulksnipe</code></div>
-                            <div class="command"><code>%clearsnipe</code></div>
-                            <div class="command"><code>%remind</code></div>
-                            <div class="command"><code>%revive</code></div>
-                            <div class="command"><code>%voice</code></div>
-                            <div class="command"><code>%analytics</code></div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">🎭</div>
                     <h3>Roles</h3>
                     <p>Role management made easy.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-roles" aria-expanded="false" aria-controls="panel-roles" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-roles" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-                            <div class="command"><code>%createrole</code></div>
-                            <div class="command"><code>%deleterole</code></div>
-                            <div class="command"><code>%giverole</code></div>
-                            <div class="command"><code>%takerole</code></div>
-                            <div class="command"><code>%listroles</code></div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">💤</div>
                     <h3>AFK</h3>
                     <p>Let others know you’re away.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-afk" aria-expanded="false" aria-controls="panel-afk" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-afk" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="command-list" style="display:grid; gap:8px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-                            <div class="command"><code>%afk [reason]</code></div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">⭐</div>
                     <h3>Important</h3>
                     <p>High-impact tools like tickets, logging, and analytics.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-important" aria-expanded="false" aria-controls="panel-important" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-important" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
-                            <div class="command"><code>%ticket</code> <span>Create/support server tickets.</span></div>
-                            <div class="command"><code>%advancedlog</code> <span>Advanced event logging and configuration.</span></div>
-                            <div class="command"><code>%analytics</code> <span>Server analytics and insights.</span></div>
-                        </div>
-                    </div>
+                    
                 </div>
-
-                
 
                 <div class="feature-card">
                     <div class="feature-icon">🔧</div>
                     <h3>Configuration</h3>
                     <p>Simple setup process with helpful guides and commands to get your server running quickly.</p>
-                    <button class="btn btn-secondary btn-small feature-toggle" data-target="#panel-setup" aria-expanded="false" aria-controls="panel-setup" style="margin-top:10px;">View Commands</button>
-                    <div id="panel-setup" class="commands-panel" style="display:none; margin-top:12px; border:1px solid var(--border-color); border-radius:12px; padding:14px; background: var(--surface-color);">
-                        <div class="section-description" style="margin-bottom:8px;">Admin & Configuration (Administrator required):</div>
-                        <div class="command-list" style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-                            <div class="command"><code>%config modlog #channel</code> <span>Set the channel for moderation logs. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config roles #channel</code> <span>Set the role selection/menu channel. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config welcome #channel</code> <span>Set the welcome messages channel. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config gambling #channel</code> <span>Restrict gambling to a specific channel. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config changelog #channel</code> <span>Set the changelog announcements channel. <strong>Requires:</strong> Administrator</span></div>
-
-                            <!-- New: Legacy Menus Configuration -->
-                            <div class="command"><code>%config ruleschannel #channel</code> <span>Set default channel for Rules/Agree menu. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config colorschannel #channel</code> <span>Set default channel for Color Roles menu. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config rulescontent title:"Title" description:"Line1\nLine2" footer:"Footer" button:"Agree" role:"Member"</code> <span>Customize rules menu content and assign role name. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config colorcontent title:"Pick a Color" description:"Choose a color role"</code> <span>Customize color menu embed text. <strong>Requires:</strong> Administrator</span></div>
-
-                            <div class="command"><code>%config rulesmenu [#channel]</code> <span>Post the rules/agree menu (uses saved defaults if omitted). <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config colormenu [#channel]</code> 
-                                <span>Auto-create color roles if missing and post the color roles menu (uses saved defaults if omitted). 
-                                <strong>Requires:</strong> Administrator</span>
-                            </div>
-
-                            <div class="command"><code>%config prefix [symbol]</code> <span>Change the server default prefix. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config view</code> <span>View all current server settings.</span></div>
-                            <div class="command"><code>%config reset [ruleschannel|colorschannel|rulescontent|colorcontent]</code> <span>Reset specific legacy menu settings. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%config reset</code> <span>Reset all configuration to defaults. <strong>Requires:</strong> Administrator</span></div>
-
-                            <div class="command"><code>%vcconfig</code> <span>Configure temporary voice channels. <strong>Requires:</strong> Manage Channels</span></div>
-                            <div class="command"><code>%setup</code> <span>Guided setup for moderation, logging, and tickets. <strong>Requires:</strong> Manage Server</span></div>
-                            <div class="command"><code>%levels config</code> <span>Configure the leveling system. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%levels reset @user</code> <span>Reset a user's XP/level. <strong>Requires:</strong> Administrator</span></div>
-                            <div class="command"><code>%levels reset all</code> <span>Reset all users' XP/levels. <strong>Requires:</strong> Administrator</span></div>
-                        </div>
-
-                        <!-- Quick Directions for Legacy Menus -->
-                        <div class="muted" style="margin-top:10px; line-height:1.6;">
-                            <strong>Directions:</strong>
-                            <ol style="margin:6px 0 0 18px;">
-                                <li>Set default channels: <code>%config ruleschannel #rules</code>, <code>%config colorschannel #roles</code>.</li>
-                                <li>Optionally customize text:
-                                    <br><code>%config rulescontent title:"Server Rules" description:"1. Be nice\n2. No spam" footer:"Click to agree" button:"I Agree" role:"Member"</code>
-                                    <br><code>%config colorcontent title:"Pick a Color" description:"Choose a single color role"</code>
-                                </li>
-                                <li>Post menus using saved defaults: <code>%config rulesmenu</code>, <code>%config colormenu</code>.
-                                    You can override channel inline, e.g. <code>%config rulesmenu #announcements</code>.</li>
-                                <li>Review current settings: <code>%config view</code>. Reset fields if needed: <code>%config reset rulescontent</code>.</li>
-                            </ol>
-                        </div>
-
-                        <!-- Permissions Note -->
-                        <p class="muted" style="margin-top:8px;">
-                            All admin/config commands validate permissions. Non-admins cannot change server settings.
-                            For legacy menus, ensure the bot has: <strong>Manage Roles</strong> (to assign the agree role and color roles),
-                            <strong>Send Messages</strong>, <strong>Embed Links</strong>, and <strong>Add Reactions/Use External Emojis</strong> (if used) in the target channels.
-                        </p>
-                    </div>
+                    
                 </div>
                 
                 <div class="feature-card">
@@ -357,8 +188,6 @@
             </div>
         </div>
     </section>
-
-    
 
     <!-- CTA Section -->
     <section class="cta">
