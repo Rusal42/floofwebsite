@@ -1,0 +1,639 @@
+[
+  {
+    "name": "afk",
+    "desc": "Set your AFK status with an optional reason",
+    "cat": "afk",
+    "aliases": []
+  },
+  {
+    "name": "8ball",
+    "desc": "Ask the magic 8-ball a question",
+    "cat": "fun",
+    "aliases": [
+      "eightball",
+      "magic8ball"
+    ],
+    "args": "%8ball <question>"
+  },
+  {
+    "name": "bite",
+    "desc": "Bite someone with a GIF",
+    "cat": "fun",
+    "aliases": [
+      "chomp"
+    ],
+    "args": "%bite [@user]"
+  },
+  {
+    "name": "blush",
+    "desc": "Blush with a GIF",
+    "cat": "fun",
+    "aliases": [
+      "shy"
+    ],
+    "args": "%blush"
+  },
+  {
+    "name": "cat",
+    "desc": "Shows a random cat image",
+    "cat": "fun",
+    "aliases": [
+      "kitty",
+      "kitten"
+    ],
+    "args": "%cat"
+  },
+  {
+    "name": "dance",
+    "desc": "Dance with someone or by yourself with a GIF",
+    "cat": "fun",
+    "aliases": [
+      "boogie"
+    ],
+    "args": "%dance [@user]"
+  },
+  {
+    "name": "highfive",
+    "desc": "High-five someone with a GIF",
+    "cat": "fun",
+    "aliases": [
+      "hi5",
+      "h5"
+    ],
+    "args": "%highfive [@user]"
+  },
+  {
+    "name": "hug",
+    "desc": "Give someone a warm hug",
+    "cat": "fun",
+    "aliases": [
+      "embrace"
+    ],
+    "args": "%hug [@user]"
+  },
+  {
+    "name": "joke",
+    "desc": "Tells a random joke",
+    "cat": "fun",
+    "aliases": [
+      "j"
+    ],
+    "args": "%joke"
+  },
+  {
+    "name": "kiss",
+    "desc": "Give someone a kiss",
+    "cat": "fun",
+    "aliases": [
+      "smooch"
+    ],
+    "args": "%kiss [@user]"
+  },
+  {
+    "name": "pat",
+    "desc": "Give someone gentle pats",
+    "cat": "fun",
+    "aliases": [
+      "headpat"
+    ],
+    "args": "%pat [@user]"
+  },
+  {
+    "name": "poll",
+    "desc": "Create interactive polls with multiple options and voting",
+    "cat": "fun",
+    "aliases": [
+      "vote",
+      "survey"
+    ],
+    "args": "%poll <question> | <option1> | <option2> [| option3...]"
+  },
+  {
+    "name": "roll",
+    "desc": "Roll a dice (1-6) or specify sides",
+    "cat": "fun",
+    "aliases": [
+      "dice",
+      "r"
+    ],
+    "args": "%roll [sides]"
+  },
+  {
+    "name": "shoot",
+    "desc": "Shoot someone with a GIF",
+    "cat": "fun",
+    "aliases": [
+      "gun",
+      "bang"
+    ],
+    "args": "%shoot [@user]"
+  },
+  {
+    "name": "slap",
+    "desc": "Slap someone with a GIF",
+    "cat": "fun",
+    "aliases": [
+      "smack"
+    ],
+    "args": "%slap [@user]"
+  },
+  {
+    "name": "wave",
+    "desc": "Wave at someone",
+    "cat": "fun",
+    "aliases": [
+      "hi",
+      "hello"
+    ],
+    "args": "%wave [@user]"
+  },
+  {
+    "name": "balance",
+    "desc": "Check your or another user\\",
+    "cat": "gambling",
+    "aliases": [
+      "bal",
+      "money",
+      "coins"
+    ],
+    "args": "%balance [@user]"
+  },
+  {
+    "name": "beatup",
+    "desc": "Beat up another user to steal their coins (80% success, 20% arrest chance)",
+    "cat": "gambling",
+    "aliases": []
+  },
+  {
+    "name": "beg",
+    "desc": "Beg for coins when you\\",
+    "cat": "gambling",
+    "aliases": [
+      "plead",
+      "ask"
+    ],
+    "args": "%beg"
+  },
+  {
+    "name": "blackjack",
+    "desc": "Play blackjack and bet your coins against the dealer",
+    "cat": "gambling",
+    "aliases": [
+      "bj"
+    ]
+  },
+  {
+    "name": "blackjack-handler",
+    "desc": "",
+    "cat": "gambling",
+    "aliases": []
+  },
+  {
+    "name": "coinflip",
+    "desc": "Flip a coin and bet on heads or tails",
+    "cat": "gambling",
+    "aliases": [
+      "cf",
+      "flip"
+    ],
+    "args": "%coinflip <heads/tails> <amount>"
+  },
+  {
+    "name": "Dog Walker",
+    "desc": "",
+    "cat": "gambling",
+    "aliases": []
+  },
+  {
+    "name": "donate",
+    "desc": "Donate coins to another user",
+    "cat": "gambling",
+    "aliases": [
+      "give",
+      "transfer"
+    ],
+    "args": "%donate <@user> <amount>"
+  },
+  {
+    "name": "gambling-menu",
+    "desc": "",
+    "cat": "gambling",
+    "aliases": []
+  },
+  {
+    "name": "give",
+    "desc": "Give coins to a user (Owner only)",
+    "cat": "gambling",
+    "aliases": [],
+    "args": "%give <amount> [@user]"
+  },
+  {
+    "name": "leaderboard",
+    "desc": "Shows the top coin holders in the server",
+    "cat": "gambling",
+    "aliases": []
+  },
+  {
+    "name": "levels",
+    "desc": "View your level, XP, and server leaderboard",
+    "cat": "gambling",
+    "aliases": [
+      "level",
+      "rank",
+      "xp"
+    ],
+    "args": "%levels [user] OR %levels leaderboard/config"
+  },
+  {
+    "name": "release",
+    "desc": "Release a user from arrested state (Owner only)",
+    "cat": "gambling",
+    "aliases": [],
+    "args": "%release [@user]"
+  },
+  {
+    "name": "roulette",
+    "desc": "Play roulette and bet your coins",
+    "cat": "gambling",
+    "aliases": [
+      "rl"
+    ]
+  },
+  {
+    "name": "slots",
+    "desc": "Play the slot machine and bet your coins for big payouts",
+    "cat": "gambling",
+    "aliases": [
+      "slot"
+    ]
+  },
+  {
+    "name": "work",
+    "desc": "Work to earn coins",
+    "cat": "gambling",
+    "aliases": [
+      "job"
+    ],
+    "args": "%work"
+  },
+  {
+    "name": "analytics",
+    "desc": "View detailed server analytics and statistics",
+    "cat": "general",
+    "aliases": [
+      "stats",
+      "serverstat",
+      "serverstats"
+    ],
+    "args": "%analytics [members|messages|commands|channels|growth]"
+  },
+  {
+    "name": "bulksnipe",
+    "desc": "Shows multiple recently deleted messages in this channel",
+    "cat": "general",
+    "aliases": [
+      "bulks"
+    ]
+  },
+  {
+    "name": "clearsnipe",
+    "desc": "Clears all stored deleted messages for this channel",
+    "cat": "general",
+    "aliases": [
+      "cs"
+    ]
+  },
+  {
+    "name": "help",
+    "desc": "Show help information and available commands",
+    "cat": "general",
+    "aliases": [
+      "h",
+      "commands"
+    ],
+    "args": "%help [command/category]"
+  },
+  {
+    "name": "prefix",
+    "desc": "Manage custom prefixes for users",
+    "cat": "general",
+    "aliases": [
+      "setprefix",
+      "pf"
+    ],
+    "args": "%prefix set <prefix> | %prefix remove/clear | %prefix list (Manage Server only)"
+  },
+  {
+    "name": "remind",
+    "desc": "Set personal and server reminders",
+    "cat": "general",
+    "aliases": [
+      "reminder",
+      "remindme"
+    ],
+    "args": "%remind <time> <message> OR %remind list/clear"
+  },
+  {
+    "name": "revive",
+    "desc": "Ping the configured revive role with a random question to get conversations started",
+    "cat": "general",
+    "aliases": [],
+    "args": "%revive",
+    "perms": [
+      "ManageChannels"
+    ]
+  },
+  {
+    "name": "snipe",
+    "desc": "Shows the most recently deleted message in this channel",
+    "cat": "general",
+    "aliases": [
+      "s"
+    ]
+  },
+  {
+    "name": "vcconfig",
+    "desc": "Configure voice channel creation settings",
+    "cat": "general",
+    "aliases": [
+      "voiceconfig",
+      "vcc",
+      "vc"
+    ],
+    "args": "%vcconfig [set/clear/view]"
+  },
+  {
+    "name": "voice",
+    "desc": "Voice channel management interface and commands",
+    "cat": "general",
+    "aliases": [
+      "vc",
+      "voicemaster",
+      "vm",
+      "v"
+    ],
+    "args": "%voice [name/reject/allow/limit/transfer] [arguments]"
+  },
+  {
+    "name": "fun-commands",
+    "desc": "",
+    "cat": "legacy",
+    "aliases": []
+  },
+  {
+    "name": "advancedlog",
+    "desc": "Configure advanced logging for all server events",
+    "cat": "moderation",
+    "aliases": [
+      "alog",
+      "logging",
+      "al",
+      "logs"
+    ],
+    "args": "%advancedlog <setup|toggle|view>"
+  },
+  {
+    "name": "antispam",
+    "desc": "Configure anti-spam protection for the server",
+    "cat": "moderation",
+    "aliases": [
+      "spam"
+    ],
+    "args": "%antispam [on/off/status/config]",
+    "perms": [
+      "ManageMessages"
+    ]
+  },
+  {
+    "name": "av",
+    "desc": "Show a user\\",
+    "cat": "moderation",
+    "aliases": [
+      "avatar",
+      "pfp"
+    ],
+    "args": "%av [@user|userID]"
+  },
+  {
+    "name": "ban",
+    "desc": "Ban a user from the server",
+    "cat": "moderation",
+    "aliases": [
+      "hammer",
+      "banish"
+    ],
+    "args": "%ban <@user|userID> [reason]"
+  },
+  {
+    "name": "clearinfractions",
+    "desc": "Clear infractions for a user or all users",
+    "cat": "moderation",
+    "aliases": [
+      "clearwarnings",
+      "clearwarns",
+      "clearinf",
+      "cw",
+      "ci"
+    ],
+    "args": "%clearinfractions <@user|all>"
+  },
+  {
+    "name": "config",
+    "desc": "Configure server-specific settings for Floof Bot",
+    "cat": "moderation",
+    "aliases": [
+      "configure",
+      "settings",
+      "cfg",
+      "c"
+    ],
+    "args": "%config <setting> [value/channel]",
+    "perms": [
+      "Administrator"
+    ]
+  },
+  {
+    "name": "infractions",
+    "desc": "View infractions for a user or all users",
+    "cat": "moderation",
+    "aliases": [
+      "warnings",
+      "warns",
+      "inf",
+      "w"
+    ],
+    "args": "%infractions [@user]"
+  },
+  {
+    "name": "kick",
+    "desc": "Kick a user from the server",
+    "cat": "moderation",
+    "aliases": [
+      "boot",
+      "yeet"
+    ],
+    "args": "%kick <@user|userID> [reason]"
+  },
+  {
+    "name": "setup",
+    "desc": "Setup guide for new servers using Floof bot",
+    "cat": "moderation",
+    "aliases": [
+      "config",
+      "configure"
+    ],
+    "args": "%setup [category]"
+  },
+  {
+    "name": "slowmode",
+    "desc": "Set slowmode for the current channel",
+    "cat": "moderation",
+    "aliases": [
+      "slow"
+    ],
+    "args": "%slowmode <seconds> or %slowmode off",
+    "perms": [
+      "ManageChannels"
+    ]
+  },
+  {
+    "name": "ticket",
+    "desc": "Manage support tickets - create, claim, close, and configure",
+    "cat": "moderation",
+    "aliases": [
+      "support",
+      "help-ticket"
+    ],
+    "args": "%ticket <create|claim|close|setup|list>"
+  },
+  {
+    "name": "timeout",
+    "desc": "Timeout a user for a specified duration",
+    "cat": "moderation",
+    "aliases": [
+      "mute",
+      "to"
+    ],
+    "args": "%timeout <@user|userID> <duration> [reason]"
+  },
+  {
+    "name": "warn",
+    "desc": "Warn a user and log it as an infraction",
+    "cat": "moderation",
+    "aliases": [
+      "warning"
+    ],
+    "args": "%warn <@user|userID> [reason]"
+  },
+  {
+    "name": "whois",
+    "desc": "Get detailed information about a user",
+    "cat": "moderation",
+    "aliases": [
+      "userinfo",
+      "ui"
+    ],
+    "args": "%whois [@user|userID]"
+  },
+  {
+    "name": "bulk",
+    "desc": "Bulk management operations for roles, channels, and server elements",
+    "cat": "owner",
+    "aliases": [
+      "bulkdelete",
+      "bulkremove",
+      "mass"
+    ],
+    "args": "%bulk <type> <action> [options]"
+  },
+  {
+    "name": "changelog",
+    "desc": "Manage and send changelogs to the building server",
+    "cat": "owner",
+    "aliases": [
+      "cl",
+      "updates"
+    ],
+    "args": "%changelog <send|list|view|delete> [options]"
+  },
+  {
+    "name": "createlevelroles_deprecated",
+    "desc": "Deprecated: use %createlevelroles (moderation) instead",
+    "cat": "owner",
+    "aliases": [],
+    "args": "%createlevelroles"
+  },
+  {
+    "name": "fluffyad",
+    "desc": "Advertise the Fluffy server with invite and information",
+    "cat": "owner",
+    "aliases": [
+      "fluffy-ad",
+      "advertise",
+      "serverad"
+    ],
+    "args": "%fluffyad"
+  },
+  {
+    "name": "createrole",
+    "desc": "Create a new role in the server",
+    "cat": "roles",
+    "aliases": [
+      "addrole",
+      "newrole"
+    ],
+    "args": "%createrole <name> [color] [hoist] [mentionable]",
+    "perms": [
+      "ManageRoles"
+    ]
+  },
+  {
+    "name": "deleterole",
+    "desc": "Delete a role from the server",
+    "cat": "roles",
+    "aliases": [
+      "removerole",
+      "destroyrole"
+    ],
+    "args": "%deleterole <role>",
+    "perms": [
+      "ManageRoles"
+    ]
+  },
+  {
+    "name": "giverole",
+    "desc": "Give a role to a user",
+    "cat": "roles",
+    "aliases": [
+      "addrole",
+      "assignrole"
+    ],
+    "args": "%giverole <@user> <role>",
+    "perms": [
+      "ManageRoles"
+    ]
+  },
+  {
+    "name": "listroles",
+    "desc": "List all roles in the server",
+    "cat": "roles",
+    "aliases": [
+      "roles",
+      "showroles"
+    ],
+    "args": "%listroles [user]"
+  },
+  {
+    "name": "takerole",
+    "desc": "Remove a role from a user",
+    "cat": "roles",
+    "aliases": [
+      "removerole",
+      "unassignrole"
+    ],
+    "args": "%takerole <@user> <role>",
+    "perms": [
+      "ManageRoles"
+    ]
+  }
+]

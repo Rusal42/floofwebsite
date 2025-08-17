@@ -33,6 +33,7 @@
       white-space:nowrap;
       transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
     }
+    .quickbar a { -webkit-user-drag: none; }
     .quickbar .cx-chip .icon { opacity:.85; }
     .quickbar .cx-chip:hover { background:#f7f7f9; border-color: rgba(0,0,0,0.12); }
     .quickbar .cx-chip.active { background:#eef2ff; border-color:#c7d2fe; color:#1f2937; }
@@ -113,9 +114,10 @@
             <a class="cx-chip" href="#" data-group="Moderation"><span class="icon">🔨</span> Moderation</a>
             <a class="cx-chip" href="#" data-group="Fun"><span class="icon">🎉</span> Fun</a>
             <a class="cx-chip" href="#" data-group="General"><span class="icon">🧰</span> General</a>
+            <a class="cx-chip" href="#" data-group="Voice"><span class="icon">🔊</span> Voice</a>
+            <a class="cx-chip" href="#" data-group="Tickets"><span class="icon">🎫</span> Tickets</a>
             <a class="cx-chip" href="#" data-group="Roles"><span class="icon">🏷️</span> Roles</a>
             <a class="cx-chip" href="#" data-group="AFK"><span class="icon">💤</span> AFK</a>
-            <a class="cx-chip" href="#" data-group="Important"><span class="icon">⭐</span> Important</a>
           </div>
         </div>
       </nav>
@@ -170,6 +172,12 @@
       <div id="grid-general" class="cx-grid" aria-live="polite"></div>
     </section>
 
+    <section id="voice" class="doc-section">
+      <h2>Voice (VC)</h2>
+      <div id="count-voice" class="section-count"></div>
+      <div id="grid-voice" class="cx-grid" aria-live="polite"></div>
+    </section>
+
     <section id="roles-section" class="doc-section">
       <h2>Roles</h2>
       <div id="count-roles" class="section-count"></div>
@@ -182,10 +190,10 @@
       <div id="grid-afk" class="cx-grid" aria-live="polite"></div>
     </section>
 
-    <section id="important" class="doc-section">
-      <h2>Important</h2>
-      <div id="count-important" class="section-count"></div>
-      <div id="grid-important" class="cx-grid" aria-live="polite"></div>
+    <section id="tickets" class="doc-section">
+      <h2>Tickets</h2>
+      <div id="count-tickets" class="section-count"></div>
+      <div id="grid-tickets" class="cx-grid" aria-live="polite"></div>
     </section>
 
     <!-- (Explorer section moved above under quickbar) -->
@@ -280,6 +288,11 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       </ul>
     </section>
   </main>
+  
+  <!-- Back to Top Button -->
+  <button id="back-to-top" aria-label="Back to top" title="Back to top">
+    <i class="fa fa-arrow-up"></i>
+  </button>
 
   <!-- Footer -->
   <footer class="footer">
@@ -356,6 +369,17 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     .cx-args-list li { border:1px dashed var(--border-color); padding:2px 8px; border-radius:10px; font-size:12px; }
     .cx-alias-list li, .cx-perms-list li { background:#00000020; border:1px solid var(--border-color); padding:2px 8px; border-radius:999px; font-size:12px; }
     .code-block { white-space:pre-wrap; background: var(--surface-color); border:1px solid var(--border-color); border-radius:10px; padding:10px; }
+    /* Back to Top */
+    #back-to-top {
+      position: fixed; right: 20px; bottom: 20px; z-index: 50;
+      width: 42px; height: 42px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #ffffff; color: #4b5563; border: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease;
+    }
+    #back-to-top.show { opacity: 1; pointer-events: auto; }
+    #back-to-top:hover { transform: translateY(-2px); background:#f7f7f9; }
   </style>
   <script>
     // Commands data (concise; expand as needed)
@@ -397,8 +421,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'clearinfractions @user', desc:'Clear a user\'s infractions.', cat:'moderation', roles:['Admin'], args:['user'] },
       { name:'slowmode [seconds]', desc:'Set channel slowmode.', cat:'moderation', roles:['Mod'], perms:['Manage Channels'], args:['seconds'] },
       { name:'purge [1-100]', desc:'Bulk delete recent messages.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'], args:['count'], aliases:['clear','prune'] },
-      { name:'ticket', desc:'Ticket system menu and actions.', cat:'important', roles:['Mod'], perms:['Manage Server'] },
-      { name:'advancedlog', desc:'Advanced logging configuration.', cat:'important', roles:['Mod'], perms:['Manage Server'] },
+      { name:'advancedlog', desc:'Advanced logging configuration.', cat:'moderation', roles:['Mod'], perms:['Manage Server'] },
       { name:'createlevelroles [start] [end]', desc:'Create level roles automatically.', cat:'moderation', roles:['Admin'] },
 
       // Fun
@@ -429,8 +452,34 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'clearsnipe', desc:'Clear snipe cache.', cat:'general', roles:['Mod'] },
       { name:'remind', desc:'Set a reminder.', cat:'general' },
       { name:'revive', desc:'Ping a revive role with a question.', cat:'general', perms:['Manage Channels'], aliases:['re'] },
-      { name:'voice', desc:'Manage temporary voice channels.', cat:'general', roles:['Mod'], perms:['Manage Channels'], args:['subcommand','...'] },
-      { name:'analytics', desc:'Server analytics.', cat:'important', roles:['Mod'] },
+      { name:'voice', desc:'Manage temporary voice channels.', cat:'voice', roles:['Mod'], perms:['Manage Channels'], args:['subcommand','...'] },
+      { name:'analytics', desc:'Server analytics.', cat:'general', roles:['Mod'] },
+
+      // Voice (VC)
+      { name:'vcconfig set #category', desc:'Set category for temporary voice channels.', cat:'voice', roles:['Mod'], perms:['Manage Channels'], args:['category'] },
+      { name:'vcconfig clear', desc:'Clear VC category configuration.', cat:'voice', roles:['Mod'], perms:['Manage Channels'] },
+      { name:'vcconfig view', desc:'View VC category configuration.', cat:'voice' },
+      { name:'voice help', desc:'Show voice command help.', cat:'voice' },
+      { name:'voice name <new name>', desc:'Rename your temporary VC.', cat:'voice', args:['name'] },
+      { name:'voice reject @user', desc:'Remove access for a user.', cat:'voice', args:['user'] },
+      { name:'voice allow @user', desc:'Grant access for a user.', cat:'voice', args:['user'] },
+      { name:'voice limit <n>', desc:'Set user limit for your VC.', cat:'voice', args:['n'] },
+      { name:'voice transfer @user', desc:'Transfer VC ownership.', cat:'voice', args:['user'] },
+
+      // Tickets
+      { name:'ticket', desc:'Ticket system menu and actions.', cat:'tickets', roles:['Mod'], perms:['Manage Server'] },
+      { name:'ticket create', desc:'Create a support ticket.', cat:'tickets' },
+      { name:'ticket claim', desc:'Claim the current ticket.', cat:'tickets' },
+      { name:'ticket close', desc:'Close the current ticket.', cat:'tickets', aliases:['delete'] },
+      { name:'ticket setup', desc:'Configure ticket system.', cat:'tickets', roles:['Admin'] },
+      { name:'ticket config', desc:'Alias of setup.', cat:'tickets', aliases:['setup'] },
+      { name:'ticket category #category', desc:'Set ticket category.', cat:'tickets', roles:['Admin'], args:['category'] },
+      { name:'ticket staff add @role|@user', desc:'Allow staff to claim.', cat:'tickets', roles:['Admin'], args:['role|user'] },
+      { name:'ticket staff remove @role|@user', desc:'Remove staff member.', cat:'tickets', roles:['Admin'], args:['role|user'] },
+      { name:'ticket log #channel', desc:'Set ticket logs channel.', cat:'tickets', roles:['Admin'], args:['channel'] },
+      { name:'ticket view', desc:'View ticket configuration.', cat:'tickets' },
+      { name:'ticket list', desc:'List open tickets.', cat:'tickets' },
+      { name:'ticket transcript', desc:'Generate ticket transcript.', cat:'tickets' },
 
       // Roles
       { name:'createrole [name]', desc:'Create a role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'], args:['name'], aliases:['addrole','ar'] },
@@ -441,6 +490,10 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
 
       // AFK
       { name:'afk [reason]', desc:'Set your AFK status.', cat:'afk' },
+
+      // Extra Moderation (missing previously)
+      { name:'av [@user]', desc:'View a user\'s avatar (server/user).', cat:'moderation' },
+      { name:'whois @user', desc:'Show detailed user information.', cat:'moderation' },
     ];
 
     const grid = document.getElementById('cx-grid');
@@ -456,7 +509,8 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       general: 'General',
       roles: 'Roles',
       afk: 'AFK',
-      important: 'Important'
+      voice: 'Voice',
+      tickets: 'Tickets'
     };
 
     function getGroup(c){ return c.group || GROUP_MAP[c.cat] || 'Miscellaneous'; }
@@ -576,6 +630,26 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       for(const c of items){ container.appendChild(makeCard(c)); }
     }
 
+    function setSectionCount(elId, cat){
+      const el = document.getElementById(elId);
+      if(!el) return;
+      const n = COMMANDS.filter(c => c.cat === cat).length;
+      el.textContent = n ? `${n} command${n!==1?'s':''}` : '';
+    }
+
+    function updateSectionCounts(){
+      setSectionCount('count-configuration','configuration');
+      setSectionCount('count-gambling','gambling');
+      setSectionCount('count-moderation','moderation');
+      setSectionCount('count-fun','fun');
+      setSectionCount('count-general','general');
+      setSectionCount('count-roles','roles');
+      setSectionCount('count-afk','afk');
+      setSectionCount('count-voice','voice');
+      setSectionCount('count-tickets','tickets');
+      
+    }
+
     catChips.addEventListener('click', (e) => {
       const btn = e.target.closest('button.cx-chip');
       if(!btn) return;
@@ -595,10 +669,17 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     renderInto('grid-general', 'general');
     renderInto('grid-roles', 'roles');
     renderInto('grid-afk', 'afk');
+    renderInto('grid-voice', 'voice');
+    renderInto('grid-tickets', 'tickets');
+    
+    updateSectionCounts();
 
     // Quickbar active state (top nav chips)
     const quickbarScroll = document.querySelector('.quickbar-scroll');
     if (quickbarScroll){
+      // Prevent native link-drag initiating a navigation drag image
+      quickbarScroll.querySelectorAll('a.cx-chip').forEach(a=> a.setAttribute('draggable','false'));
+      quickbarScroll.addEventListener('dragstart', (e)=>{ e.preventDefault(); });
       // Active state on click (only if not dragging)
       let dragging = false;
       let startX = 0;
@@ -651,24 +732,17 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hidePop(); });
     }
 
-    // Populate counts under each static section
-    const sectionKeyMap = {
-      configuration: 'count-configuration',
-      gambling: 'count-gambling',
-      moderation: 'count-moderation',
-      fun: 'count-fun',
-      general: 'count-general',
-      roles: 'count-roles',
-      afk: 'count-afk',
-      important: 'count-important'
-    };
-    const catCounts = {};
-    for(const c of COMMANDS){ catCounts[c.cat] = (catCounts[c.cat]||0)+1; }
-    for(const [cat, elId] of Object.entries(sectionKeyMap)){
-      const el = document.getElementById(elId);
-      if(el) el.textContent = `${catCounts[cat]||0} commands`;
-    }
-    renderInto('grid-important', 'important');
+    // Back to Top behavior
+    (function(){
+      const btn = document.getElementById('back-to-top');
+      if(!btn) return;
+      function onScroll(){
+        if(window.scrollY > 600) btn.classList.add('show'); else btn.classList.remove('show');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      btn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      onScroll();
+    })();
   </script>
 </body>
 </html>
