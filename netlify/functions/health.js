@@ -20,10 +20,10 @@ const handler = async () => {
   const WEBSITE_VERSION = process.env.WEBSITE_VERSION || 'v2.1.5';
   const env = process.env.NODE_ENV || 'production';
   const stats = getStats();
-  // Prefer the larger of bot-provided uptime and function uptime to avoid regressions
+  // Use bot-provided uptime if available; otherwise fallback to function uptime
   const fnUptimeSec = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
   const statsUptimeSec = Number.isFinite(stats.uptime) ? Math.floor(stats.uptime) : 0;
-  const uptimeSec = Math.max(statsUptimeSec, fnUptimeSec);
+  const uptimeSec = statsUptimeSec > 0 ? statsUptimeSec : fnUptimeSec;
   // Humanize to days/hours/minutes/seconds
   const days = Math.floor(uptimeSec / 86400);
   const hours = Math.floor((uptimeSec % 86400) / 3600);
@@ -50,7 +50,7 @@ const handler = async () => {
     message: '🐾 Floofs Den API is purring along nicely! (Netlify)',
     server: {
       name: 'Floofs Den API',
-      version: WEBSITE_VERSION,
+      version: stats.version || WEBSITE_VERSION,
       uptime: uptimeFormatted,
       environment: env
     },

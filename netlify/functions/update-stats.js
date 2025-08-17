@@ -47,7 +47,7 @@ const handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const allowed = ['serverCount', 'userCount', 'commandsUsed', 'uptime', 'ping'];
+  const allowed = ['serverCount', 'userCount', 'commandsUsed', 'uptime', 'ping', 'version'];
   const updates = {};
   for (const key of allowed) {
     if (payload[key] !== undefined) updates[key] = payload[key];

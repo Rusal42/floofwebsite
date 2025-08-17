@@ -7,6 +7,7 @@ const store = {
   commandsUsed: 150,
   uptime: 0,
   ping: 42,
+  version: null,
   lastUpdated: new Date().toISOString()
 };
 
