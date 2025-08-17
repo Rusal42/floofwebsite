@@ -42,23 +42,95 @@
   </header>
 
   <main class="container" style="padding-top:24px; padding-bottom:48px">
-    <!-- Commands Explorer -->
+    <!-- Quick Navigation -->
+    <nav class="doc-section" aria-label="Quick navigation" style="margin-bottom:16px;">
+      <div class="cx-chips" role="tablist" aria-label="Quick links">
+        <a class="cx-chip" href="#getting-started">Getting Started</a>
+        <a class="cx-chip" href="#configuration">Configuration</a>
+        <a class="cx-chip" href="#gambling">Gambling</a>
+        <a class="cx-chip" href="#moderation">Moderation</a>
+        <a class="cx-chip" href="#fun">Fun</a>
+        <a class="cx-chip" href="#general">General</a>
+        <a class="cx-chip" href="#roles-section">Roles</a>
+        <a class="cx-chip" href="#afk">AFK</a>
+        <a class="cx-chip" href="#important">Important</a>
+        <a class="cx-chip" href="#explorer">Explorer</a>
+        <a class="cx-chip" href="#help">Help</a>
+      </div>
+    </nav>
+
+    <!-- Getting Started (moved up) -->
+    <section id="getting-started" class="doc-section">
+      <h2>Getting Started</h2>
+      <ol>
+        <li>Invite the bot with the recommended permissions.</li>
+        <li>Run <code>%config view</code> to see current settings. <span class="badge badge-admin">Admin</span></li>
+        <li>Set channels you need (modlog, welcome, gambling). <span class="badge badge-admin">Admin</span></li>
+        <li>Post menus if desired: rules menu and color roles. <span class="badge badge-admin">Admin</span></li>
+      </ol>
+    </section>
+
+    <!-- Configuration (Admin) (moved up) -->
+    <section id="configuration" class="doc-section">
+      <h2>Configuration <span class="badge badge-admin">Admin</span></h2>
+      <div class="doc-grid">
+        <div class="doc-card"><code>%config modlog #channel</code><p>Set moderation logs destination.</p></div>
+        <div class="doc-card"><code>%config roles #channel</code><p>Set role selection/menu channel.</p></div>
+        <div class="doc-card"><code>%config welcome #channel</code><p>Set welcome messages channel.</p></div>
+        <div class="doc-card"><code>%config gambling #channel</code><p>Restrict gambling to a channel.</p></div>
+        <div class="doc-card"><code>%config rulesmenu [#channel] [RoleName]</code><p>Post the rules/agree menu. Optional: give RoleName on agree.</p></div>
+        <div class="doc-card"><code>%config colormenu [#channel]</code><p>Post the color roles selector menu.</p></div>
+        <div class="doc-card"><code>%config prefix [symbol]</code><p>Change server default prefix (e.g. <code>!</code>).</p></div>
+        <div class="doc-card"><code>%config userprefix @user [symbol]</code><p>Set a personal prefix for a user.</p></div>
+        <div class="doc-card"><code>%config view</code><p>View all current settings.</p></div>
+        <div class="doc-card"><code>%config reset [setting|all]</code><p>Reset a specific setting or all.</p></div>
+      </div>
+      <p class="muted">All config commands require Administrator and validate permissions.</p>
+    </section>
+
+    <!-- Category Sections -->
+    <section id="gambling" class="doc-section">
+      <h2>Gambling</h2>
+      <div id="grid-gambling" class="cx-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="moderation" class="doc-section">
+      <h2>Moderation</h2>
+      <div id="grid-moderation" class="cx-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="fun" class="doc-section">
+      <h2>Fun</h2>
+      <div id="grid-fun" class="cx-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="general" class="doc-section">
+      <h2>General</h2>
+      <div id="grid-general" class="cx-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="roles-section" class="doc-section">
+      <h2>Roles</h2>
+      <div id="grid-roles" class="cx-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="afk" class="doc-section">
+      <h2>AFK</h2>
+      <div id="grid-afk" class="cx-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="important" class="doc-section">
+      <h2>Important</h2>
+      <div id="grid-important" class="cx-grid" aria-live="polite"></div>
+    </section>
+
+    <!-- Commands Explorer (moved below) -->
     <section id="explorer" class="doc-section" aria-label="Commands Explorer">
       <h2 style="display:flex; align-items:center; gap:10px;">Commands
         <small class="muted" style="font-weight:400">Explore by category or search</small>
       </h2>
       <div class="cx-toolbar">
-        <div class="cx-chips" role="tablist" aria-label="Categories">
-          <button class="cx-chip active" data-category="all">All</button>
-          <button class="cx-chip" data-category="gambling">Gambling</button>
-          <button class="cx-chip" data-category="moderation">Moderation</button>
-          <button class="cx-chip" data-category="fun">Fun</button>
-          <button class="cx-chip" data-category="general">General</button>
-          <button class="cx-chip" data-category="roles">Roles</button>
-          <button class="cx-chip" data-category="afk">AFK</button>
-          <button class="cx-chip" data-category="important">Important</button>
-          <button class="cx-chip" data-category="configuration">Configuration</button>
-        </div>
+        <div id="cx-cat-chips" class="cx-chips" role="tablist" aria-label="Categories"></div>
         <div class="cx-search">
           <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
         </div>
@@ -82,35 +154,7 @@
       </div>
     </section>
 
-    <!-- Getting Started -->
-    <section id="getting-started" class="doc-section">
-      <h2>Getting Started</h2>
-      <ol>
-        <li>Invite the bot with the recommended permissions.</li>
-        <li>Run <code>%config view</code> to see current settings. <span class="badge badge-admin">Admin</span></li>
-        <li>Set channels you need (modlog, welcome, gambling, changelog). <span class="badge badge-admin">Admin</span></li>
-        <li>Post menus if desired: rules menu and color roles. <span class="badge badge-admin">Admin</span></li>
-      </ol>
-    </section>
-
-    <!-- Configuration (Admin) -->
-    <section id="configuration" class="doc-section">
-      <h2>Configuration <span class="badge badge-admin">Admin</span></h2>
-      <div class="doc-grid">
-        <div class="doc-card"><code>%config modlog #channel</code><p>Set moderation logs destination.</p></div>
-        <div class="doc-card"><code>%config roles #channel</code><p>Set role selection/menu channel.</p></div>
-        <div class="doc-card"><code>%config welcome #channel</code><p>Set welcome messages channel.</p></div>
-        <div class="doc-card"><code>%config gambling #channel</code><p>Restrict gambling to a channel.</p></div>
-        <div class="doc-card"><code>%config changelog #channel</code><p>Set changelog announcements channel.</p></div>
-        <div class="doc-card"><code>%config rulesmenu [#channel] [RoleName]</code><p>Post the rules/agree menu. Optional: give RoleName on agree.</p></div>
-        <div class="doc-card"><code>%config colormenu [#channel]</code><p>Post the color roles selector menu.</p></div>
-        <div class="doc-card"><code>%config prefix [symbol]</code><p>Change server default prefix (e.g. <code>!</code>).</p></div>
-        <div class="doc-card"><code>%config userprefix @user [symbol]</code><p>Set a personal prefix for a user.</p></div>
-        <div class="doc-card"><code>%config view</code><p>View all current settings.</p></div>
-        <div class="doc-card"><code>%config reset [setting|all]</code><p>Reset a specific setting or all.</p></div>
-      </div>
-      <p class="muted">All config commands require Administrator and validate permissions.</p>
-    </section>
+    <!-- (moved sections above) -->
 
     <!-- Menus -->
     <section id="menus" class="doc-section">
@@ -159,11 +203,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       <p class="muted">Spam protection prevents abuse; XP is rate-limited.</p>
     </section>
 
-    <!-- Changelogs -->
-    <section id="changelogs" class="doc-section">
-      <h2>Changelogs</h2>
-      <p>Configure: <code>%config changelog #channel</code> <span class="badge badge-admin">Admin</span>. Once set, owners can post formatted changelogs via the bot’s changelog command suite.</p>
-    </section>
+    
 
     <!-- Roles -->
     <section id="roles" class="doc-section">
@@ -242,9 +282,13 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     .doc-card code, .doc-block code { background: var(--chip-bg, #00000010); padding: 2px 6px; border-radius: 8px; }
     /* Explorer */
     .cx-toolbar { display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; }
-    .cx-chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width: thin; }
-    .cx-chip { white-space:nowrap; padding:6px 12px; border-radius:999px; border:1px solid var(--border-color); background: var(--surface-color); color: var(--text-color); cursor:pointer; }
+    .cx-chips { display:flex; gap:8px; overflow-x:auto; padding:6px 4px; scrollbar-width: thin; }
+    .cx-chips::-webkit-scrollbar { height: 8px; }
+    .cx-chips::-webkit-scrollbar-track { background: transparent; }
+    .cx-chips::-webkit-scrollbar-thumb { background: #00000030; border-radius: 999px; }
+    .cx-chip { white-space:nowrap; padding:6px 12px; border-radius:999px; border:1px solid var(--border-color); background: var(--surface-color); color: var(--text-color); cursor:pointer; display:flex; align-items:center; gap:8px; }
     .cx-chip.active { background: linear-gradient(180deg, #9b8cff33, #9b8cff22); border-color:#b18cff66; }
+    .cx-chip .count { font-weight:700; font-size:11px; padding:2px 6px; border-radius:999px; background:#00000020; border:1px solid var(--border-color); }
     .cx-search input { padding:8px 10px; border-radius:10px; border:1px solid var(--border-color); background: var(--surface-color); color: var(--text-color); min-width:220px; }
     .cx-grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
     .cx-card { border:1px solid var(--border-color); border-radius:12px; background: var(--surface-color); padding:12px; display:flex; flex-direction:column; gap:8px; }
@@ -254,6 +298,15 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     .cx-badge.admin { background:#e3d1ff20; border-color:#b18cff60; color:#b18cff; }
     .cx-badge.mod { background:#ffd9a820; border-color:#ffb34760; color:#ff9a00; }
     .cx-badge.perm { background:#90cdf420; border-color:#63b3ed60; color:#63b3ed; }
+    .cx-args { font-size:13px; }
+    .cx-args strong { color: var(--text-color); }
+    .cx-args-list { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 0; padding:0; list-style:none; }
+    .cx-args-list li { border:1px dashed var(--border-color); padding:2px 6px; border-radius:8px; font-size:12px; }
+    .cx-aliases { font-size:13px; }
+    .cx-aliases strong { color: var(--text-color); }
+    .cx-alias-list { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 0; padding:0; list-style:none; }
+    .cx-alias-list li { background:#00000020; border:1px solid var(--border-color); padding:2px 6px; border-radius:999px; font-size:12px; }
+    .cx-perms { font-size:12px; color:var(--muted-color); }
     .code-block { white-space:pre-wrap; background: var(--surface-color); border:1px solid var(--border-color); border-radius:10px; padding:10px; }
   </style>
   <script>
@@ -263,7 +316,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'balance', desc:'View your current coins.', cat:'gambling' },
       { name:'beg', desc:'Chance to receive a small coin reward.', cat:'gambling' },
       { name:'work', desc:'Earn coins on a cooldown.', cat:'gambling' },
-      { name:'slots [amount]', desc:'Slot machine with wins/losses based on symbols.', cat:'gambling' },
+      { name:'slots [amount]', desc:'Slot machine with wins/losses based on symbols.', cat:'gambling', aliases:['slot'] },
       { name:'coinflip [amount] [heads|tails]', desc:'50/50 coin toss bet.', cat:'gambling' },
       { name:'blackjack [amount]', desc:'Play blackjack vs the dealer.', cat:'gambling' },
       { name:'roulette [amount] [color|number]', desc:'Bet on red/black/green or a number.', cat:'gambling' },
@@ -278,7 +331,6 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'config roles #channel', desc:'Set role selection/menu channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config welcome #channel', desc:'Set welcome channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config gambling #channel', desc:'Restrict gambling to a channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
-      { name:'config changelog #channel', desc:'Set changelog announcements channel.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config ruleschannel #channel', desc:'Default channel for rules menu.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config colorschannel #channel', desc:'Default channel for color menu.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config rulescontent ...', desc:'Customize rules title/description/footer/button/role (use \\n for new lines).', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
@@ -289,14 +341,14 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'config reset [setting|all]', desc:'Reset a specific setting or all.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
 
       // Moderation
-      { name:'ban @user [reason]', desc:'Ban a user.', cat:'moderation', roles:['Admin'], perms:['Ban Members'] },
-      { name:'kick @user [reason]', desc:'Kick a user.', cat:'moderation', roles:['Admin'], perms:['Kick Members'] },
-      { name:'timeout @user [duration] [reason]', desc:'Timeout a user.', cat:'moderation', roles:['Mod'], perms:['Moderate Members'] },
-      { name:'warn @user [reason]', desc:'Warn a user; logs to infractions.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'] },
+      { name:'ban @user [reason]', desc:'Ban a user.', cat:'moderation', roles:['Admin'], perms:['Ban Members'], args:['user','reason'], aliases:['banish'] },
+      { name:'kick @user [reason]', desc:'Kick a user.', cat:'moderation', roles:['Admin'], perms:['Kick Members'], args:['user','reason'] },
+      { name:'timeout @user [duration] [reason]', desc:'Timeout a user.', cat:'moderation', roles:['Mod'], perms:['Moderate Members'], args:['user','duration','reason'], aliases:['mute','tm'] },
+      { name:'warn @user [reason]', desc:'Warn a user; logs to infractions.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'], args:['user','reason'], aliases:['strike'] },
       { name:'infractions @user', desc:'View a user\'s infractions.', cat:'moderation', roles:['Mod'] },
-      { name:'clearinfractions @user', desc:'Clear a user\'s infractions.', cat:'moderation', roles:['Admin'] },
-      { name:'slowmode [seconds]', desc:'Set channel slowmode.', cat:'moderation', roles:['Mod'], perms:['Manage Channels'] },
-      { name:'purge [1-100]', desc:'Bulk delete recent messages.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'] },
+      { name:'clearinfractions @user', desc:'Clear a user\'s infractions.', cat:'moderation', roles:['Admin'], args:['user'] },
+      { name:'slowmode [seconds]', desc:'Set channel slowmode.', cat:'moderation', roles:['Mod'], perms:['Manage Channels'], args:['seconds'] },
+      { name:'purge [1-100]', desc:'Bulk delete recent messages.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'], args:['count'], aliases:['clear','prune'] },
       { name:'ticket', desc:'Ticket system menu and actions.', cat:'important', roles:['Mod'], perms:['Manage Server'] },
       { name:'advancedlog', desc:'Advanced logging configuration.', cat:'important', roles:['Mod'], perms:['Manage Server'] },
       { name:'createlevelroles [start] [end]', desc:'Create level roles automatically.', cat:'moderation', roles:['Admin'] },
@@ -320,19 +372,19 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
 
       // General
       { name:'help', desc:'Show help.', cat:'general' },
-      { name:'snipe', desc:'Retrieve last deleted message in channel.', cat:'general', perms:['Manage Messages'] },
+      { name:'snipe', desc:'Retrieve last deleted message in channel.', cat:'general', perms:['Manage Messages'], args:['channel?','index?'], aliases:['sn'] },
       { name:'bulksnipe', desc:'Show list of recently deleted messages.', cat:'general', roles:['Mod'] },
       { name:'clearsnipe', desc:'Clear snipe cache.', cat:'general', roles:['Mod'] },
       { name:'remind', desc:'Set a reminder.', cat:'general' },
-      { name:'revive', desc:'Ping a revive role with a question.', cat:'general', perms:['Manage Channels'] },
-      { name:'voice', desc:'Manage temporary voice channels.', cat:'general', roles:['Mod'], perms:['Manage Channels'] },
+      { name:'revive', desc:'Ping a revive role with a question.', cat:'general', perms:['Manage Channels'], aliases:['re'] },
+      { name:'voice', desc:'Manage temporary voice channels.', cat:'general', roles:['Mod'], perms:['Manage Channels'], args:['subcommand','...'] },
       { name:'analytics', desc:'Server analytics.', cat:'important', roles:['Mod'] },
 
       // Roles
-      { name:'createrole [name]', desc:'Create a role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
-      { name:'deleterole [name]', desc:'Delete a role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
-      { name:'giverole @user [role]', desc:'Give a role to a user.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
-      { name:'takerole @user [role]', desc:'Remove a user\'s role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'] },
+      { name:'createrole [name]', desc:'Create a role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'], args:['name'], aliases:['addrole','ar'] },
+      { name:'deleterole [name]', desc:'Delete a role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'], args:['name'] },
+      { name:'giverole @user [role]', desc:'Give a role to a user.', cat:'roles', roles:['Mod'], perms:['Manage Roles'], args:['user','role'] },
+      { name:'takerole @user [role]', desc:'Remove a user\'s role.', cat:'roles', roles:['Mod'], perms:['Manage Roles'], args:['user','role'], aliases:['removerole','rr'] },
       { name:'listroles', desc:'List all roles.', cat:'roles' },
 
       // AFK
@@ -340,43 +392,109 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     ];
 
     const grid = document.getElementById('cx-grid');
-    const chips = Array.from(document.querySelectorAll('.cx-chip'));
+    const catChips = document.getElementById('cx-cat-chips');
     const search = document.getElementById('cx-search');
+
+    function computeCategoryCounts(){
+      const counts = {};
+      for(const c of COMMANDS){ counts[c.cat] = (counts[c.cat]||0)+1; }
+      const total = COMMANDS.length;
+      return { counts, total };
+    }
+
+    function buildCategoryChips(){
+      const order = ['all','gambling','moderation','fun','general','roles','afk','important','configuration'];
+      const labels = { all:'All', gambling:'Gambling', moderation:'Moderation', fun:'Fun', general:'General', roles:'Roles', afk:'AFK', important:'Important', configuration:'Configuration' };
+      const icons = { all:'📚', gambling:'🎲', moderation:'🔨', fun:'🎉', general:'🧰', roles:'🏷️', afk:'💤', important:'⭐', configuration:'⚙️' };
+      const { counts, total } = computeCategoryCounts();
+      catChips.innerHTML = '';
+      for(const key of order){
+        const btn = document.createElement('button');
+        btn.className = 'cx-chip' + (key==='all' ? ' active' : '');
+        btn.dataset.category = key;
+        const count = key==='all' ? total : (counts[key] || 0);
+        btn.innerHTML = `${icons[key] || ''} ${labels[key]} <span class=\"count\">${count}</span>`;
+        catChips.appendChild(btn);
+      }
+    }
+
+    function makeCard(c){
+      const card = document.createElement('div');
+      card.className = 'cx-card';
+      const title = document.createElement('h4');
+      title.textContent = c.name.startsWith('%') ? c.name : `%${c.name}`;
+      const desc = document.createElement('div');
+      desc.textContent = c.desc;
+      const meta = document.createElement('div');
+      meta.className = 'cx-meta';
+      const cat = document.createElement('span'); cat.className='cx-badge'; cat.textContent = c.cat;
+      meta.appendChild(cat);
+      if(Array.isArray(c.roles)){
+        for(const r of c.roles){
+          const role = document.createElement('span');
+          role.className = 'cx-badge ' + (r==='Admin' ? 'admin' : 'mod');
+          role.textContent = r;
+          meta.appendChild(role);
+        }
+      }
+      if(Array.isArray(c.perms)){
+        for(const p of c.perms){
+          const perm = document.createElement('span');
+          perm.className = 'cx-badge perm';
+          perm.textContent = p;
+          meta.appendChild(perm);
+        }
+      }
+      // Arguments block
+      const argsWrap = document.createElement('div');
+      argsWrap.className = 'cx-args';
+      if(Array.isArray(c.args) && c.args.length){
+        const argsTitle = document.createElement('div');
+        argsTitle.innerHTML = '<strong>Arguments</strong>';
+        const ul = document.createElement('ul');
+        ul.className = 'cx-args-list';
+        for(const a of c.args){
+          const li = document.createElement('li');
+          li.textContent = a;
+          ul.appendChild(li);
+        }
+        argsWrap.appendChild(argsTitle);
+        argsWrap.appendChild(ul);
+      }
+      // Aliases block
+      const aliasesWrap = document.createElement('div');
+      aliasesWrap.className = 'cx-aliases';
+      if(Array.isArray(c.aliases) && c.aliases.length){
+        const alTitle = document.createElement('div');
+        alTitle.innerHTML = '<strong>Aliases</strong>';
+        const ulA = document.createElement('ul');
+        ulA.className = 'cx-alias-list';
+        for(const al of c.aliases){
+          const li = document.createElement('li');
+          li.textContent = al;
+          ulA.appendChild(li);
+        }
+        aliasesWrap.appendChild(alTitle);
+        aliasesWrap.appendChild(ulA);
+      }
+      // Permissions line
+      const permsLine = document.createElement('div');
+      permsLine.className = 'cx-perms';
+      if(Array.isArray(c.perms) && c.perms.length){
+        permsLine.textContent = `Permissions: ${c.perms.join(', ')}`;
+      }
+      card.appendChild(title); card.appendChild(desc); card.appendChild(meta);
+      if(argsWrap.childNodes.length) card.appendChild(argsWrap);
+      if(aliasesWrap.childNodes.length) card.appendChild(aliasesWrap);
+      if(permsLine.textContent) card.appendChild(permsLine);
+      return card;
+    }
 
     function render(filterCat='all', query=''){
       grid.innerHTML = '';
       const q = query.trim().toLowerCase();
       const items = COMMANDS.filter(c => (filterCat==='all' || c.cat===filterCat) && (!q || (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q))));
-      for(const c of items){
-        const card = document.createElement('div');
-        card.className = 'cx-card';
-        const title = document.createElement('h4');
-        title.textContent = c.name.startsWith('%') ? c.name : `%${c.name}`;
-        const desc = document.createElement('div');
-        desc.textContent = c.desc;
-        const meta = document.createElement('div');
-        meta.className = 'cx-meta';
-        const cat = document.createElement('span'); cat.className='cx-badge'; cat.textContent = c.cat;
-        meta.appendChild(cat);
-        if(Array.isArray(c.roles)){
-          for(const r of c.roles){
-            const role = document.createElement('span');
-            role.className = 'cx-badge ' + (r==='Admin' ? 'admin' : 'mod');
-            role.textContent = r;
-            meta.appendChild(role);
-          }
-        }
-        if(Array.isArray(c.perms)){
-          for(const p of c.perms){
-            const perm = document.createElement('span');
-            perm.className = 'cx-badge perm';
-            perm.textContent = p;
-            meta.appendChild(perm);
-          }
-        }
-        card.appendChild(title); card.appendChild(desc); card.appendChild(meta);
-        grid.appendChild(card);
-      }
+      for(const c of items){ grid.appendChild(makeCard(c)); }
       if(items.length===0){
         const empty = document.createElement('div');
         empty.className='muted';
@@ -385,16 +503,35 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       }
     }
 
-    chips.forEach(ch => ch.addEventListener('click', () => {
-      chips.forEach(x => x.classList.remove('active'));
-      ch.classList.add('active');
-      render(ch.dataset.category, search.value);
-    }));
+    function renderInto(containerId, filterCat){
+      const container = document.getElementById(containerId);
+      if(!container) return;
+      container.innerHTML = '';
+      const items = COMMANDS.filter(c => c.cat === filterCat);
+      for(const c of items){ container.appendChild(makeCard(c)); }
+    }
+
+    catChips.addEventListener('click', (e) => {
+      const btn = e.target.closest('button.cx-chip');
+      if(!btn) return;
+      for(const b of catChips.querySelectorAll('button.cx-chip')) b.classList.remove('active');
+      btn.classList.add('active');
+      render(btn.dataset.category, search.value);
+    });
     search.addEventListener('input', () => {
       const active = document.querySelector('.cx-chip.active');
       render(active?.dataset.category || 'all', search.value);
     });
+    // Initial renders
+    buildCategoryChips();
     render();
+    renderInto('grid-gambling', 'gambling');
+    renderInto('grid-moderation', 'moderation');
+    renderInto('grid-fun', 'fun');
+    renderInto('grid-general', 'general');
+    renderInto('grid-roles', 'roles');
+    renderInto('grid-afk', 'afk');
+    renderInto('grid-important', 'important');
   </script>
 </body>
 </html>
