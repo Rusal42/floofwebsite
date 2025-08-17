@@ -9,6 +9,34 @@
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Light variant of the category toolbar for quick nav */
+    .quickbar {
+      display:flex; align-items:center; gap:12px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 14px;
+      padding: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      backdrop-filter: blur(6px);
+      overflow:auto;
+      scrollbar-width: none;
+    }
+    .quickbar::-webkit-scrollbar { display:none; }
+    .quickbar .cx-chip {
+      display:inline-flex; align-items:center; gap:8px;
+      border-radius: 10px;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      color:#2b2b2b; text-decoration:none; font-weight:500;
+      white-space:nowrap;
+      transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .quickbar .cx-chip .icon { opacity:.85; }
+    .quickbar .cx-chip:hover { background:#f7f7f9; border-color: rgba(0,0,0,0.12); }
+    .quickbar .cx-chip.active { background:#eef2ff; border-color:#c7d2fe; color:#1f2937; }
+  </style>
 </head>
 <body>
   <!-- Navigation -->
@@ -44,31 +72,19 @@
   <main class="container" style="padding-top:24px; padding-bottom:48px">
     <!-- Quick Navigation -->
     <nav class="doc-section" aria-label="Quick navigation" style="margin-bottom:16px;">
-      <div class="cx-chips" role="tablist" aria-label="Quick links">
-        <a class="cx-chip" href="#getting-started">Getting Started</a>
-        <a class="cx-chip" href="#configuration">Configuration</a>
-        <a class="cx-chip" href="#gambling">Gambling</a>
-        <a class="cx-chip" href="#moderation">Moderation</a>
-        <a class="cx-chip" href="#fun">Fun</a>
-        <a class="cx-chip" href="#general">General</a>
-        <a class="cx-chip" href="#roles-section">Roles</a>
-        <a class="cx-chip" href="#afk">AFK</a>
-        <a class="cx-chip" href="#important">Important</a>
-        <a class="cx-chip" href="#explorer">Explorer</a>
-        <a class="cx-chip" href="#help">Help</a>
+      <div class="quickbar" role="tablist" aria-label="Quick links">
+        <a class="cx-chip active" href="#configuration"><span class="icon">⚙️</span> Configuration</a>
+        <a class="cx-chip" href="#gambling"><span class="icon">🎲</span> Gambling</a>
+        <a class="cx-chip" href="#moderation"><span class="icon">🔨</span> Moderation</a>
+        <a class="cx-chip" href="#fun"><span class="icon">🎉</span> Fun</a>
+        <a class="cx-chip" href="#general"><span class="icon">🧰</span> General</a>
+        <a class="cx-chip" href="#roles-section"><span class="icon">🏷️</span> Roles</a>
+        <a class="cx-chip" href="#afk"><span class="icon">💤</span> AFK</a>
+        <a class="cx-chip" href="#important"><span class="icon">⭐</span> Important</a>
+        <a class="cx-chip" href="#explorer"><span class="icon">📚</span> Explorer</a>
+        <a class="cx-chip" href="#help"><span class="icon">❓</span> Help</a>
       </div>
     </nav>
-
-    <!-- Getting Started (moved up) -->
-    <section id="getting-started" class="doc-section">
-      <h2>Getting Started</h2>
-      <ol>
-        <li>Invite the bot with the recommended permissions.</li>
-        <li>Run <code>%config view</code> to see current settings. <span class="badge badge-admin">Admin</span></li>
-        <li>Set channels you need (modlog, welcome, gambling). <span class="badge badge-admin">Admin</span></li>
-        <li>Post menus if desired: rules menu and color roles. <span class="badge badge-admin">Admin</span></li>
-      </ol>
-    </section>
 
     <!-- Configuration (Admin) (moved up) -->
     <section id="configuration" class="doc-section">
@@ -557,6 +573,17 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     renderInto('grid-general', 'general');
     renderInto('grid-roles', 'roles');
     renderInto('grid-afk', 'afk');
+
+    // Quickbar active state (top nav chips)
+    const quickbar = document.querySelector('.quickbar');
+    if (quickbar){
+      quickbar.addEventListener('click', (e)=>{
+        const a = e.target.closest('a.cx-chip');
+        if(!a) return;
+        for(const el of quickbar.querySelectorAll('a.cx-chip')) el.classList.remove('active');
+        a.classList.add('active');
+      });
+    }
     renderInto('grid-important', 'important');
   </script>
 </body>
