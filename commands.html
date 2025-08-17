@@ -40,6 +40,20 @@
     .quickbar .cx-chip .icon { opacity:.85; }
     .quickbar .cx-chip:hover { background:#f7f7f9; border-color: rgba(0,0,0,0.12); }
     .quickbar .cx-chip.active { background:#eef2ff; border-color:#c7d2fe; color:#1f2937; }
+
+    /* Quickbar search button + popover */
+    .qb-search{
+      position:absolute; right:8px; top:8px;
+      width:36px; height:36px; border-radius:10px; border:1px solid rgba(0,0,0,0.06);
+      background:#fff; color:#4b5563; display:inline-flex; align-items:center; justify-content:center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .qb-search:hover{ background:#f7f7f9; }
+    .qb-popover{ position:absolute; right:8px; top:52px; background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:8px; box-shadow:0 8px 24px rgba(0,0,0,0.12); }
+    .qb-popover input{ width:260px; padding:10px 12px; border:1px solid rgba(0,0,0,0.12); border-radius:10px; outline:none; }
+
+    /* Count badge under section headings */
+    .section-count{ margin-top:6px; color:#6b7280; font-size:12px; }
   </style>
 </head>
 <body>
@@ -69,26 +83,29 @@
     <div class="container">
       <h1 class="hero-title">Commands & Help</h1>
       <p class="hero-description">Clear, step-by-step usage for admins and users.</p>
-      <div class="muted" style="margin-top:8px">Legend: <span class="badge badge-admin">Admin</span> requires Administrator permission</div>
     </div>
   </header>
 
   <main class="container" style="padding-top:24px; padding-bottom:48px">
     <!-- Quick Navigation -->
-    <nav class="doc-section" aria-label="Quick navigation" style="margin-bottom:16px;">
+    <nav class="doc-section" aria-label="Quick navigation" style="margin-bottom:16px; position:relative;">
       <div class="quickbar" role="tablist" aria-label="Quick links">
         <a class="cx-chip active" href="#" data-group="All"><span class="icon">📚</span> All</a>
-        <a class="cx-chip" href="#" data-group="Server"><span class="icon">🗂️</span> Server</a>
-        <a class="cx-chip" href="#" data-group="Fun"><span class="icon">🎉</span> Fun</a>
+        <a class="cx-chip" href="#" data-group="Configuration"><span class="icon">⚙️</span> Configuration</a>
+        <a class="cx-chip" href="#" data-group="Gambling"><span class="icon">🎲</span> Gambling</a>
         <a class="cx-chip" href="#" data-group="Moderation"><span class="icon">🔨</span> Moderation</a>
-        <a class="cx-chip" href="#" data-group="Information"><span class="icon">ℹ️</span> Information</a>
-        <a class="cx-chip" href="#" data-group="Audio"><span class="icon">🎧</span> Audio</a>
-        <a class="cx-chip" href="#" data-group="ImageManipulation"><span class="icon">🖼️</span> ImageManipulation</a>
-        <a class="cx-chip" href="#" data-group="Bot"><span class="icon">🤖</span> Bot</a>
-        <a class="cx-chip" href="#" data-group="Miscellaneous"><span class="icon">🧩</span> Misc</a>
-        <a class="cx-chip" href="#" data-group="VoiceMaster"><span class="icon">🎙️</span> Voice</a>
-        <a class="cx-chip" href="#" data-group="YouTube"><span class="icon">▶️</span> YouTube</a>
-        <a class="cx-chip" href="#" data-group="Weather"><span class="icon">🌤️</span> Weather</a>
+        <a class="cx-chip" href="#" data-group="Fun"><span class="icon">🎉</span> Fun</a>
+        <a class="cx-chip" href="#" data-group="General"><span class="icon">🧰</span> General</a>
+        <a class="cx-chip" href="#" data-group="Roles"><span class="icon">🏷️</span> Roles</a>
+        <a class="cx-chip" href="#" data-group="AFK"><span class="icon">💤</span> AFK</a>
+        <a class="cx-chip" href="#" data-group="Important"><span class="icon">⭐</span> Important</a>
+      </div>
+      <!-- Search icon button -->
+      <button id="qb-search" class="qb-search" aria-label="Search commands" title="Search" type="button">
+        <i class="fa fa-search"></i>
+      </button>
+      <div id="qb-search-pop" class="qb-popover" role="dialog" aria-label="Search commands" hidden>
+        <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
       </div>
     </nav>
 
@@ -97,11 +114,9 @@
       <h2 style="display:flex; align-items:center; gap:10px;">Commands
         <small class="muted" style="font-weight:400">Explore by category or search</small>
       </h2>
-      <div class="cx-toolbar">
+      <div class="cx-toolbar" style="display:none">
         <div id="cx-cat-chips" class="cx-chips" role="tablist" aria-label="Categories" style="display:none"></div>
-        <div class="cx-search">
-          <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
-        </div>
+        <div class="cx-search" style="display:none"></div>
       </div>
       <div id="cx-grid" class="cx-grid" aria-live="polite"></div>
     </section>
@@ -109,6 +124,7 @@
     <!-- Configuration (Admin) (moved up) -->
     <section id="configuration" class="doc-section">
       <h2>Configuration <span class="badge badge-admin">Admin</span></h2>
+      <div id="count-configuration" class="section-count"></div>
       <div class="doc-grid">
         <div class="doc-card"><code>%config modlog #channel</code><p>Set moderation logs destination.</p></div>
         <div class="doc-card"><code>%config roles #channel</code><p>Set role selection/menu channel.</p></div>
@@ -127,36 +143,43 @@
     <!-- Category Sections -->
     <section id="gambling" class="doc-section">
       <h2>Gambling</h2>
+      <div id="count-gambling" class="section-count"></div>
       <div id="grid-gambling" class="cx-grid" aria-live="polite"></div>
     </section>
 
     <section id="moderation" class="doc-section">
       <h2>Moderation</h2>
+      <div id="count-moderation" class="section-count"></div>
       <div id="grid-moderation" class="cx-grid" aria-live="polite"></div>
     </section>
 
     <section id="fun" class="doc-section">
       <h2>Fun</h2>
+      <div id="count-fun" class="section-count"></div>
       <div id="grid-fun" class="cx-grid" aria-live="polite"></div>
     </section>
 
     <section id="general" class="doc-section">
       <h2>General</h2>
+      <div id="count-general" class="section-count"></div>
       <div id="grid-general" class="cx-grid" aria-live="polite"></div>
     </section>
 
     <section id="roles-section" class="doc-section">
       <h2>Roles</h2>
+      <div id="count-roles" class="section-count"></div>
       <div id="grid-roles" class="cx-grid" aria-live="polite"></div>
     </section>
 
     <section id="afk" class="doc-section">
       <h2>AFK</h2>
+      <div id="count-afk" class="section-count"></div>
       <div id="grid-afk" class="cx-grid" aria-live="polite"></div>
     </section>
 
     <section id="important" class="doc-section">
       <h2>Important</h2>
+      <div id="count-important" class="section-count"></div>
       <div id="grid-important" class="cx-grid" aria-live="polite"></div>
     </section>
 
@@ -419,17 +442,16 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     const catChips = document.getElementById('cx-cat-chips');
     const search = document.getElementById('cx-search');
 
-    // Map our internal categories to external display groups (baba-style)
+    // Map internal categories to display groups matching our sections
     const GROUP_MAP = {
-      configuration: 'Server',
+      configuration: 'Configuration',
+      gambling: 'Gambling',
       moderation: 'Moderation',
-      roles: 'Server',
-      general: 'Information',
-      important: 'Server',
-      gambling: 'Fun',
-      afk: 'Information',
-      fun: 'Fun'
-      // Additional internal cats can be mapped here later
+      fun: 'Fun',
+      general: 'General',
+      roles: 'Roles',
+      afk: 'AFK',
+      important: 'Important'
     };
 
     function getGroup(c){ return c.group || GROUP_MAP[c.cat] || 'Miscellaneous'; }
@@ -442,20 +464,8 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     }
 
     function buildCategoryChips(){
-      const order = ['All','Server','Fun','Moderation','Information','Audio','ImageManipulation','Bot','Miscellaneous','VoiceMaster','YouTube','Weather'];
-      const icons = { All:'📚', Server:'🗂️', Fun:'🎉', Moderation:'🔨', Information:'ℹ️', Audio:'🎧', ImageManipulation:'🖼️', Bot:'🤖', Miscellaneous:'🧩', VoiceMaster:'🎙️', YouTube:'▶️', Weather:'🌤️' };
-      const { counts, total } = computeGroupCounts();
+      // Keep Explorer's internal chips hidden (we now control via top quickbar)
       catChips.innerHTML = '';
-      for(const key of order){
-        const isAll = key === 'All';
-        const count = isAll ? total : (counts[key] || 0);
-        if(!isAll && count === 0) continue; // hide empty groups
-        const btn = document.createElement('button');
-        btn.className = 'cx-chip' + (isAll ? ' active' : '');
-        btn.dataset.group = key;
-        btn.innerHTML = `${icons[key] || ''} ${key} <span class=\"count\">${count}</span>`;
-        catChips.appendChild(btn);
-      }
     }
 
     function makeCard(c){
@@ -624,6 +634,34 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
         const group = a.dataset.group || 'All';
         render(group, search.value);
       }, true);
+    }
+    // Search popover toggle
+    const qbSearchBtn = document.getElementById('qb-search');
+    const qbPop = document.getElementById('qb-search-pop');
+    function hidePop(){ if(!qbPop) return; qbPop.hidden = true; }
+    function showPop(){ if(!qbPop) return; qbPop.hidden = false; const inp = qbPop.querySelector('#cx-search'); inp && inp.focus(); }
+    if(qbSearchBtn && qbPop){
+      qbSearchBtn.addEventListener('click', (e)=>{ e.stopPropagation(); qbPop.hidden ? showPop() : hidePop(); });
+      document.addEventListener('click', (e)=>{ if(qbPop.hidden) return; if(!qbPop.contains(e.target) && e.target !== qbSearchBtn) hidePop(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hidePop(); });
+    }
+
+    // Populate counts under each static section
+    const sectionKeyMap = {
+      configuration: 'count-configuration',
+      gambling: 'count-gambling',
+      moderation: 'count-moderation',
+      fun: 'count-fun',
+      general: 'count-general',
+      roles: 'count-roles',
+      afk: 'count-afk',
+      important: 'count-important'
+    };
+    const catCounts = {};
+    for(const c of COMMANDS){ catCounts[c.cat] = (catCounts[c.cat]||0)+1; }
+    for(const [cat, elId] of Object.entries(sectionKeyMap)){
+      const el = document.getElementById(elId);
+      if(el) el.textContent = `${catCounts[cat]||0} commands`;
     }
     renderInto('grid-important', 'important');
   </script>
