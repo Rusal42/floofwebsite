@@ -27,7 +27,9 @@ let botStats = {
     userCount: 30,
     commandsUsed: 150,
     uptime: 50.0,
-    ping: 42
+    ping: 42,
+    version: '1.0.0',
+    lastUpdated: new Date().toISOString()
 };
 
 // Routes
@@ -56,13 +58,14 @@ app.post('/api/update-stats', (req, res) => {
         return res.status(401).json({ success: false, error: 'Unauthorized' });
     }
 
-    const { serverCount, userCount, commandsUsed, uptime, ping, timestamp } = req.body || {};
+    const { serverCount, userCount, commandsUsed, uptime, ping, version, timestamp } = req.body || {};
 
     if (serverCount !== undefined) botStats.serverCount = serverCount;
     if (userCount !== undefined) botStats.userCount = userCount;
     if (commandsUsed !== undefined) botStats.commandsUsed = commandsUsed;
     if (uptime !== undefined) botStats.uptime = uptime;
     if (ping !== undefined) botStats.ping = ping;
+    if (version !== undefined) botStats.version = version;
 
     // Update timestamp
     botStats.lastUpdated = timestamp ? new Date(timestamp).toISOString() : new Date().toISOString();
@@ -76,7 +79,25 @@ app.post('/api/update-stats', (req, res) => {
 
 // Simple health endpoint for uptime checks
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', port: PORT, time: new Date().toISOString(), version: WEBSITE_VERSION, environment: process.env.NODE_ENV || 'development' });
+    const procUptimeSec = Math.floor(process.uptime());
+    const statsUptimeSec = Number.isFinite(botStats.uptime) ? Math.floor(botStats.uptime) : 0;
+    const uptimeSec = Math.max(procUptimeSec, statsUptimeSec);
+    const days = Math.floor(uptimeSec / 86400);
+    const hours = Math.floor((uptimeSec % 86400) / 3600);
+    const minutes = Math.floor((uptimeSec % 3600) / 60);
+    const seconds = uptimeSec % 60;
+    const uptimeFormatted = days > 0
+        ? `${days}d ${hours}h ${minutes}m ${seconds}s`
+        : `${hours}h ${minutes}m ${seconds}s`;
+
+    res.json({ 
+        status: 'ok', 
+        port: PORT, 
+        time: new Date().toISOString(), 
+        version: WEBSITE_VERSION, 
+        environment: process.env.NODE_ENV || 'development',
+        uptime: uptimeFormatted
+    });
 });
 
 // Discord OAuth2 callback
@@ -192,14 +213,16 @@ app.get('/api/stats', async (req, res) => {
 // Update bot statistics (called by your bot)
 app.post('/api/stats', authenticateBot, (req, res) => {
     try {
-        const { serverCount, userCount, commandsUsed, uptime, ping } = req.body;
+        const { serverCount, userCount, commandsUsed, uptime, ping, version } = req.body;
         
         botStats = {
             serverCount: serverCount || botStats.serverCount,
             userCount: userCount || botStats.userCount,
             commandsUsed: commandsUsed || botStats.commandsUsed,
             uptime: uptime || botStats.uptime,
-            ping: ping || botStats.ping
+            ping: ping || botStats.ping,
+            version: version || botStats.version,
+            lastUpdated: new Date().toISOString()
         };
         
         res.json({ success: true, message: 'Stats updated successfully' });

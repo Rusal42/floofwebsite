@@ -139,8 +139,6 @@
         <div class="doc-card"><code>%config gambling #channel</code><p>Restrict gambling to a channel.</p></div>
         <div class="doc-card"><code>%config rulesmenu [#channel] [RoleName]</code><p>Post the rules/agree menu. Optional: give RoleName on agree.</p></div>
         <div class="doc-card"><code>%config colormenu [#channel]</code><p>Post the color roles selector menu.</p></div>
-        <div class="doc-card"><code>%config prefix [symbol]</code><p>Change server default prefix (e.g. <code>!</code>).</p></div>
-        <div class="doc-card"><code>%config userprefix @user [symbol]</code><p>Set a personal prefix for a user.</p></div>
         <div class="doc-card"><code>%config view</code><p>View all current settings.</p></div>
         <div class="doc-card"><code>%config reset [setting|all]</code><p>Reset a specific setting or all.</p></div>
       </div>
@@ -202,13 +200,9 @@
       <h2>Help</h2>
       <div class="doc-block">
         <h3>Prefix</h3>
-        <p>
-          Floof supports both a server default prefix and per-user prefixes.
-        </p>
         <ul>
-          <li><code>%help</code> — Show the help menu with your current prefix.</li>
-          <li><strong>Per-user prefix:</strong> You can have your own prefix that only you can use. Ask an admin to set it via <code>%config userprefix @you !</code>. After that, you can use <code>!help</code>, <code>!balance</code>, etc., without changing the server default.</li>
-          <li><strong>Server default prefix (Admin):</strong> <code>%config prefix ?</code> changes the default prefix for everyone.</li>
+          <li><code>%help</code> — Show the help menu.</li>
+          <li><strong>Per-user prefix:</strong> Set your own with <code>%prefix set !</code>. After that, you can use <code>!help</code>, <code>!balance</code>, etc. Default is <code>%</code> if you haven't set one.</li>
         </ul>
         <p class="muted">Tip: You can always mention the bot to get help, e.g. <code>@Floof help</code>.</p>
       </div>
@@ -284,7 +278,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       <ul>
         <li><strong>Bot can’t post:</strong> Check channel permissions (Send Messages, Embed Links).</li>
         <li><strong>Role not assigned:</strong> Ensure bot role is above the target role and bot has Manage Roles.</li>
-        <li><strong>Commands not responding:</strong> Confirm prefix (server default or your per-user prefix) and try <code>@Floof help</code>.</li>
+        <li><strong>Commands not responding:</strong> Confirm your personal prefix (or use the default <code>%</code>) and try <code>@Floof help</code>.</li>
       </ul>
     </section>
   </main>

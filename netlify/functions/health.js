@@ -20,9 +20,18 @@ const handler = async () => {
   const WEBSITE_VERSION = process.env.WEBSITE_VERSION || 'v2.1.5';
   const env = process.env.NODE_ENV || 'production';
   const stats = getStats();
-  // Prefer bot-provided uptime (in seconds). Fallback to function uptime.
-  const uptimeSec = Number.isFinite(stats.uptime) ? Math.floor(stats.uptime) : Math.max(0, Math.floor((Date.now() - startTime) / 1000));
-  const uptimeFormatted = `${Math.floor(uptimeSec / 3600)}h ${Math.floor((uptimeSec % 3600) / 60)}m ${uptimeSec % 60}s`;
+  // Prefer the larger of bot-provided uptime and function uptime to avoid regressions
+  const fnUptimeSec = Math.max(0, Math.floor((Date.now() - startTime) / 1000));
+  const statsUptimeSec = Number.isFinite(stats.uptime) ? Math.floor(stats.uptime) : 0;
+  const uptimeSec = Math.max(statsUptimeSec, fnUptimeSec);
+  // Humanize to days/hours/minutes/seconds
+  const days = Math.floor(uptimeSec / 86400);
+  const hours = Math.floor((uptimeSec % 86400) / 3600);
+  const minutes = Math.floor((uptimeSec % 3600) / 60);
+  const seconds = uptimeSec % 60;
+  const uptimeFormatted = days > 0
+    ? `${days}d ${hours}h ${minutes}m ${seconds}s`
+    : `${hours}h ${minutes}m ${seconds}s`;
 
   // Synthetic single-shard snapshot; real metrics can be wired via a stats endpoint later
   const shardSnapshot = [{

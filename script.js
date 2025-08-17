@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     sortCommandLists();
     setupGlobalCommandsFilter();
     handleAuthCallback();
+    fetchAndDisplayBotVersion();
 });
 
 // Authentication Functions
@@ -515,6 +516,21 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('error', (event) => {
     console.error('Website error:', event.error);
 });
+
+// Fetch bot version and update footer
+async function fetchAndDisplayBotVersion() {
+    const el = document.getElementById('botVersion');
+    if (!el) return;
+    try {
+        const res = await fetch('/api/stats', { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const json = await res.json();
+        const version = json?.data?.version || json?.version || '—';
+        el.textContent = version;
+    } catch (_) {
+        // leave placeholder
+    }
+}
 
 // Service Worker Registration (for PWA features)
 if ('serviceWorker' in navigator) {

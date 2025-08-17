@@ -5,7 +5,7 @@ const store = {
   serverCount: 8,
   userCount: 30,
   commandsUsed: 150,
-  uptime: 50.0,
+  uptime: 0,
   ping: 42,
   lastUpdated: new Date().toISOString()
 };
