@@ -663,7 +663,10 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     });
     // Helper: show only the selected category section (or all)
     function setVisibleSections(group){
-      const catSections = [
+      const explorer = document.getElementById('explorer');
+      if(explorer) explorer.style.display = (group === 'All') ? '' : 'none';
+
+      const sections = [
         { id:'configuration', group:'Configuration' },
         { id:'gambling', group:'Gambling' },
         { id:'moderation', group:'Moderation' },
@@ -672,23 +675,20 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
         { id:'voice', group:'Voice' },
         { id:'tickets', group:'Tickets' },
         { id:'afk', group:'AFK' },
-        { id:'roles-section', group:'Roles' }
+        { id:'roles-section', group:'Roles' },
+        // Non-category informational sections (show only on All)
+        { id:'help', group:'All' },
+        { id:'menus', group:'All' },
+        { id:'leveling', group:'All' },
+        { id:'troubleshooting', group:'All' }
       ];
-      for(const {id, group:grp} of catSections){
+      for(const {id, group:grp} of sections){
         const el = document.getElementById(id);
         if(!el) continue;
         const show = (group === 'All') || (group === grp);
         el.style.display = show ? '' : 'none';
       }
-      // If focusing a specific group, scroll that section into view
-      if(group !== 'All'){
-        const target = catSections.find(s => s.group === group);
-        const el = target && document.getElementById(target.id);
-        if(el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-      } else {
-        // On All, ensure we're near the explorer
-        document.getElementById('explorer')?.scrollIntoView({ behavior:'smooth', block:'start' });
-      }
+      // No auto-scrolling; keep the view stable per user preference
     }
 
     // Initial render (default to All)
