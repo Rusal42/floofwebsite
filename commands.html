@@ -462,6 +462,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'vcconfig set #category', desc:'Set category for temporary voice channels.', cat:'voice', roles:['Mod'], perms:['Manage Channels'], args:['category'] },
       { name:'vcconfig clear', desc:'Clear VC category configuration.', cat:'voice', roles:['Mod'], perms:['Manage Channels'] },
       { name:'vcconfig view', desc:'View VC category configuration.', cat:'voice' },
+      { name:'vcconfig', desc:'Admin: Configure VC category and lobby (set, clear, setlobby, clearlobby, view).', cat:'voice', roles:['Admin'], perms:['Manage Channels'], args:['set|clear|view|setlobby|clearlobby'] },
       { name:'voice help', desc:'Show voice command help.', cat:'voice' },
       { name:'voice name <new name>', desc:'Rename your temporary VC.', cat:'voice', args:['name'] },
       { name:'voice reject @user', desc:'Remove access for a user.', cat:'voice', args:['user'] },
