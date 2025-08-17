@@ -19,14 +19,10 @@
       padding: 8px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.05);
       backdrop-filter: blur(6px);
-      overflow:auto;
-      scrollbar-width: none;
-      cursor: grab;
-      user-select: none;
-      -webkit-overflow-scrolling: touch;
     }
-    .quickbar::-webkit-scrollbar { display:none; }
-    .quickbar.dragging { cursor: grabbing; }
+    .quickbar-scroll{ flex:1 1 auto; display:flex; gap:12px; overflow:auto; scrollbar-width:none; cursor: grab; user-select:none; -webkit-overflow-scrolling: touch; }
+    .quickbar-scroll::-webkit-scrollbar{ display:none; }
+    .quickbar-scroll.dragging { cursor: grabbing; }
     .quickbar .cx-chip {
       display:inline-flex; align-items:center; gap:8px;
       border-radius: 10px;
@@ -47,6 +43,7 @@
       width:36px; height:36px; border-radius:10px; border:1px solid rgba(0,0,0,0.06);
       background:#fff; color:#4b5563; display:inline-flex; align-items:center; justify-content:center;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      z-index:2;
     }
     .qb-search:hover{ background:#f7f7f9; }
     .qb-popover{ position:absolute; right:8px; top:52px; background:#fff; border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:8px; box-shadow:0 8px 24px rgba(0,0,0,0.12); }
@@ -87,33 +84,41 @@
   </header>
 
   <main class="container" style="padding-top:24px; padding-bottom:48px">
-    <!-- Quick Navigation -->
-    <nav class="doc-section" aria-label="Quick navigation" style="margin-bottom:16px; position:relative;">
-      <div class="quickbar" role="tablist" aria-label="Quick links">
-        <a class="cx-chip active" href="#" data-group="All"><span class="icon">📚</span> All</a>
-        <a class="cx-chip" href="#" data-group="Configuration"><span class="icon">⚙️</span> Configuration</a>
-        <a class="cx-chip" href="#" data-group="Gambling"><span class="icon">🎲</span> Gambling</a>
-        <a class="cx-chip" href="#" data-group="Moderation"><span class="icon">🔨</span> Moderation</a>
-        <a class="cx-chip" href="#" data-group="Fun"><span class="icon">🎉</span> Fun</a>
-        <a class="cx-chip" href="#" data-group="General"><span class="icon">🧰</span> General</a>
-        <a class="cx-chip" href="#" data-group="Roles"><span class="icon">🏷️</span> Roles</a>
-        <a class="cx-chip" href="#" data-group="AFK"><span class="icon">💤</span> AFK</a>
-        <a class="cx-chip" href="#" data-group="Important"><span class="icon">⭐</span> Important</a>
+    <!-- Commands Header Row -->
+    <section id="explorer" class="doc-section" aria-label="Commands Explorer" style="position:relative;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; position:relative;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span class="qb-search" aria-hidden="true" style="pointer-events:none; opacity:.9; display:inline-flex; align-items:center; justify-content:center;">
+            <i class="fa fa-image"></i>
+          </span>
+          <h2 style="margin:0; display:flex; align-items:center; gap:10px;">Commands
+            <small class="muted" style="font-weight:400">Explore by category or search</small>
+          </h2>
+        </div>
+        <button id="qb-search" class="qb-search" aria-label="Search commands" title="Search" type="button">
+          <i class="fa fa-search"></i>
+        </button>
+        <div id="qb-search-pop" class="qb-popover" role="dialog" aria-label="Search commands" hidden>
+          <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
+        </div>
       </div>
-      <!-- Search icon button -->
-      <button id="qb-search" class="qb-search" aria-label="Search commands" title="Search" type="button">
-        <i class="fa fa-search"></i>
-      </button>
-      <div id="qb-search-pop" class="qb-popover" role="dialog" aria-label="Search commands" hidden>
-        <input id="cx-search" type="text" placeholder="Search commands…" aria-label="Search commands" />
-      </div>
-    </nav>
 
-    <!-- Commands Explorer placed directly under quickbar -->
-    <section id="explorer" class="doc-section" aria-label="Commands Explorer">
-      <h2 style="display:flex; align-items:center; gap:10px;">Commands
-        <small class="muted" style="font-weight:400">Explore by category or search</small>
-      </h2>
+      <!-- Quick Navigation directly below header -->
+      <nav aria-label="Quick navigation" style="margin-bottom:16px; position:relative;">
+        <div class="quickbar" aria-label="Quick links">
+          <div class="quickbar-scroll" role="tablist">
+            <a class="cx-chip active" href="#" data-group="All"><span class="icon">📚</span> All</a>
+            <a class="cx-chip" href="#" data-group="Configuration"><span class="icon">⚙️</span> Configuration</a>
+            <a class="cx-chip" href="#" data-group="Gambling"><span class="icon">🎲</span> Gambling</a>
+            <a class="cx-chip" href="#" data-group="Moderation"><span class="icon">🔨</span> Moderation</a>
+            <a class="cx-chip" href="#" data-group="Fun"><span class="icon">🎉</span> Fun</a>
+            <a class="cx-chip" href="#" data-group="General"><span class="icon">🧰</span> General</a>
+            <a class="cx-chip" href="#" data-group="Roles"><span class="icon">🏷️</span> Roles</a>
+            <a class="cx-chip" href="#" data-group="AFK"><span class="icon">💤</span> AFK</a>
+            <a class="cx-chip" href="#" data-group="Important"><span class="icon">⭐</span> Important</a>
+          </div>
+        </div>
+      </nav>
       <div class="cx-toolbar" style="display:none">
         <div id="cx-cat-chips" class="cx-chips" role="tablist" aria-label="Categories" style="display:none"></div>
         <div class="cx-search" style="display:none"></div>
@@ -592,8 +597,8 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
     renderInto('grid-afk', 'afk');
 
     // Quickbar active state (top nav chips)
-    const quickbar = document.querySelector('.quickbar');
-    if (quickbar){
+    const quickbarScroll = document.querySelector('.quickbar-scroll');
+    if (quickbarScroll){
       // Active state on click (only if not dragging)
       let dragging = false;
       let startX = 0;
@@ -602,34 +607,34 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
 
       function onDown(clientX){
         dragging = true; moved = 0;
-        startX = clientX; scrollStart = quickbar.scrollLeft;
-        quickbar.classList.add('dragging');
+        startX = clientX; scrollStart = quickbarScroll.scrollLeft;
+        quickbarScroll.classList.add('dragging');
       }
       function onMove(clientX){
         if(!dragging) return;
         const dx = clientX - startX;
         moved = Math.max(moved, Math.abs(dx));
-        quickbar.scrollLeft = scrollStart - dx;
+        quickbarScroll.scrollLeft = scrollStart - dx;
       }
-      function onUp(){ dragging = false; quickbar.classList.remove('dragging'); }
+      function onUp(){ dragging = false; quickbarScroll.classList.remove('dragging'); }
 
       // Mouse
-      quickbar.addEventListener('mousedown', (e)=>{ if(e.button!==0) return; onDown(e.clientX); });
+      quickbarScroll.addEventListener('mousedown', (e)=>{ if(e.button!==0) return; onDown(e.clientX); });
       window.addEventListener('mousemove', (e)=> onMove(e.clientX));
       window.addEventListener('mouseup', onUp);
 
       // Touch
-      quickbar.addEventListener('touchstart', (e)=>{ if(!e.touches[0]) return; onDown(e.touches[0].clientX); }, {passive:true});
-      quickbar.addEventListener('touchmove', (e)=>{ if(!e.touches[0]) return; onMove(e.touches[0].clientX); }, {passive:true});
-      quickbar.addEventListener('touchend', onUp);
+      quickbarScroll.addEventListener('touchstart', (e)=>{ if(!e.touches[0]) return; onDown(e.touches[0].clientX); }, {passive:true});
+      quickbarScroll.addEventListener('touchmove', (e)=>{ if(!e.touches[0]) return; onMove(e.touches[0].clientX); }, {passive:true});
+      quickbarScroll.addEventListener('touchend', onUp);
 
       // Click selects group (unless we dragged)
-      quickbar.addEventListener('click', (e)=>{
+      quickbarScroll.addEventListener('click', (e)=>{
         const a = e.target.closest('a.cx-chip');
         if(!a) return;
         e.preventDefault();
         if(moved > 5){ return; }
-        for(const el of quickbar.querySelectorAll('a.cx-chip')) el.classList.remove('active');
+        for(const el of quickbarScroll.querySelectorAll('a.cx-chip')) el.classList.remove('active');
         a.classList.add('active');
         const group = a.dataset.group || 'All';
         render(group, search.value);
