@@ -147,44 +147,155 @@
       </div>
       <div class="doc-block" style="margin-top:12px">
         <h3>Automod <span class="badge badge-admin">Admin</span></h3>
+        <h4>View</h4>
         <div class="doc-grid">
           <div class="doc-card"><code>%config automod view</code><p>Show current automod settings.</p></div>
+        </div>
+
+        <h4>Enable/Disable Modules</h4>
+        <div class="doc-grid">
           <div class="doc-card"><code>%config automod enable &lt;module&gt;</code><p>Enable an automod module.</p></div>
           <div class="doc-card"><code>%config automod disable &lt;module&gt;</code><p>Disable an automod module.</p></div>
-          <div class="doc-card"><code>Modules: spam, links, invites, caps, mentions, badwords, similarspam</code><p>Available modules.</p></div>
+          <div class="doc-card"><code>Modules: spam, links, invites, caps, mentions, badwords, similarspam</code><p>Available modules. Aliases: spam(s), links(link), invites(inv, invite), mentions(mention), badwords(bw, bad), similarspam(sim, simspam, similar)</p></div>
+        </div>
 
+        <h4>Spam Settings</h4>
+        <div class="doc-grid">
           <div class="doc-card"><code>%config automod set spam max &lt;n&gt;</code><p>Max messages in time window.</p></div>
           <div class="doc-card"><code>%config automod set spam window &lt;seconds&gt;</code><p>Time window in seconds.</p></div>
-          <div class="doc-card"><code>%config automod set spam mutetime &lt;minutes&gt;</code><p>Mute duration when triggered.</p></div>
+          <div class="doc-card"><code>%config automod set spam mutetime &lt;minutes&gt;</code><p>Dynamic mute base (backward compatible).</p></div>
+          <div class="doc-card"><code>%config automod set spam mutebase &lt;minutes&gt;</code><p>Set base mute duration.</p></div>
+          <div class="doc-card"><code>%config automod set spam mutestep &lt;minutes&gt;</code><p>Increment per violation.</p></div>
+          <div class="doc-card"><code>%config automod set spam mutemax &lt;minutes&gt;</code><p>Maximum mute duration.</p></div>
+        </div>
+        <p class="muted">Key aliases: window(win), mutetime(mt), mutebase(mb), mutestep(ms), mutemax(mm)</p>
 
+        <h4>Similar Message Spam</h4>
+        <div class="doc-grid">
+          <div class="doc-card"><code>%config automod enable similarspam</code><p>Enable similar message spam checks.</p></div>
+          <div class="doc-card"><code>%config automod disable similarspam</code><p>Disable similar message spam checks.</p></div>
+          <div class="doc-card"><code>%config automod set similarspam minrepeats &lt;n&gt;</code><p>Messages in a row to trigger.</p></div>
+          <div class="doc-card"><code>%config automod set similarspam action &lt;delete|warn|mute&gt;</code><p>Action on trigger.</p></div>
+          <div class="doc-card"><code>%config automod set similarspam mutetime &lt;minutes&gt;</code><p>Mute duration when action=mute.</p></div>
+        </div>
+        <p class="muted">Module aliases: sim, simspam, similar. Key aliases: minrepeats(repeats, min), action(act), mutetime(mt)</p>
+
+        <h4>Links / Invites / Mentions</h4>
+        <div class="doc-grid">
           <div class="doc-card"><code>%config automod set links action &lt;delete|warn|mute&gt;</code><p>Action on link from non-whitelisted user.</p></div>
-          <div class="doc-card"><code>%config automod links whitelist add @User [@User2 ...]</code><p>Add users to link whitelist.</p></div>
-          <div class="doc-card"><code>%config automod links whitelist remove @User [@User2 ...]</code><p>Remove users from link whitelist.</p></div>
-          <div class="doc-card"><code>%config automod links whitelist list</code><p>List whitelisted users.</p></div>
-          <div class="doc-card"><code>%config automod links whitelist clear</code><p>Clear the link whitelist.</p></div>
-
           <div class="doc-card"><code>%config automod set invites action &lt;delete|warn|mute&gt;</code><p>Action when invites are posted.</p></div>
-
           <div class="doc-card"><code>%config automod set mentions max &lt;n&gt;</code><p>Max mentions per message.</p></div>
           <div class="doc-card"><code>%config automod set mentions action &lt;delete|warn|mute&gt;</code><p>Action when exceeding mentions max.</p></div>
+        </div>
+        <p class="muted">Key alias: action(act)</p>
 
+        <h4>Links Whitelist Management</h4>
+        <div class="doc-grid">
+          <div class="doc-card"><code>%config automod links whitelist add @user [@user2 ...]</code><p>Add users to link whitelist.</p></div>
+          <div class="doc-card"><code>%config automod links whitelist remove @user [@user2 ...]</code><p>Remove users from link whitelist.</p></div>
+          <div class="doc-card"><code>%config automod links whitelist list</code><p>List whitelisted users.</p></div>
+          <div class="doc-card"><code>%config automod links whitelist clear</code><p>Clear the link whitelist.</p></div>
+        </div>
+
+        <h4>Caps</h4>
+        <div class="doc-grid">
           <div class="doc-card"><code>%config automod set caps threshold &lt;percent|0-1&gt;</code><p>Ex: 70 or 0.7.</p></div>
           <div class="doc-card"><code>%config automod set caps minlen &lt;n&gt;</code><p>Minimum message length to check.</p></div>
           <div class="doc-card"><code>%config automod set caps action &lt;delete|warn|mute&gt;</code><p>Action for excessive caps.</p></div>
+        </div>
+        <p class="muted">Key aliases: threshold(th), minlen(minlength), action(act)</p>
 
+        <h4>Bad Words</h4>
+        <div class="doc-grid">
           <div class="doc-card"><code>%config automod badwords add &lt;word&gt;</code><p>Add a bad word.</p></div>
           <div class="doc-card"><code>%config automod badwords remove &lt;word&gt;</code><p>Remove a bad word.</p></div>
           <div class="doc-card"><code>%config automod badwords list</code><p>List configured bad words.</p></div>
           <div class="doc-card"><code>%config automod badwords clear</code><p>Clear bad words list.</p></div>
           <div class="doc-card"><code>%config automod badwords action &lt;delete|warn|mute&gt;</code><p>Action for bad words.</p></div>
-
-          <div class="doc-card"><code>%config automod enable similarspam</code><p>Enable similar message spam checks.</p></div>
-          <div class="doc-card"><code>%config automod disable similarspam</code><p>Disable similar message spam checks.</p></div>
-          <div class="doc-card"><code>%config automod set similarspam minrepeats &lt;n&gt;</code><p>Messages in a row to trigger.</p></div>
-
-          <div class="doc-card"><code>%config automod reset all</code><p>Reset all automod settings to defaults.</p></div>
-          <div class="doc-card"><code>%config automod reset &lt;module&gt;</code><p>Reset one module (e.g., spam, links, badwords).</p></div>
         </div>
+        <p class="muted">Module aliases: bw, bad</p>
+
+        <h4>Reset</h4>
+        <div class="doc-grid">
+          <div class="doc-card"><code>%config automod reset all</code><p>Reset all automod settings to defaults.</p></div>
+          <div class="doc-card"><code>%config automod reset &lt;module&gt;</code><p>Reset one module (e.g., spam, sim, bw).</p></div>
+        </div>
+
+        <details>
+          <summary><strong>Quick Examples</strong></summary>
+          <div class="doc-block" style="margin-top:10px">
+            <pre class="code-block"><code># View settings
+%config automod view
+
+# Enable core protections
+%config automod enable spam
+%config automod enable links
+%config automod enable invites
+%config automod enable mentions
+%config automod enable caps
+%config automod enable badwords
+%config automod enable sim
+
+# Spam thresholds
+%config automod set spam max 6
+%config automod set spam window 8
+%config automod set spam mutebase 5
+%config automod set spam mutestep 5
+%config automod set spam mutemax 60
+
+# Similar message spam
+%config automod set similarspam minrepeats 3
+%config automod set similarspam action mute
+%config automod set similarspam mutetime 10
+
+# Links/Invites/Mentions actions
+%config automod set links action delete
+%config automod set invites action delete
+%config automod set mentions max 5
+%config automod set mentions action warn
+
+# Caps
+%config automod set caps threshold 70
+%config automod set caps minlen 12
+%config automod set caps action warn
+
+# Bad words
+%config automod badwords add slur1
+%config automod badwords add slur2
+%config automod badwords action delete
+
+# Links whitelist
+%config automod links whitelist add @TrustedUser @Staff
+
+# Reset a module
+%config automod reset sim
+            </code></pre>
+          </div>
+        </details>
+
+        <details>
+          <summary><strong>Admin Cheat Sheet</strong></summary>
+          <div class="doc-block" style="margin-top:10px">
+            <pre class="code-block"><code># Aliases (modules)
+# spam(s), links(link), invites(inv, invite), mentions(mention), badwords(bw, bad), similarspam(sim, simspam, similar)
+
+# Aliases (keys)
+# window(win), mutetime(mt), mutebase(mb), mutestep(ms), mutemax(mm), threshold(th), action(act), minrepeats(repeats|min)
+
+# Examples using aliases
+%config automod set spam win 8
+%config automod set spam mb 5
+%config automod set spam ms 5
+%config automod set spam mm 60
+%config automod set caps th 0.7
+%config automod set sim act mute
+%config automod set sim mt 10
+%config automod enable bw
+%config automod disable link
+            </code></pre>
+          </div>
+        </details>
+
         <p class="muted">All Automod settings are per-guild and require Administrator. Links module blocks all URLs from non-whitelisted users when enabled.</p>
       </div>
       <div class="doc-block" style="margin-top:12px">
@@ -460,30 +571,35 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
 
       // Automod (Configuration)
       { name:'config automod view', desc:'Show current automod settings.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
-      { name:'config automod enable <module>', desc:'Enable an automod module.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['module'] },
-      { name:'config automod disable <module>', desc:'Disable an automod module.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['module'] },
+      { name:'config automod enable <module>', desc:'Enable an automod module.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['module'], aliases:['s','link','inv','invite','mention','bw','bad','sim','simspam','similar'] },
+      { name:'config automod disable <module>', desc:'Disable an automod module.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['module'], aliases:['s','link','inv','invite','mention','bw','bad','sim','simspam','similar'] },
       { name:'config automod set spam max <n>', desc:'Max messages in time window.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['n'] },
-      { name:'config automod set spam window <seconds>', desc:'Time window in seconds.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['seconds'] },
-      { name:'config automod set spam mutetime <minutes>', desc:'Mute duration.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['minutes'] },
-      { name:'config automod set links action <delete|warn|mute>', desc:'Action on link from non-whitelisted user.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'] },
+      { name:'config automod set spam window <seconds>', desc:'Time window in seconds.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['seconds'], aliases:['win'] },
+      { name:'config automod set spam mutetime <minutes>', desc:'Dynamic mute base (back-compat).', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['minutes'], aliases:['mt'] },
+      { name:'config automod set spam mutebase <minutes>', desc:'Set base mute duration.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['minutes'], aliases:['mb'] },
+      { name:'config automod set spam mutestep <minutes>', desc:'Increment per violation.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['minutes'], aliases:['ms'] },
+      { name:'config automod set spam mutemax <minutes>', desc:'Maximum mute duration.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['minutes'], aliases:['mm'] },
+      { name:'config automod set links action <delete|warn|mute>', desc:'Action on link from non-whitelisted user.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'], aliases:['act'] },
       { name:'config automod links whitelist add @User [@User2 ...]', desc:'Add users to link whitelist.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['user','...'] },
       { name:'config automod links whitelist remove @User [@User2 ...]', desc:'Remove users from link whitelist.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['user','...'] },
       { name:'config automod links whitelist list', desc:'List whitelisted users.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config automod links whitelist clear', desc:'Clear the link whitelist.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
-      { name:'config automod set invites action <delete|warn|mute>', desc:'Action when invites are posted.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'] },
+      { name:'config automod set invites action <delete|warn|mute>', desc:'Action when invites are posted.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'], aliases:['act'] },
       { name:'config automod set mentions max <n>', desc:'Max mentions per message.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['n'] },
-      { name:'config automod set mentions action <delete|warn|mute>', desc:'Action when exceeding mentions max.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'] },
-      { name:'config automod set caps threshold <percent|0-1>', desc:'Example: 70 or 0.7.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['threshold'] },
+      { name:'config automod set mentions action <delete|warn|mute>', desc:'Action when exceeding mentions max.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'], aliases:['act'] },
+      { name:'config automod set caps threshold <percent|0-1>', desc:'Example: 70 or 0.7.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['threshold'], aliases:['th'] },
       { name:'config automod set caps minlen <n>', desc:'Minimum message length to check.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['n'] },
-      { name:'config automod set caps action <delete|warn|mute>', desc:'Action for excessive caps.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'] },
+      { name:'config automod set caps action <delete|warn|mute>', desc:'Action for excessive caps.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'], aliases:['act'] },
       { name:'config automod badwords add <word>', desc:'Add a bad word.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['word'] },
       { name:'config automod badwords remove <word>', desc:'Remove a bad word.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['word'] },
       { name:'config automod badwords list', desc:'List configured bad words.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config automod badwords clear', desc:'Clear bad words list.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config automod badwords action <delete|warn|mute>', desc:'Action for bad words.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'] },
-      { name:'config automod enable similarspam', desc:'Enable similar message spam checks.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
-      { name:'config automod disable similarspam', desc:'Disable similar message spam checks.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
-      { name:'config automod set similarspam minrepeats <n>', desc:'Messages in a row to trigger.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['n'] },
+      { name:'config automod enable similarspam', desc:'Enable similar message spam checks.', cat:'configuration', roles:['Admin'], perms:['Administrator'], aliases:['sim','simspam','similar'] },
+      { name:'config automod disable similarspam', desc:'Disable similar message spam checks.', cat:'configuration', roles:['Admin'], perms:['Administrator'], aliases:['sim','simspam','similar'] },
+      { name:'config automod set similarspam minrepeats <n>', desc:'Messages in a row to trigger.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['n'], aliases:['repeats','min'] },
+      { name:'config automod set similarspam action <delete|warn|mute>', desc:'Action on trigger.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['action'], aliases:['act'] },
+      { name:'config automod set similarspam mutetime <minutes>', desc:'Mute duration for similarspam (when action=mute).', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['minutes'], aliases:['mt'] },
       { name:'config automod reset all', desc:'Reset all automod settings to defaults.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config automod reset <module>', desc:'Reset one automod module.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['module'] },
 
