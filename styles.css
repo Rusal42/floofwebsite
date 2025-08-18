@@ -1,14 +1,38 @@
-/* Floofs Den - Cute & Fluffy Theme */
+/* Floofs Den - Theme System (Default: Dark Purple) */
 :root {
+    /* Brand accents stay vibrant on both themes */
+    --primary-color: #c8a6ff; /* light lavender */
+    --primary-dark: #b18cff;
+    --secondary-color: #9b8cff;
+    --accent-color: #ffd93d;
+
+    /* Default DARK theme tokens */
+    --background-color: #0f0f23; /* deep indigo */
+    --bg-gradient-start: #1a1333; /* subtle purple haze */
+    --surface-color: #181832; /* cards/nav surfaces */
+    --text-color: #eef0ff;
+    --text-light: #b9bbd6;
+    --border-color: rgba(255,255,255,0.08);
+    --chip-bg: rgba(255,255,255,0.06);
+    --shadow-light: 0 6px 16px rgba(0, 0, 0, 0.35);
+    --shadow-medium: 0 14px 30px rgba(0, 0, 0, 0.45);
+    --gradient-primary: linear-gradient(135deg, #7b5cff 0%, #c279ff 100%);
+    --gradient-secondary: linear-gradient(135deg, #ffd93d 0%, #c279ff 100%);
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
     --primary-color: #ff9ec7;
     --primary-dark: #ff7bb3;
     --secondary-color: #b794f6;
     --accent-color: #ffd93d;
     --background-color: #fef7ff;
+    --bg-gradient-start: #fef7ff;
     --surface-color: #ffffff;
     --text-color: #4a5568;
     --text-light: #718096;
     --border-color: #e2e8f0;
+    --chip-bg: #00000010;
     --shadow-light: 0 4px 6px rgba(255, 158, 199, 0.1);
     --shadow-medium: 0 10px 25px rgba(255, 158, 199, 0.15);
     --gradient-primary: linear-gradient(135deg, #ff9ec7 0%, #b794f6 100%);
@@ -92,7 +116,7 @@
     padding: 0 14px;
     cursor: pointer;
     user-select: none;
-    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
 }
 
 .toolbar-grip {
@@ -128,15 +152,7 @@
     flex-wrap: wrap;
 }
 
-.chip {
-    padding: 8px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 999px;
-    background: #fff;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease;
-}
+.chip { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 999px; background: var(--surface-color); font-size: 0.9rem; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
 
 .chip.active, .chip:hover {
     background: rgba(183, 148, 246, 0.12);
@@ -148,7 +164,7 @@
     margin: 8px 0 18px 0;
     border: 1px solid var(--border-color);
     border-radius: 14px;
-    background: #fff;
+    background: var(--surface-color);
     box-shadow: var(--shadow-light);
 }
 
@@ -164,15 +180,7 @@
 .gcf-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .gcf-title { font-weight: 800; color: #2d3748; }
 .gcf-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-.gcf-chip {
-    padding: 8px 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 999px;
-    background: #fff;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.2s ease, border-color 0.2s ease;
-}
+.gcf-chip { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 999px; background: var(--surface-color); font-size: 0.9rem; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
 .gcf-chip.active, .gcf-chip:hover { background: rgba(183,148,246,0.12); border-color: rgba(183,148,246,0.6); }
 
 .gcf-right input {
@@ -187,7 +195,7 @@
 .legal-page {
     padding: 120px 0 80px;
     min-height: 100vh;
-    background: linear-gradient(135deg, rgba(254, 247, 255, 0.95) 0%, rgba(247, 250, 252, 0.95) 100%);
+    background: linear-gradient(135deg, rgba(26,19,51,0.9) 0%, rgba(15,15,35,0.92) 100%);
 }
 
 .legal-container {
@@ -268,7 +276,7 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background: linear-gradient(135deg, rgba(254, 247, 255, 0.95) 0%, rgba(247, 250, 252, 0.95) 100%), url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGx2dGJmZXVqbWl6dGNvdGNhbWZjZXNlbzBzaHNlNzNmbGVxZGNrZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JIX9t2j0ZTN9S/giphy.gif');
+    background: linear-gradient(135deg, rgba(26, 19, 51, 0.9) 0%, rgba(15, 15, 35, 0.95) 100%), url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGx2dGJmZXVqbWl6dGNvdGNhbWZjZXNlbzBzaHNlNzNmbGVxZGNrZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JIX9t2j0ZTN9S/giphy.gif');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -286,8 +294,8 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(15, 15, 35, 0.95);
+    backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     transition: all 0.3s ease;
@@ -328,6 +336,24 @@ body {
     align-items: center;
     gap: 30px;
 }
+
+/* Theme toggle button */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--surface-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    box-shadow: var(--shadow-light);
+}
+.theme-toggle:hover { transform: translateY(-2px); border-color: rgba(183,148,246,0.6); }
+.theme-toggle:active { transform: translateY(0); }
 
 .nav-link {
     text-decoration: none;
@@ -374,7 +400,7 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    background: linear-gradient(135deg, rgba(254, 247, 255, 0.9) 0%, rgba(247, 250, 252, 0.9) 100%), url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGx2dGJmZXVqbWl6dGNvdGNhbWZjZXNlbzBzaHNlNzNmbGVxZGNrZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JIX9t2j0ZTN9S/giphy.gif');
+    background: linear-gradient(135deg, rgba(26, 19, 51, 0.85) 0%, rgba(15, 15, 35, 0.9) 100%), url('https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaGx2dGJmZXVqbWl6dGNvdGNhbWZjZXNlbzBzaHNlNzNmbGVxZGNrZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/JIX9t2j0ZTN9S/giphy.gif');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -387,7 +413,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.1;
+    opacity: 0.06;
 }
 
 .hero-particles {
@@ -482,11 +508,7 @@ body {
     box-shadow: var(--shadow-medium);
 }
 
-.btn-secondary {
-    background: white;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
+.btn-secondary { background: var(--surface-color); color: var(--primary-color); border: 2px solid var(--primary-color); }
 
 .btn-secondary:hover {
     background: var(--primary-color);
@@ -605,7 +627,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: white;
+    background: var(--surface-color);
     padding: 12px 20px;
     border-radius: 25px;
     box-shadow: var(--shadow-light);
@@ -723,7 +745,7 @@ body {
         left: -100%;
         width: 100%;
         height: calc(100vh - 70px);
-        background: white;
+        background: var(--surface-color);
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;

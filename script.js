@@ -1,3 +1,8 @@
+    // Theme toggle buttons (can appear on multiple pages)
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+        btn.addEventListener('click', toggleTheme);
+    });
+
 // Discord OAuth2 Configuration
 const DISCORD_CLIENT_ID = '1387563676961341461'; // Your Floof bot's client ID
 const REDIRECT_URI = encodeURIComponent(window.location.origin + '/auth/callback');
@@ -30,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupCommandToolbars();
     sortCommandLists();
     setupGlobalCommandsFilter();
+    initTheme();
     handleAuthCallback();
     fetchAndDisplayBotVersion();
 });
@@ -42,6 +48,33 @@ function initializeAuth() {
     if (token && user) {
         updateUIForLoggedInUser(JSON.parse(user));
     }
+
+// Theme: default dark (root), optional light via data-theme="light" on <html>
+function initTheme() {
+    const saved = localStorage.getItem('theme');
+    const prefers = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const theme = saved || 'dark'; // default dark as requested
+    applyTheme(theme);
+}
+
+function applyTheme(theme) {
+    const root = document.documentElement;
+    const buttons = document.querySelectorAll('.theme-toggle');
+    if (theme === 'light') {
+        root.setAttribute('data-theme', 'light');
+        buttons.forEach(b => b.textContent = '☀️');
+    } else {
+        root.removeAttribute('data-theme');
+        buttons.forEach(b => b.textContent = '🌙');
+    }
+    localStorage.setItem('theme', theme);
+}
+
+function toggleTheme() {
+    const current = localStorage.getItem('theme') || 'dark';
+    const next = current === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+}
 
 // Swap hero image to PNG only if it exists; default SVG always shows
 function setupHeroImageSwap() {
