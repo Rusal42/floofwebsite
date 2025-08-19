@@ -319,6 +319,28 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       <h2>Moderation</h2>
       <div id="count-moderation" class="section-count"></div>
       <div id="grid-moderation" class="cx-grid" aria-live="polite"></div>
+      <div class="doc-block" style="margin-top:12px">
+        <h3>Quick Examples</h3>
+        <pre class="code-block"><code># Lock / Unlock
+%lock
+%lock #general Spam wave
+%unlock
+%unlock #general All clear
+
+# Sticky
+%sticky set Be respectful and follow the rules.
+%sticky set --title Rules | Be respectful and follow the rules.
+%sticky edit --title Updated Rules | No spam, be kind.
+%sticky show
+%sticky off</code></pre>
+        <p class="muted">Requires <em>Manage Channels</em>. Bot needs <em>Send Messages</em> and <em>Manage Messages</em> (and <em>Embed Links</em> when using <code>--title</code>).</p>
+      </div>
+      <div class="doc-block" style="margin-top:12px">
+        <h3>Unban</h3>
+        <p>Unban a user by their ID. You can optionally include a reason for audit logs.</p>
+        <pre class="code-block"><code>%unban 123456789012345678 Resolved after appeal</code></pre>
+        <p class="muted">Requires <em>Ban Members</em>. Tip: Right-click a user > Copy User ID (Developer Mode) to get their ID.</p>
+      </div>
     </section>
 
     <section id="fun" class="doc-section">
@@ -331,6 +353,12 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       <h2>General</h2>
       <div id="count-general" class="section-count"></div>
       <div id="grid-general" class="cx-grid" aria-live="polite"></div>
+      <div class="doc-block" style="margin-top:12px">
+        <h3>Revive Ping</h3>
+        <p>Ping the configured revive role with a custom embedded message.</p>
+        <pre class="code-block"><code>%revive Your custom revive message here</code></pre>
+        <p class="muted">Uses the role set with <code>%config revive @role</code>. Requires <em>Manage Channels</em>.</p>
+      </div>
     </section>
 
     <section id="voice" class="doc-section">
@@ -569,6 +597,17 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'config view', desc:'View all current settings.', cat:'configuration', roles:['Admin'] },
       { name:'config reset [setting|all]', desc:'Reset a specific setting or all.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
 
+      // Moderation (Commands)
+      { name:'lock [#channel] [reason]', desc:'Lock the current/specified channel (deny @everyone Send Messages).', cat:'moderation', perms:['Manage Channels'] },
+      { name:'unlock [#channel] [reason]', desc:'Unlock the current/specified channel (restore Send Messages).', cat:'moderation', perms:['Manage Channels'] },
+      { name:'sticky set <message>', desc:'Set a sticky message that stays at the bottom.', cat:'moderation', perms:['Manage Channels'] },
+      { name:'sticky set --title Title | Message', desc:'Set a sticky as an embed with a title.', cat:'moderation', perms:['Manage Channels'] },
+      { name:'sticky edit <message>', desc:'Edit the existing sticky message.', cat:'moderation', perms:['Manage Channels'] },
+      { name:'sticky edit --title Title | Message', desc:'Edit sticky as an embed or update its title.', cat:'moderation', perms:['Manage Channels'] },
+      { name:'sticky show', desc:'Show the current sticky message.', cat:'moderation', perms:['Manage Channels'] },
+      { name:'sticky off', desc:'Remove the sticky message.', cat:'moderation', perms:['Manage Channels'] },
+      { name:'revive <your message>', desc:'Ping the configured revive role with a custom embedded message.', cat:'general', perms:['Manage Channels'] },
+
       // Automod (Configuration)
       { name:'config automod view', desc:'Show current automod settings.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config automod enable <module>', desc:'Enable an automod module.', cat:'configuration', roles:['Admin'], perms:['Administrator'], args:['module'], aliases:['s','link','inv','invite','mention','bw','bad','sim','simspam','similar'] },
@@ -605,6 +644,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
 
       // Moderation
       { name:'ban @user [reason]', desc:'Ban a user.', cat:'moderation', roles:['Admin'], perms:['Ban Members'], args:['user','reason'], aliases:['banish'] },
+      { name:'unban <userId> [reason]', desc:'Unban a user by ID.', cat:'moderation', roles:['Admin'], perms:['Ban Members'], args:['userId','reason'], aliases:['pardon'] },
       { name:'kick @user [reason]', desc:'Kick a user.', cat:'moderation', roles:['Admin'], perms:['Kick Members'], args:['user','reason'] },
       { name:'timeout @user [duration] [reason]', desc:'Timeout a user.', cat:'moderation', roles:['Mod'], perms:['Moderate Members'], args:['user','duration','reason'], aliases:['mute','tm'] },
       { name:'warn @user [reason]', desc:'Warn a user; logs to infractions.', cat:'moderation', roles:['Mod'], perms:['Manage Messages'], args:['user','reason'], aliases:['strike'] },
