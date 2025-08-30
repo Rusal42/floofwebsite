@@ -66,7 +66,7 @@
         <a href="/index.html#home" class="nav-link">Home</a>
         <a href="/index.html#features" class="nav-link">Features</a>
         <a href="/commands.html" class="nav-link active">Commands</a>
-        <a href="/status.html" class="nav-link">Status</a>
+        <!-- removed status link -->
         <button type="button" class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">🌙</button>
         <a href="https://discord.gg/Acpx662Eyg" target="_blank" class="nav-link support-link">
           <i class="fab fa-discord"></i> Support
@@ -134,16 +134,18 @@
       <h2>Configuration <span class="badge badge-admin">Admin</span></h2>
       <div id="count-configuration" class="section-count"></div>
       <div class="doc-grid">
-        <div class="doc-card"><code>%config modlog #channel</code><p>Set moderation logs destination.</p></div>
-        <div class="doc-card"><code>%config roles #channel</code><p>Set role selection/menu channel.</p></div>
-        <div class="doc-card"><code>%config welcome #channel</code><p>Set welcome messages channel.</p></div>
-        <div class="doc-card"><code>%config gambling #channel</code><p>Restrict gambling to a channel.</p></div>
-        <div class="doc-card"><code>%config rulesmenu [#channel] [RoleName]</code><p>Post the rules/agree menu. Optional: give RoleName on agree.</p></div>
-        <div class="doc-card"><code>%config ruleschannel #channel</code> <span class="badge badge-admin">Admin</span><p>Set default channel for the rules/agree menu.</p></div>
-        <div class="doc-card"><code>%config rulescontent</code> <span class="badge badge-admin">Admin</span><p>Customize rules title, description (use \n), footer, button label, and auto-assign role.</p></div>
+        <div class="doc-card"><code>%config modlog #channel</code><p>Send mod logs to <strong>#channel</strong>.</p></div>
+        <div class="doc-card"><code>%config roles #channel</code><p>Choose where role menus get posted.</p></div>
+        <div class="doc-card"><code>%config welcome #channel</code><p>Choose where welcome messages appear.</p></div>
+        <div class="doc-card"><code>%config gambling #channel</code><p>Only allow gambling in <strong>#channel</strong>.</p></div>
+        <div class="doc-card"><code>%config rulesmenu [#channel] [RoleName]</code><p>Post the rules menu. Optional: auto‑give <strong>RoleName</strong> when they agree.</p></div>
+        <div class="doc-card"><code>%config ruleschannel #channel</code> <span class="badge badge-admin">Admin</span><p>Set the default channel for your rules menu.</p></div>
+        <div class="doc-card"><code>%config rulescontent</code> <span class="badge badge-admin">Admin</span><p>Edit rules text and button. Use <code>\n</code> for new lines. You can set an auto‑role.</p></div>
         <div class="doc-card"><code>%config colormenu [#channel]</code><p>Post the color roles selector menu.</p></div>
-        <div class="doc-card"><code>%config view</code><p>View all current settings.</p></div>
-        <div class="doc-card"><code>%config reset [setting|all]</code><p>Reset a specific setting or all.</p></div>
+        <div class="doc-card"><code>%config rolemenu &lt;label&gt; [#channel] &lt;role1 role2 ...&gt;</code><p>Post a role picker. The <strong>label</strong> becomes the title/placeholder (e.g., “Games”).</p></div>
+        <div class="doc-card"><code>%config funroles [#channel] [role1 role2 ...]</code><p>Post ready‑made fun role menus, or use your own role names.</p></div>
+        <div class="doc-card"><code>%config view</code><p>Show all current settings.</p></div>
+        <div class="doc-card"><code>%config reset [setting|all]</code><p>Reset one setting or everything.</p></div>
       </div>
       <div class="doc-block" style="margin-top:12px">
         <h3>Automod <span class="badge badge-admin">Admin</span></h3>
@@ -156,7 +158,7 @@
         <div class="doc-grid">
           <div class="doc-card"><code>%config automod enable &lt;module&gt;</code><p>Enable an automod module.</p></div>
           <div class="doc-card"><code>%config automod disable &lt;module&gt;</code><p>Disable an automod module.</p></div>
-          <div class="doc-card"><code>Modules: spam, links, invites, caps, mentions, badwords, similarspam</code><p>Available modules. Aliases: spam(s), links(link), invites(inv, invite), mentions(mention), badwords(bw, bad), similarspam(sim, simspam, similar)</p></div>
+          <div class="doc-card"><code>Modules: spam, links, invites, caps, mentions, badwords, similar spam</code><p>These are the protections you can turn on/off.</p></div>
         </div>
 
         <h4>Spam Settings</h4>
@@ -168,7 +170,7 @@
           <div class="doc-card"><code>%config automod set spam mutestep &lt;minutes&gt;</code><p>Increment per violation.</p></div>
           <div class="doc-card"><code>%config automod set spam mutemax &lt;minutes&gt;</code><p>Maximum mute duration.</p></div>
         </div>
-        <p class="muted">Key aliases: window(win), mutetime(mt), mutebase(mb), mutestep(ms), mutemax(mm)</p>
+        <p class="muted">Quick start: try <code>max 6</code>, <code>window 8</code>, <code>mutebase 5</code>.</p>
 
         <h4>Similar Message Spam</h4>
         <div class="doc-grid">
@@ -178,23 +180,23 @@
           <div class="doc-card"><code>%config automod set similarspam action &lt;delete|warn|mute&gt;</code><p>Action on trigger.</p></div>
           <div class="doc-card"><code>%config automod set similarspam mutetime &lt;minutes&gt;</code><p>Mute duration when action=mute.</p></div>
         </div>
-        <p class="muted">Module aliases: sim, simspam, similar. Key aliases: minrepeats(repeats, min), action(act), mutetime(mt)</p>
+        <p class="muted">Tip: a good start is <code>minrepeats 3</code>, <code>action mute</code>, <code>mutetime 10</code>.</p>
 
         <h4>Links / Invites / Mentions</h4>
         <div class="doc-grid">
-          <div class="doc-card"><code>%config automod set links action &lt;delete|warn|mute&gt;</code><p>Action on link from non-whitelisted user.</p></div>
-          <div class="doc-card"><code>%config automod set invites action &lt;delete|warn|mute&gt;</code><p>Action when invites are posted.</p></div>
-          <div class="doc-card"><code>%config automod set mentions max &lt;n&gt;</code><p>Max mentions per message.</p></div>
-          <div class="doc-card"><code>%config automod set mentions action &lt;delete|warn|mute&gt;</code><p>Action when exceeding mentions max.</p></div>
+          <div class="doc-card"><code>%config automod set links action &lt;delete|warn|mute&gt;</code><p>What to do when someone posts a link (non‑whitelisted).</p></div>
+          <div class="doc-card"><code>%config automod set invites action &lt;delete|warn|mute&gt;</code><p>What to do when someone posts a server invite.</p></div>
+          <div class="doc-card"><code>%config automod set mentions max &lt;n&gt;</code><p>How many @mentions are allowed in one message.</p></div>
+          <div class="doc-card"><code>%config automod set mentions action &lt;delete|warn|mute&gt;</code><p>What to do if they go over the limit.</p></div>
         </div>
-        <p class="muted">Key alias: action(act)</p>
+        <p class="muted">Actions: <strong>delete</strong> (remove), <strong>warn</strong> (message), <strong>mute</strong> (timeout).</p>
 
         <h4>Links Whitelist Management</h4>
         <div class="doc-grid">
-          <div class="doc-card"><code>%config automod links whitelist add @user [@user2 ...]</code><p>Add users to link whitelist.</p></div>
-          <div class="doc-card"><code>%config automod links whitelist remove @user [@user2 ...]</code><p>Remove users from link whitelist.</p></div>
-          <div class="doc-card"><code>%config automod links whitelist list</code><p>List whitelisted users.</p></div>
-          <div class="doc-card"><code>%config automod links whitelist clear</code><p>Clear the link whitelist.</p></div>
+          <div class="doc-card"><code>%config automod links whitelist add @user [@user2 ...]</code><p>Let trusted people post links.</p></div>
+          <div class="doc-card"><code>%config automod links whitelist remove @user [@user2 ...]</code><p>Stop a person from being allowed to post links.</p></div>
+          <div class="doc-card"><code>%config automod links whitelist list</code><p>See who’s allowed to post links.</p></div>
+          <div class="doc-card"><code>%config automod links whitelist clear</code><p>Empty the allowed‑to‑post list.</p></div>
         </div>
 
         <h4>Caps</h4>
@@ -203,7 +205,7 @@
           <div class="doc-card"><code>%config automod set caps minlen &lt;n&gt;</code><p>Minimum message length to check.</p></div>
           <div class="doc-card"><code>%config automod set caps action &lt;delete|warn|mute&gt;</code><p>Action for excessive caps.</p></div>
         </div>
-        <p class="muted">Key aliases: threshold(th), minlen(minlength), action(act)</p>
+        <p class="muted">Example: <code>threshold 70</code> means ~70% caps triggers it.</p>
 
         <h4>Bad Words</h4>
         <div class="doc-grid">
@@ -213,7 +215,7 @@
           <div class="doc-card"><code>%config automod badwords clear</code><p>Clear bad words list.</p></div>
           <div class="doc-card"><code>%config automod badwords action &lt;delete|warn|mute&gt;</code><p>Action for bad words.</p></div>
         </div>
-        <p class="muted">Module aliases: bw, bad</p>
+        <p class="muted">Tip: keep the list short; focus on the worst words.</p>
 
         <h4>Reset</h4>
         <div class="doc-grid">
@@ -421,6 +423,23 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
         </ul>
       </div>
       <div class="doc-block">
+        <h3>Role Menu <span class="badge badge-admin">Admin</span></h3>
+        <p>Use <code>%config rolemenu &lt;label&gt; [#channel] &lt;role1 role2 ...&gt;</code> to post a role selector. The embed title, description, and select placeholder are derived from <code>&lt;label&gt;</code> (e.g., label <code>Games</code> → title “🐾 Pick your Games!”).</p>
+        <ul>
+          <li>Channel: if omitted, uses the configured roles channel or current channel.</li>
+          <li>Bot needs <em>Manage Roles</em>, <em>Send Messages</em>, and <em>Embed Links</em>.</li>
+          <li>Roles can be mentioned or named; missing roles may be created by the bot if supported.</li>
+        </ul>
+      </div>
+      <div class="doc-block">
+        <h3>Fun Roles Menu <span class="badge badge-admin">Admin</span></h3>
+        <p>Use <code>%config funroles [#channel] [role1 role2 ...]</code> to post playful role menus (e.g., pings, notifications). If you omit role names, a default set is used.</p>
+        <ul>
+          <li>Channel: if omitted, uses the configured roles channel or current channel.</li>
+          <li>Bot needs <em>Manage Roles</em>, <em>Send Messages</em>, and <em>Embed Links</em>.</li>
+        </ul>
+      </div>
+      <div class="doc-block">
         <h3>Custom Rules Content <span class="badge badge-admin">Admin</span></h3>
         <p>Customize the rules embed text, footer, button label, and assign role via quoted key-value pairs. <strong>Newlines:</strong> use <code>\n</code> inside quotes.</p>
         <pre class="code-block"><code>%config rulescontent title:"Server Rules"
@@ -492,7 +511,7 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
           <ul>
             <li><a href="/index.html#features">Features</a></li>
             <li><a href="/commands.html">Commands</a></li>
-            <li><a href="/status.html">API Status</a></li>
+            <!-- removed status link -->
           </ul>
         </div>
         <div class="footer-section">
@@ -594,6 +613,8 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       { name:'config colorcontent ...', desc:'Customize color menu title/description.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config rulesmenu [#channel]', desc:'Post rules/agree menu (uses defaults).', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config colormenu [#channel]', desc:'Auto-create color roles if missing; post color selector.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config rolemenu <label> [#channel] <role1 role2 ...>', desc:'Post a role selector. Embed title/placeholder use <label> (e.g., “Pick your Games!”).', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
+      { name:'config funroles [#channel] [role1 role2 ...]', desc:'Post fun role menus (uses defaults if roles omitted).', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
       { name:'config view', desc:'View all current settings.', cat:'configuration', roles:['Admin'] },
       { name:'config reset [setting|all]', desc:'Reset a specific setting or all.', cat:'configuration', roles:['Admin'], perms:['Administrator'] },
 
