@@ -463,6 +463,8 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
         <div class="doc-card"><code>%levels config</code> <span class="badge badge-admin">Admin</span><p>Configure leveling (channels, rates, rewards).</p></div>
         <div class="doc-card"><code>%levels reset @user</code> <span class="badge badge-admin">Admin</span><p>Reset a user’s XP/level.</p></div>
         <div class="doc-card"><code>%levels reset all</code> <span class="badge badge-admin">Admin</span><p>Reset everyone’s XP/levels.</p></div>
+        <div class="doc-card"><code>%createlevelroles</code> <span class="badge badge-admin">Admin</span><p>Create level roles (1-100) with color progression.</p></div>
+        <div class="doc-card"><code>%deletelevelroles</code> <span class="badge badge-admin">Admin</span><p>Delete all level roles with button confirmation.</p></div>
       </div>
       <p class="muted">Spam protection prevents abuse; XP is rate-limited.</p>
     </section>
@@ -591,15 +593,33 @@ footer:"Click I Agree to get access" button:"I Agree" role:"Member"</code></pre>
       // Gambling
       { name:'balance', desc:'View your current coins.', cat:'gambling' },
       { name:'beg', desc:'Chance to receive a small coin reward.', cat:'gambling' },
-      { name:'work', desc:'Earn coins on a cooldown.', cat:'gambling' },
+      { name:'work', desc:'Earn coins by working.', cat:'gambling' },
       { name:'slots [amount]', desc:'Slot machine with wins/losses based on symbols.', cat:'gambling', aliases:['slot'] },
       { name:'coinflip [amount] [heads|tails]', desc:'50/50 coin toss bet.', cat:'gambling' },
       { name:'blackjack [amount]', desc:'Play blackjack vs the dealer.', cat:'gambling' },
       { name:'roulette [amount] [color|number]', desc:'Bet on red/black/green or a number.', cat:'gambling' },
       { name:'donate @user [amount]', desc:'Send coins to another user.', cat:'gambling' },
+      { name:'shop [category] [buy] [item] [amount]', desc:'Browse and purchase weapons, ammo, and items. Weapons limited to one per type.', cat:'gambling', aliases:['store','buy','s','armory'] },
+      { name:'petshop [buy] [pet/item]', desc:'Dedicated shop for pets and pet items with numbered selection.', cat:'gambling', aliases:['ps','petstore'] },
+      { name:'inventory [equip|unequip] [item]', desc:"View your inventory; equip or unequip items.", cat:'gambling', aliases:['inv','items','i'] },
+      { name:'vault [deposit|withdraw|upgrade] [amount]', desc:'Manage your secure vault for protected coin storage.', cat:'gambling', aliases:['bank','safe'] },
+      { name:'briefcase [open] [tier] | briefcase buy [tier]', desc:'Open mystery briefcases for random rewards.', cat:'gambling', aliases:['case','lootbox','box','bc','loot'] },
+      { name:'select weapon [number]', desc:'Choose which weapon to use for attacks from your inventory.', cat:'gambling', aliases:['sel','choose'] },
+      { name:'attack <@user>', desc:'Attack another user with your selected/equipped weapon. Consumes ammo.', cat:'gambling', aliases:['fight','hit','punch','a','atk'] },
+      { name:'streetdealer [buy] [dealer] [drug] [amount]', desc:'Buy drugs from street dealers with numbered selection.', cat:'gambling', aliases:['sd','drugs'] },
+      { name:'rob [target]', desc:'Rob banks and businesses with numbered selection and security levels.', cat:'gambling', aliases:['r','bank'] },
+      { name:'business [hire/fire/info] [type]', desc:'Manage your business empire and hire bodyguards for protection.', cat:'gambling', aliases:['bus','work'] },
+      { name:'bail [self/friend] [@user]', desc:'Pay bail to get out of jail or help a friend escape.', cat:'gambling', aliases:['b','free'] },
+      { name:'preferences [setting] [on/off]', desc:'Configure crime targeting, bodyguard protection, and pet defense settings.', cat:'gambling', aliases:['p','pref'] },
+      { name:'optout [crime/all]', desc:'Opt out of being targeted by crimes or all gambling interactions.', cat:'gambling' },
+      { name:'pet [buy/feed/train/shop/battle/switch/info]', desc:'Manage virtual pets - buy, feed, train, and battle!', cat:'gambling', aliases:['pets','animal'] },
+      { name:'petbattle <@user> [bet]', desc:'Battle other users\' pets for coins and glory!', cat:'gambling', aliases:['petfight','pb'] },
+      { name:'petattack <@user>', desc:'Command your pet to attack another user.', cat:'gambling', aliases:['petsend','petfight'] },
+      { name:'blackmarket [buy/use/inventory] [item]', desc:'Access underground market for drugs and illegal items with combat effects.', cat:'gambling', aliases:['bm','black','market'] },
+      { name:'farm [plant/water/harvest/upgrade] [crop/plot]', desc:'Plant and grow crops for profit - legal and illegal options.', cat:'gambling', aliases:['farming','crops','agriculture'] },
+      { name:'beer [buy/drink/menu] [type]', desc:'Buy and consume beverages for temporary gambling boosts.', cat:'gambling', aliases:['drink','beverage','alcohol'] },
       { name:'leaderboard', desc:'See top balances.', cat:'gambling' },
       { name:'levels', desc:'Check XP/leveling progress.', cat:'gambling' },
-      { name:'release', desc:'Claim periodic release rewards.', cat:'gambling' },
       { name:'beatup [@user]', desc:'Fun combat-themed coin interaction.', cat:'gambling' },
 
       // Moderation / Configuration
